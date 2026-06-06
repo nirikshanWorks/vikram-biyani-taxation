@@ -19,10 +19,10 @@ export function Contact() {
 
           <div className="mt-10 space-y-5">
             {[
-              { icon: Phone, label: "Call us", value: "+91 98765 43210" },
-              { icon: Mail, label: "Email", value: "support@cavikrambiyani.com" },
-              { icon: MessageSquare, label: "WhatsApp", value: "+91 98765 43210" },
-              { icon: MapPin, label: "Office", value: "Mumbai, Maharashtra, India" },
+            { icon: Phone, label: "Call us", value: "+91 98307 73655" },
+              { icon: Mail, label: "Email", value: "vbtaxclasses@gmail.com" },
+              { icon: MessageSquare, label: "WhatsApp", value: "+91 90519 03915" },
+              { icon: MapPin, label: "Office", value: "Kenderdine Ln, Bowbazar, Kolkata, West Bengal 700012" },
             ].map(c => (
               <div key={c.label} className="flex items-start gap-4">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-navy text-navy-foreground shrink-0">

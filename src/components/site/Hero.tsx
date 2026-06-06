@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight, Sparkles, Star, Trophy, Users, BadgeCheck } from "lucide-react";
-import vikramAsset from "@/assets/vikram-profile.jpg.asset.json";
+import vikramAsset from "@/assets/vikram-real.jpg.asset.json";
 
 export function Hero() {
   return (
