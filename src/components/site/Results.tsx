@@ -12,7 +12,9 @@ export function Results() {
     <section id="results" className="py-20 lg:py-28">
       <div className="container-page">
         <div className="max-w-2xl mx-auto text-center">
-          <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Proven Results</div>
+          <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold">
+            Proven Results
+          </div>
           <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold text-navy">
             Student results speak for themselves
           </h2>
@@ -21,8 +23,11 @@ export function Results() {
           </p>
         </div>
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {items.map(i => (
-            <div key={i.label} className="rounded-2xl bg-card border border-border p-8 text-center hover:shadow-elevated transition-shadow">
+          {items.map((i) => (
+            <div
+              key={i.label}
+              className="rounded-2xl bg-card border border-border p-8 text-center hover:shadow-elevated transition-shadow"
+            >
               <span className="inline-grid h-14 w-14 place-items-center rounded-2xl bg-accent text-navy">
                 <i.icon className="h-6 w-6" />
               </span>

@@ -1,6 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Play, ArrowRight, Star, Trophy, Users, BadgeCheck, Sparkles as SparkIcon } from "lucide-react";
-import vikramAsset from "@/assets/vikram-real.jpg.asset.json";
+import {
+  Play,
+  ArrowRight,
+  Star,
+  Trophy,
+  Users,
+  BadgeCheck,
+  Sparkles as SparkIcon,
+} from "lucide-react";
+import vikramAsset from "@/assets/viram biyani profile.jpg";
 import { WordRotate } from "./WordRotate";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { Sparkles } from "./Sparkles";
@@ -9,10 +17,22 @@ export function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
       {/* Animated background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-brand-50" aria-hidden />
-      <div className="absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl animate-blob -z-10" aria-hidden />
-      <div className="absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/25 blur-3xl animate-blob [animation-delay:3s] -z-10" aria-hidden />
-      <div className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-indigo-400/20 blur-3xl animate-blob [animation-delay:6s] -z-10" aria-hidden />
+      <div
+        className="absolute inset-0 -z-10 bg-gradient-to-br from-background via-background to-brand-50"
+        aria-hidden
+      />
+      <div
+        className="absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl animate-blob -z-10"
+        aria-hidden
+      />
+      <div
+        className="absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/25 blur-3xl animate-blob [animation-delay:3s] -z-10"
+        aria-hidden
+      />
+      <div
+        className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-indigo-400/20 blur-3xl animate-blob [animation-delay:6s] -z-10"
+        aria-hidden
+      />
       <div className="absolute inset-0 bg-grid-dots opacity-[0.35] -z-10" aria-hidden />
       <Sparkles count={18} className="-z-10" />
 
@@ -34,26 +54,53 @@ export function Hero() {
               className="text-gradient-animated"
             />
             <br />
-            with <span className="relative inline-block">
+            with{" "}
+            <span className="relative inline-block">
               Confidence
-              <svg className="absolute -bottom-2 left-0 w-full" height="14" viewBox="0 0 300 14" fill="none">
-                <path d="M2 9 C 80 2, 220 2, 298 9" stroke="url(#u)" strokeWidth="4" strokeLinecap="round" fill="none" />
-                <defs><linearGradient id="u" x1="0" x2="1"><stop stopColor="oklch(0.55 0.22 264)"/><stop offset="1" stopColor="oklch(0.72 0.18 220)"/></linearGradient></defs>
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                height="14"
+                viewBox="0 0 300 14"
+                fill="none"
+              >
+                <path
+                  d="M2 9 C 80 2, 220 2, 298 9"
+                  stroke="url(#u)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+                <defs>
+                  <linearGradient id="u" x1="0" x2="1">
+                    <stop stopColor="oklch(0.55 0.22 264)" />
+                    <stop offset="1" stopColor="oklch(0.72 0.18 220)" />
+                  </linearGradient>
+                </defs>
               </svg>
             </span>
             <span className="inline-block ml-2 animate-bounce-soft">🎓</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
-            Live & recorded courses in Direct Tax and GST by <strong className="text-foreground">CA Vikram Biyani</strong> — trusted by 50,000+ CA & CMA students across India.
+            Live & recorded courses in Direct Tax and GST by{" "}
+            <strong className="text-foreground">CA Vikram Biyani</strong> — trusted by 50,000+ CA &
+            CMA students across India.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button size="lg" className="group relative h-12 px-6 bg-gradient-to-r from-brand via-indigo-500 to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient">
+            <Button
+              size="lg"
+              className="group relative h-12 px-6 bg-gradient-to-r from-brand via-indigo-500 to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient"
+            >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shine" />
-              <span className="relative">Enroll Now</span> <ArrowRight className="relative ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <span className="relative">Enroll Now</span>{" "}
+              <ArrowRight className="relative ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-6 border-brand/30 text-brand-700 hover:bg-brand-50 hover:scale-105 transition-transform">
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-12 px-6 border-brand/30 text-brand-700 hover:bg-brand-50 hover:scale-105 transition-transform"
+            >
               Explore Courses
             </Button>
             <Button size="lg" variant="ghost" className="h-12 px-4 text-foreground group">
@@ -70,7 +117,10 @@ export function Hero() {
               { i: Trophy, v: 1200, suf: "+", l: "Top Rankers" },
               { i: Star, v: 4.9, suf: "/5", l: "12K Reviews", dec: 1 },
             ].map((s) => (
-              <div key={s.l} className="group rounded-2xl border border-border/70 bg-white/60 backdrop-blur p-3 hover:bg-white hover:-translate-y-1 hover:shadow-soft transition-all">
+              <div
+                key={s.l}
+                className="group rounded-2xl border border-border/70 bg-white/60 backdrop-blur p-3 hover:bg-white hover:-translate-y-1 hover:shadow-soft transition-all"
+              >
                 <s.i className="h-4 w-4 text-brand group-hover:scale-125 group-hover:text-gold transition-all" />
                 <div className="mt-2 font-display text-xl font-bold text-foreground">
                   <AnimatedCounter to={s.v} suffix={s.suf} decimals={s.dec ?? 0} />
@@ -85,15 +135,27 @@ export function Hero() {
         <div className="lg:col-span-5 relative animate-fade-up [animation-delay:120ms]">
           <div className="relative mx-auto max-w-md aspect-[4/5]" style={{ perspective: "1200px" }}>
             {/* Glow ring */}
-            <div className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-cyan-400 to-indigo-500 blur-2xl opacity-40 animate-pulse-slow" aria-hidden />
+            <div
+              className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-cyan-400 to-indigo-500 blur-2xl opacity-40 animate-pulse-slow"
+              aria-hidden
+            />
             {/* Dotted bg */}
-            <div className="absolute inset-0 rounded-[2.5rem] bg-grid-dots opacity-60" aria-hidden />
+            <div
+              className="absolute inset-0 rounded-[2.5rem] bg-grid-dots opacity-60"
+              aria-hidden
+            />
 
             <div className="relative h-full w-full rounded-[2rem] overflow-hidden border border-white shadow-elevated bg-gradient-to-br from-brand-50 to-white animate-float-soft">
-              <img src={vikramAsset.url} alt="CA Vikram Biyani" className="h-full w-full object-cover object-top" />
+              <img
+                src={vikramAsset}
+                alt="CA Vikram Biyani"
+                className="h-full w-full object-cover object-top"
+              />
               {/* Bottom name tag */}
               <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 to-transparent">
-                <div className="text-white font-display text-2xl font-bold leading-tight">CA Vikram Biyani</div>
+                <div className="text-white font-display text-2xl font-bold leading-tight">
+                  CA Vikram Biyani
+                </div>
                 <div className="text-white/80 text-xs">B.Com, FCA · 15+ years teaching</div>
               </div>
             </div>
@@ -101,7 +163,9 @@ export function Hero() {
             {/* Floating cards */}
             <div className="absolute -left-6 top-10 rounded-2xl bg-white border border-border shadow-elevated p-4 w-52 animate-float-soft [animation-delay:.6s]">
               <div className="flex items-center gap-2">
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand"><BadgeCheck className="h-4 w-4" /></span>
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand">
+                  <BadgeCheck className="h-4 w-4" />
+                </span>
                 <div>
                   <div className="text-xs text-muted-foreground">Live Batch</div>
                   <div className="text-sm font-semibold">CA Final Nov '26</div>
@@ -122,12 +186,19 @@ export function Hero() {
             <div className="absolute -bottom-4 left-8 rounded-2xl bg-white border border-border shadow-elevated p-3 w-56 animate-float-soft [animation-delay:1.8s]">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[1,2,3,4].map(i => <div key={i} className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-cyan-400" />)}
+                  {[1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-cyan-400"
+                    />
+                  ))}
                 </div>
                 <div>
                   <div className="text-xs font-semibold">50,000+ students</div>
                   <div className="flex items-center gap-0.5 text-[10px] text-amber-500">
-                    {[...Array(5)].map((_,i)=><Star key={i} className="h-2.5 w-2.5 fill-current" />)}
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-2.5 w-2.5 fill-current" />
+                    ))}
                     <span className="ml-1 text-muted-foreground">4.9/5</span>
                   </div>
                 </div>

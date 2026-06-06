@@ -11,11 +11,14 @@ export function Sparkles({ count = 14, className = "" }: { count?: number; class
         delay: Math.random() * 4,
         duration: 2.5 + Math.random() * 2.5,
       })),
-    [count]
+    [count],
   );
 
   return (
-    <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden>
+    <div
+      className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
+      aria-hidden
+    >
       {sparkles.map((s) => (
         <svg
           key={s.id}

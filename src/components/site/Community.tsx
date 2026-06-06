@@ -10,12 +10,15 @@ export function Community() {
           <div className="absolute -left-16 -bottom-16 h-60 w-60 rounded-full bg-navy/10 blur-3xl" />
           <div className="relative grid lg:grid-cols-2 gap-10 items-center">
             <div>
-              <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Community</div>
+              <div className="text-xs uppercase tracking-[0.2em] text-gold font-semibold">
+                Community
+              </div>
               <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold text-navy leading-tight">
                 Join India's growing taxation learning community
               </h2>
               <p className="mt-4 text-muted-foreground max-w-lg">
-                Discussion groups, live doubt sessions, exclusive webinars and mentorship — all in one place with 30,000+ active students.
+                Discussion groups, live doubt sessions, exclusive webinars and mentorship — all in
+                one place with 30,000+ active students.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button size="lg" className="bg-navy text-navy-foreground hover:bg-navy/90 h-12">
@@ -32,7 +35,7 @@ export function Community() {
                 { icon: MessageCircle, k: "Daily", v: "Doubt Sessions" },
                 { icon: Video, k: "Weekly", v: "Live Webinars" },
                 { icon: Send, k: "1-on-1", v: "Mentorship" },
-              ].map(i => (
+              ].map((i) => (
                 <div key={i.v} className="rounded-2xl bg-card border border-border p-5">
                   <i.icon className="h-5 w-5 text-gold" />
                   <div className="mt-4 font-display text-xl font-bold text-navy">{i.k}</div>

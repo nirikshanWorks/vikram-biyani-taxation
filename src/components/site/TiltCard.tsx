@@ -1,6 +1,14 @@
 import { useRef, type ReactNode } from "react";
 
-export function TiltCard({ children, className = "", intensity = 12 }: { children: ReactNode; className?: string; intensity?: number }) {
+export function TiltCard({
+  children,
+  className = "",
+  intensity = 12,
+}: {
+  children: ReactNode;
+  className?: string;
+  intensity?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   const onMove = (e: React.MouseEvent) => {
@@ -33,7 +41,10 @@ export function TiltCard({ children, className = "", intensity = 12 }: { childre
     >
       <div
         className="relative h-full w-full transition-transform duration-300 ease-out will-change-transform"
-        style={{ transform: "rotateX(var(--rx,0)) rotateY(var(--ry,0))", transformStyle: "preserve-3d" }}
+        style={{
+          transform: "rotateX(var(--rx,0)) rotateY(var(--ry,0))",
+          transformStyle: "preserve-3d",
+        }}
       >
         {children}
         <div

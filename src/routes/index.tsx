@@ -20,9 +20,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "CA Vikram Biyani — India's Trusted Taxation Mentor for CA & CMA" },
-      { name: "description", content: "Master Direct Tax & GST with CA Vikram Biyani. Structured learning, practical examples and exam-focused strategies for CA Inter, CA Final and CMA students." },
+      {
+        name: "description",
+        content:
+          "Master Direct Tax & GST with CA Vikram Biyani. Structured learning, practical examples and exam-focused strategies for CA Inter, CA Final and CMA students.",
+      },
       { property: "og:title", content: "CA Vikram Biyani — Master Taxation with Confidence" },
-      { property: "og:description", content: "Trusted by 50,000+ CA & CMA students. Direct Tax, GST, live & recorded batches, revision notes and mentorship." },
+      {
+        property: "og:description",
+        content:
+          "Trusted by 50,000+ CA & CMA students. Direct Tax, GST, live & recorded batches, revision notes and mentorship.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -37,17 +45,37 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <Reveal><Stats /></Reveal>
-        <Reveal><About /></Reveal>
-        <Reveal><WhyChoose /></Reveal>
-        <Reveal><Courses /></Reveal>
-        <Reveal><Featured /></Reveal>
+        <Reveal>
+          <Stats />
+        </Reveal>
+        <Reveal>
+          <About />
+        </Reveal>
+        <Reveal>
+          <WhyChoose />
+        </Reveal>
+        <Reveal>
+          <Courses />
+        </Reveal>
+        <Reveal>
+          <Featured />
+        </Reveal>
         <Testimonials />
-        <Reveal><Results /></Reveal>
-        <Reveal><Resources /></Reveal>
-        <Reveal><Community /></Reveal>
-        <Reveal><Faq /></Reveal>
-        <Reveal><Contact /></Reveal>
+        <Reveal>
+          <Results />
+        </Reveal>
+        <Reveal>
+          <Resources />
+        </Reveal>
+        <Reveal>
+          <Community />
+        </Reveal>
+        <Reveal>
+          <Faq />
+        </Reveal>
+        <Reveal>
+          <Contact />
+        </Reveal>
       </main>
       <Footer />
       <ChatBot />

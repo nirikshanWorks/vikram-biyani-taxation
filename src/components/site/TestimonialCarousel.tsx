@@ -13,13 +13,15 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
     return () => clearInterval(id);
   }, [playing, reviews.length]);
 
-  const go = (delta: number) =>
-    setIndex((i) => (i + delta + reviews.length) % reviews.length);
+  const go = (delta: number) => setIndex((i) => (i + delta + reviews.length) % reviews.length);
 
   return (
     <div className="relative">
       {/* glow */}
-      <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-indigo-400/15 to-gold/20 blur-2xl opacity-70" aria-hidden />
+      <div
+        className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-indigo-400/15 to-gold/20 blur-2xl opacity-70"
+        aria-hidden
+      />
 
       <div className="relative overflow-hidden rounded-3xl border border-border bg-background shadow-elevated">
         {/* slides */}
@@ -47,9 +49,7 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
                       key={j}
                       className="h-4 w-4 fill-current"
                       style={{
-                        animation: active
-                          ? `sparkle 1.2s ease-out ${j * 100}ms both`
-                          : "none",
+                        animation: active ? `sparkle 1.2s ease-out ${j * 100}ms both` : "none",
                       }}
                     />
                   ))}
@@ -59,7 +59,11 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
                 </blockquote>
                 <figcaption className="mt-5 pt-4 border-t border-border flex items-center gap-3">
                   <div className="h-11 w-11 rounded-full bg-gradient-to-br from-brand to-indigo-500 grid place-items-center text-white font-semibold">
-                    {r.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    {r.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
                   </div>
                   <div className="min-w-0">
                     <div className="font-semibold text-navy truncate">{r.name}</div>

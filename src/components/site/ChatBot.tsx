@@ -3,7 +3,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import ReactMarkdown from "react-markdown";
 import { MessageCircle, X, Send, Sparkles } from "lucide-react";
-import vikram from "@/assets/vikram-real.jpg.asset.json";
+import vikram from "@/assets/viram biyani profile.jpg";
 
 const SUGGESTIONS = [
   "What's the fee for CA Inter Taxation?",
@@ -56,7 +56,7 @@ export function ChatBot() {
     <>
       {/* Floating Launcher */}
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((o) => !o)}
         aria-label="Open chat"
         className="fixed bottom-5 right-5 z-50 group"
       >
@@ -77,40 +77,58 @@ export function ChatBot() {
       {/* Chat panel */}
       {open && (
         <div className="fixed bottom-24 right-4 sm:right-5 z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-w-md animate-fade-up">
-          <div className="rounded-3xl bg-background border border-border shadow-elevated overflow-hidden flex flex-col" style={{ height: "min(70vh, 600px)" }}>
+          <div
+            className="rounded-3xl bg-background border border-border shadow-elevated overflow-hidden flex flex-col"
+            style={{ height: "min(70vh, 600px)" }}
+          >
             {/* Header */}
             <div className="relative px-4 py-3 bg-gradient-to-br from-brand via-brand-600 to-indigo-700 text-white">
               <div className="absolute inset-0 bg-grid-dots opacity-20" />
               <div className="relative flex items-center gap-3">
                 <div className="relative">
-                  <img src={vikram.url} alt="VB" className="h-11 w-11 rounded-full object-cover object-top border-2 border-white/80 shadow-soft" />
+                  <img
+                    src={vikram}
+                    alt="VB"
+                    className="h-11 w-11 rounded-full object-cover object-top border-2 border-white/80 shadow-soft"
+                  />
                   <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-400 border-2 border-white" />
                 </div>
                 <div className="flex-1">
                   <div className="font-display text-base font-bold flex items-center gap-1.5">
                     Vikram Sir Bot <Sparkles className="h-3.5 w-3.5" />
                   </div>
-                  <div className="text-[11px] opacity-90">Usually replies instantly · CA & CMA counselling</div>
+                  <div className="text-[11px] opacity-90">
+                    Usually replies instantly · CA & CMA counselling
+                  </div>
                 </div>
-                <button onClick={() => setOpen(false)} aria-label="Close" className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close"
+                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                >
                   <X className="h-4 w-4" />
                 </button>
               </div>
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-brand-50/40 to-background">
-              {messages.map(m => {
-                const text = m.parts.map(p => (p.type === "text" ? p.text : "")).join("");
+            <div
+              ref={scrollRef}
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-brand-50/40 to-background"
+            >
+              {messages.map((m) => {
+                const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
                 if (!text) return null;
                 const mine = m.role === "user";
                 return (
                   <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-soft ${
-                      mine
-                        ? "bg-gradient-to-br from-brand to-brand-600 text-white rounded-br-md"
-                        : "bg-card border border-border text-foreground rounded-bl-md"
-                    }`}>
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-soft ${
+                        mine
+                          ? "bg-gradient-to-br from-brand to-brand-600 text-white rounded-br-md"
+                          : "bg-card border border-border text-foreground rounded-bl-md"
+                      }`}
+                    >
                       <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-current">
                         <ReactMarkdown>{text}</ReactMarkdown>
                       </div>
@@ -122,7 +140,13 @@ export function ChatBot() {
                 <div className="flex justify-start">
                   <div className="bg-card border border-border rounded-2xl rounded-bl-md px-4 py-3 shadow-soft">
                     <div className="flex gap-1">
-                      {[0,1,2].map(i => <span key={i} className="h-2 w-2 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: `${i*120}ms` }} />)}
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="h-2 w-2 rounded-full bg-brand/60 animate-bounce"
+                          style={{ animationDelay: `${i * 120}ms` }}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -132,7 +156,7 @@ export function ChatBot() {
             {/* Suggestions */}
             {messages.length <= 1 && (
               <div className="px-3 pb-2 flex flex-wrap gap-1.5 border-t border-border pt-3 bg-background">
-                {SUGGESTIONS.map(s => (
+                {SUGGESTIONS.map((s) => (
                   <button
                     key={s}
                     onClick={() => submit(s)}
@@ -147,13 +171,16 @@ export function ChatBot() {
 
             {/* Input */}
             <form
-              onSubmit={e => { e.preventDefault(); submit(input); }}
+              onSubmit={(e) => {
+                e.preventDefault();
+                submit(input);
+              }}
               className="flex items-center gap-2 px-3 py-3 border-t border-border bg-background"
             >
               <input
                 ref={inputRef}
                 value={input}
-                onChange={e => setInput(e.target.value)}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about courses, fees, batches…"
                 disabled={busy}
                 className="flex-1 h-11 px-4 rounded-full bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 disabled:opacity-60"
