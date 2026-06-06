@@ -5,15 +5,13 @@ export function Reveal({
   delay = 0,
   direction = "up",
   className = "",
-  as: Tag = "div",
 }: {
   children: ReactNode;
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "fade";
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -46,8 +44,7 @@ export function Reveal({
             : "none";
 
   return (
-    <Tag
-      // @ts-expect-error generic ref
+    <div
       ref={ref}
       className={className}
       style={{
@@ -58,7 +55,7 @@ export function Reveal({
       }}
     >
       {children}
-    </Tag>
+    </div>
   );
 }
 
