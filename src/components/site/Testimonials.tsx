@@ -14,7 +14,7 @@ const reviews = [
 
 export function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-card border-y border-border">
+    <section id="testimonials" className="py-20 lg:py-28 bg-card border-y border-border">
       <div className="container-page">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">

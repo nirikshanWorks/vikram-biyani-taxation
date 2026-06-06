@@ -13,6 +13,7 @@ import { Community } from "@/components/site/Community";
 import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
+import { ChatBot } from "@/components/site/ChatBot";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,6 +49,7 @@ function Index() {
         <Contact />
       </main>
       <Footer />
+      <ChatBot />
     </div>
   );
 }
