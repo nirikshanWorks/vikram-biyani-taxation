@@ -1,5 +1,5 @@
 import { BadgeCheck, BookOpen, GraduationCap, Scale, Sparkles, Users } from "lucide-react";
-import heroImg from "@/assets/vikram-hero.jpg";
+import heroImg from "@/assets/vikram-real.jpg.asset.json";
 
 const features = [
   { icon: Scale, label: "Direct Tax Specialist" },
@@ -16,7 +16,7 @@ export function About() {
       <div className="container-page grid lg:grid-cols-12 gap-12 items-start">
         <div className="lg:col-span-5 relative">
           <div className="rounded-3xl overflow-hidden border border-border shadow-elevated">
-            <img src={heroImg} alt="CA Vikram Biyani" width={1024} height={1280} loading="lazy" className="w-full" />
+            <img src={heroImg.url} alt="CA Vikram Biyani" width={1024} height={1280} loading="lazy" className="w-full" />
           </div>
           <div className="absolute -bottom-6 -right-4 bg-navy text-navy-foreground rounded-2xl p-5 shadow-elevated max-w-[220px]">
             <div className="font-display text-3xl font-bold text-gold">15+</div>
