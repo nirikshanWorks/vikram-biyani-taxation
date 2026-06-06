@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Play, ArrowRight, Sparkles, Star, Trophy, Users, BadgeCheck } from "lucide-react";
+import { Play, ArrowRight, Star, Trophy, Users, BadgeCheck, Sparkles as SparkIcon } from "lucide-react";
 import vikramAsset from "@/assets/vikram-real.jpg.asset.json";
+import { WordRotate } from "./WordRotate";
+import { AnimatedCounter } from "./AnimatedCounter";
+import { Sparkles } from "./Sparkles";
 
 export function Hero() {
   return (
@@ -11,10 +14,12 @@ export function Hero() {
       <div className="absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/25 blur-3xl animate-blob [animation-delay:3s] -z-10" aria-hidden />
       <div className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-indigo-400/20 blur-3xl animate-blob [animation-delay:6s] -z-10" aria-hidden />
       <div className="absolute inset-0 bg-grid-dots opacity-[0.35] -z-10" aria-hidden />
+      <Sparkles count={18} className="-z-10" />
 
       <div className="container-page grid lg:grid-cols-12 gap-10 items-center pt-14 pb-24 lg:pt-20 lg:pb-32">
         <div className="lg:col-span-7 animate-fade-up">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-white/70 backdrop-blur px-3 py-1.5 text-xs font-medium text-brand-700 shadow-soft">
+          <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-white/70 backdrop-blur px-3 py-1.5 text-xs font-medium text-brand-700 shadow-soft hover:scale-105 transition-transform">
+            <SparkIcon className="h-3.5 w-3.5 text-gold animate-wiggle" />
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
@@ -22,8 +27,13 @@ export function Hero() {
             India's #1 Taxation Mentor for CA & CMA
           </div>
 
-          <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight text-foreground">
-            Master <span className="text-gradient-brand">Taxation</span><br />
+          <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-foreground">
+            Master{" "}
+            <WordRotate
+              words={["Taxation", "Direct Tax", "GST", "Success"]}
+              className="text-gradient-animated"
+            />
+            <br />
             with <span className="relative inline-block">
               Confidence
               <svg className="absolute -bottom-2 left-0 w-full" height="14" viewBox="0 0 300 14" fill="none">
@@ -31,6 +41,7 @@ export function Hero() {
                 <defs><linearGradient id="u" x1="0" x2="1"><stop stopColor="oklch(0.55 0.22 264)"/><stop offset="1" stopColor="oklch(0.72 0.18 220)"/></linearGradient></defs>
               </svg>
             </span>
+            <span className="inline-block ml-2 animate-bounce-soft">🎓</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
@@ -38,10 +49,11 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button size="lg" className="group h-12 px-6 bg-gradient-to-r from-brand to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all">
-              Enroll Now <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Button size="lg" className="group relative h-12 px-6 bg-gradient-to-r from-brand via-indigo-500 to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient">
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shine" />
+              <span className="relative">Enroll Now</span> <ArrowRight className="relative ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-6 border-brand/30 text-brand-700 hover:bg-brand-50">
+            <Button size="lg" variant="outline" className="h-12 px-6 border-brand/30 text-brand-700 hover:bg-brand-50 hover:scale-105 transition-transform">
               Explore Courses
             </Button>
             <Button size="lg" variant="ghost" className="h-12 px-4 text-foreground group">
@@ -54,13 +66,15 @@ export function Hero() {
 
           <div className="mt-10 grid grid-cols-3 max-w-md gap-4">
             {[
-              { i: Users, v: "50K+", l: "Students" },
-              { i: Trophy, v: "1,200+", l: "Top Rankers" },
-              { i: Star, v: "4.9/5", l: "12K Reviews" },
+              { i: Users, v: 50, suf: "K+", l: "Students" },
+              { i: Trophy, v: 1200, suf: "+", l: "Top Rankers" },
+              { i: Star, v: 4.9, suf: "/5", l: "12K Reviews", dec: 1 },
             ].map((s) => (
-              <div key={s.l} className="rounded-2xl border border-border/70 bg-white/60 backdrop-blur p-3 hover:bg-white transition-colors">
-                <s.i className="h-4 w-4 text-brand" />
-                <div className="mt-2 font-display text-xl font-bold text-foreground">{s.v}</div>
+              <div key={s.l} className="group rounded-2xl border border-border/70 bg-white/60 backdrop-blur p-3 hover:bg-white hover:-translate-y-1 hover:shadow-soft transition-all">
+                <s.i className="h-4 w-4 text-brand group-hover:scale-125 group-hover:text-gold transition-all" />
+                <div className="mt-2 font-display text-xl font-bold text-foreground">
+                  <AnimatedCounter to={s.v} suffix={s.suf} decimals={s.dec ?? 0} />
+                </div>
                 <div className="text-[11px] text-muted-foreground">{s.l}</div>
               </div>
             ))}
