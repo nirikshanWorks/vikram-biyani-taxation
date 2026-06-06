@@ -267,7 +267,7 @@ function Navbar() {
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               "a",
               {
-                href: "https://wa.me/919051903915",
+                href: "https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E",
                 target: "_blank",
                 rel: "noopener noreferrer",
                 className: "text-sm font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1.5",
@@ -393,7 +393,7 @@ function Footer() {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "a",
               {
-                href: "https://wa.me/919051903915",
+                href: "https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E",
                 target: "_blank",
                 rel: "noopener noreferrer",
                 className: "hover:text-gold",

@@ -23,13 +23,19 @@ export function Contact() {
 
           <div className="mt-10 space-y-5">
             {[
-              { icon: Phone, label: "Call us", value: "+91 98307 73655" },
-              { icon: Mail, label: "Email", value: "vbtaxclasses@gmail.com" },
-              { icon: MessageSquare, label: "WhatsApp", value: "+91 90519 03915" },
+              { icon: Phone, label: "Call us", value: "+91 98307 73655", href: "tel:+919830773655" },
+              { icon: Mail, label: "Email", value: "vbtaxclasses@gmail.com", href: "mailto:vbtaxclasses@gmail.com" },
+              {
+                icon: MessageSquare,
+                label: "WhatsApp",
+                value: "+91 90519 03915",
+                href: "https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E",
+              },
               {
                 icon: MapPin,
                 label: "Office",
                 value: "Kenderdine Ln, Bowbazar, Kolkata, West Bengal 700012",
+                href: "https://maps.google.com/?q=Kenderdine+Ln,+Bowbazar,+Kolkata,+West+Bengal+700012",
               },
             ].map((c) => (
               <div key={c.label} className="flex items-start gap-4">
@@ -40,7 +46,18 @@ export function Contact() {
                   <div className="text-xs uppercase tracking-wider text-muted-foreground">
                     {c.label}
                   </div>
-                  <div className="font-medium text-navy">{c.value}</div>
+                  {c.href ? (
+                    <a
+                      href={c.href}
+                      target={c.href.startsWith("http") ? "_blank" : undefined}
+                      rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="font-medium text-navy hover:text-brand transition-colors"
+                    >
+                      {c.value}
+                    </a>
+                  ) : (
+                    <div className="font-medium text-navy">{c.value}</div>
+                  )}
                 </div>
               </div>
             ))}

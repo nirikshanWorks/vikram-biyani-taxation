@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer, C as ChatBot, B as Button, h as heroImg, c as cn } from "./ChatBot-DSJfQySe.mjs";
+import { N as Navbar, F as Footer, C as ChatBot, B as Button, h as heroImg, c as cn } from "./ChatBot-BmfzVcpr.mjs";
 import { R as Root2, I as Item, H as Header, T as Trigger2, C as Content2 } from "../_libs/radix-ui__react-accordion.mjs";
 import { R as Root } from "../_libs/radix-ui__react-label.mjs";
 import { c as cva } from "../_libs/class-variance-authority.mjs";
@@ -1572,19 +1572,34 @@ function Contact() {
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-muted-foreground max-w-md", children: "Fill the form and our counsellor will help you choose the right batch and answer your questions." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-10 space-y-5", children: [
-        { icon: Phone, label: "Call us", value: "+91 98307 73655" },
-        { icon: Mail, label: "Email", value: "vbtaxclasses@gmail.com" },
-        { icon: MessageSquare, label: "WhatsApp", value: "+91 90519 03915" },
+        { icon: Phone, label: "Call us", value: "+91 98307 73655", href: "tel:+919830773655" },
+        { icon: Mail, label: "Email", value: "vbtaxclasses@gmail.com", href: "mailto:vbtaxclasses@gmail.com" },
+        {
+          icon: MessageSquare,
+          label: "WhatsApp",
+          value: "+91 90519 03915",
+          href: "https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E"
+        },
         {
           icon: MapPin,
           label: "Office",
-          value: "Kenderdine Ln, Bowbazar, Kolkata, West Bengal 700012"
+          value: "Kenderdine Ln, Bowbazar, Kolkata, West Bengal 700012",
+          href: "https://maps.google.com/?q=Kenderdine+Ln,+Bowbazar,+Kolkata,+West+Bengal+700012"
         }
       ].map((c) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid h-11 w-11 place-items-center rounded-xl bg-navy text-navy-foreground shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(c.icon, { className: "h-5 w-5" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs uppercase tracking-wider text-muted-foreground", children: c.label }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium text-navy", children: c.value })
+          c.href ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "a",
+            {
+              href: c.href,
+              target: c.href.startsWith("http") ? "_blank" : void 0,
+              rel: c.href.startsWith("http") ? "noopener noreferrer" : void 0,
+              className: "font-medium text-navy hover:text-brand transition-colors",
+              children: c.value
+            }
+          ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium text-navy", children: c.value })
         ] })
       ] }, c.label)) })
     ] }),

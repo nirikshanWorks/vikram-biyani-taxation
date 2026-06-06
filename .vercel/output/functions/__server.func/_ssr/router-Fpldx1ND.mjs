@@ -135,7 +135,7 @@ function RootComponent() {
   const { queryClient } = Route$5.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$3 = () => import("./terms-DGqilXXP.mjs");
+const $$splitComponentImporter$3 = () => import("./terms-CnmBf4s8.mjs");
 const Route$4 = createFileRoute("/terms")({
   head: () => ({
     meta: [{
@@ -147,7 +147,7 @@ const Route$4 = createFileRoute("/terms")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./refund-policy-C8LSO1Fm.mjs");
+const $$splitComponentImporter$2 = () => import("./refund-policy-FjUCzFsp.mjs");
 const Route$3 = createFileRoute("/refund-policy")({
   head: () => ({
     meta: [{
@@ -159,7 +159,7 @@ const Route$3 = createFileRoute("/refund-policy")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./privacy-C6PDaKbq.mjs");
+const $$splitComponentImporter$1 = () => import("./privacy-DgWKIOQ9.mjs");
 const Route$2 = createFileRoute("/privacy")({
   head: () => ({
     meta: [{
@@ -171,7 +171,7 @@ const Route$2 = createFileRoute("/privacy")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-CfZTM3ow.mjs");
+const $$splitComponentImporter = () => import("./index-CNyaENRA.mjs");
 const Route$1 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -247,27 +247,151 @@ Rules:
 - For anything off-topic, politely steer back. Never invent prices, batches or guarantees.
 - If a parent or student wants to enrol, share WhatsApp +91 90519 03915 or Call +91 98307 73655.
 - Keep replies short (2-5 sentences) unless asked for details. Use bullet points for course comparisons.`;
+function getFallbackResponse(query) {
+  const q = query.toLowerCase();
+  if (q.includes("contact") || q.includes("phone") || q.includes("call") || q.includes("whatsapp") || q.includes("email") || q.includes("address") || q.includes("location") || q.includes("office") || q.includes("map") || q.includes("number")) {
+    return `You can contact CA Vikram Biyani Tax Classes (VBTC) via:
+
+• 📞 **Call Support:** +91 98307 73655
+• 💬 **WhatsApp Counselling:** [+91 90519 03915](https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E)
+• ✉️ **Email:** vbtaxclasses@gmail.com
+• 📍 **Kolkata Address:** Kenderdine Ln, Bowbazar, Kolkata, WB 700012
+
+Dada and the counselling team are happy to guide you! Feel free to reach out directly. 😊`;
+  }
+  if (q.includes("ca final") || q.includes("final dt") || q.includes("final idt") || q.includes("combo")) {
+    return `Here are our CA Final Taxation batches (all include unlimited views):
+
+1. **Direct Tax (DT) — 200 hours (5 Vol Coloured Hard Books):**
+   • Nov 2026 Batch: ₹8,600
+   • May 2027 Batch: ₹10,500
+
+2. **Indirect Tax (GST) — 150 hours (4 Vol Coloured Hard Books):**
+   • Nov 2026 Batch: ₹7,500
+   • May 2027 Batch: ₹8,600
+
+3. **DT + IDT Combo — 350 hours:**
+   • Nov 2026 (Hard Books): ₹15,000 | (PDF): ₹13,200
+   • May 2027 (Hard Books): ₹16,500
+
+Would you like to enroll in any of these batches? 🎓`;
+  }
+  if (q.includes("ca inter") || q.includes("inter dt") || q.includes("inter gst") || q.includes("ipcc")) {
+    return `Here are our CA Inter Taxation (Direct Tax + GST) courses for Sep 2026 (220 hours, unlimited views):
+
+• 📚 **Hard Books (4 Volumes):** ₹7,500
+• 📄 **PDF / Digital Material:** ₹6,000
+
+All CA Inter batches focus heavily on ICAI concept coverage and practice problems. Let me know if you would like the enrollment link!`;
+  }
+  if (q.includes("cma final") || q.includes("cma")) {
+    return `Here are our CMA Final Taxation courses (unlimited views, hard books included):
+
+1. **Direct Tax (DT) — 200 hours:**
+   • Dec 2026 Batch: ₹8,600
+   • June & Dec 2027 Batch: ₹10,600
+
+2. **Indirect Tax (GST) — 150 hours:**
+   • Dec 2026 Batch: ₹8,600
+   • June & Dec 2027 Batch: ₹8,600
+
+Let me know which batch targets your exam term! 📚`;
+  }
+  if (q.includes("refund") || q.includes("cancel") || q.includes("return") || q.includes("money back")) {
+    return `Our Refund Policy permits cancellations within **48 hours** of enrollment, subject to these conditions:
+
+• No lectures have been streamed or downloaded.
+• The video player activation key has not been used.
+• Physical textbooks have not yet been dispatched from our printing hub.
+
+All approved refunds are credited back to the original payment source within 5-7 banking days. For assistance, email vbtaxclasses@gmail.com.`;
+  }
+  if (q.includes("enroll") || q.includes("register") || q.includes("buy") || q.includes("join") || q.includes("payment") || q.includes("admission") || q.includes("fees")) {
+    return `You can enroll in our classes easily:
+
+1. **Online Registry**: Browse our courses in the ledger, select the batch, and click **Enroll Now**.
+2. **Direct Setup**: WhatsApp us at [**+91 90519 03915**](https://wa.me/919051903915?text=Hello%21%20I%27m%20interested%20in%20CA%2FCMA%20Taxation%20classes%20with%20CA%20Vikram%20Biyani%2E%20Please%20guide%20me%20with%20enrollment%20and%20batch%20details%2E) or call **+91 98307 73655** for manual registration and instant player activation keys.
+
+We support GPay, PhonePe, credit/debit cards, net banking, and bank transfers.`;
+  }
+  if (q.includes("book") || q.includes("material") || q.includes("pdf") || q.includes("notes") || q.includes("chart")) {
+    return `Depending on your course selection, you can opt for:
+
+• 📚 **Hard Books**: Coloured volumes printed on-demand and shipped directly to your address.
+• 📄 **PDF / Digital Notes**: Provided directly in your account for online viewing.
+• 📊 **Special VB Charts**: Comprehensive maps condensing 20-30 pages of tax law into 1-2 pages.
+
+All books and revision charts are fully aligned with the latest ICAI/ICMAI exam patterns.`;
+  }
+  return `Namaste! I am **Vikram Sir Bot**, counselling assistant for CA Vikram Biyani Tax Classes. 
+
+How can I help you? I can answer queries about:
+• 📚 **Courses & Fees** (CA Inter, CA Final, CMA Final batches)
+• 📞 **Contact Information** (Phone, WhatsApp, Kolkata office address)
+• 📝 **Admissions & Enrolment** (Payment channels and registration steps)
+• 🔄 **Refund and Cancellation policies**`;
+}
+function createFallbackResponseStream(messages) {
+  const userMessages = messages.filter((m) => m.role === "user");
+  const lastUserMessage = userMessages[userMessages.length - 1];
+  const queryText = lastUserMessage?.parts?.map((p) => p.type === "text" ? p.text : "").join("") || "";
+  const text = getFallbackResponse(queryText);
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const words = text.split(" ");
+      for (let i = 0; i < words.length; i++) {
+        const chunk = words[i] + (i < words.length - 1 ? " " : "");
+        const formattedChunk = `0:${JSON.stringify(chunk)}
+`;
+        controller.enqueue(encoder.encode(formattedChunk));
+        await new Promise((resolve) => setTimeout(resolve, 25));
+      }
+      const doneFrame = `d:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":0}}
+`;
+      controller.enqueue(encoder.encode(doneFrame));
+      controller.close();
+    }
+  });
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "x-vercel-ai-data-stream": "v1",
+      "Cache-Control": "no-cache",
+      "Connection": "keep-alive"
+    }
+  });
+}
 const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        let incomingMessages = [];
         try {
-          const { messages } = await request.json();
-          if (!Array.isArray(messages)) {
-            return new Response("Messages are required", { status: 400 });
+          const body = await request.json();
+          if (Array.isArray(body.messages)) {
+            incomingMessages = body.messages;
           }
+        } catch (_) {
+        }
+        if (incomingMessages.length === 0) {
+          return new Response("Messages are required", { status: 400 });
+        }
+        try {
           const key = process.env.LOVABLE_API_KEY;
-          if (!key) return new Response("Missing LOVABLE_API_KEY", { status: 500 });
+          if (!key) {
+            return createFallbackResponseStream(incomingMessages);
+          }
           const gateway = createLovableAiGatewayProvider(key);
           const result = streamText({
             model: gateway("google/gemini-3-flash-preview"),
             system: SYSTEM_PROMPT,
-            messages: await convertToModelMessages(messages)
+            messages: await convertToModelMessages(incomingMessages)
           });
-          return result.toUIMessageStreamResponse({ originalMessages: messages });
+          return result.toUIMessageStreamResponse({ originalMessages: incomingMessages });
         } catch (err) {
-          console.error("chat error", err);
-          return new Response("Chat error", { status: 500 });
+          console.error("chat error, triggering fallback", err);
+          return createFallbackResponseStream(incomingMessages);
         }
       }
     }

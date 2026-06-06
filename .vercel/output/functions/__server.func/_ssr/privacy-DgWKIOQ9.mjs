@@ -1,5 +1,5 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer, C as ChatBot } from "./ChatBot-DSJfQySe.mjs";
+import { N as Navbar, F as Footer, C as ChatBot } from "./ChatBot-BmfzVcpr.mjs";
 import { S as Shield } from "../_libs/lucide-react.mjs";
 import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/radix-ui__react-compose-refs.mjs";
