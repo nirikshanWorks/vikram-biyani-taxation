@@ -26,11 +26,11 @@ export function Hero() {
         aria-hidden
       />
       <div
-        className="absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/25 blur-3xl animate-blob [animation-delay:3s] -z-10"
+        className="absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-brand-300/20 blur-3xl animate-blob [animation-delay:3s] -z-10"
         aria-hidden
       />
       <div
-        className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-indigo-400/20 blur-3xl animate-blob [animation-delay:6s] -z-10"
+        className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-accent/30 blur-3xl animate-blob [animation-delay:6s] -z-10"
         aria-hidden
       />
       <div className="absolute inset-0 bg-grid-dots opacity-[0.35] -z-10" aria-hidden />
@@ -72,8 +72,8 @@ export function Hero() {
                 />
                 <defs>
                   <linearGradient id="u" x1="0" x2="1">
-                    <stop stopColor="oklch(0.55 0.22 264)" />
-                    <stop offset="1" stopColor="oklch(0.72 0.18 220)" />
+                    <stop stopColor="oklch(0.58 0.16 195)" />
+                    <stop offset="1" stopColor="oklch(0.91 0.035 195)" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -90,7 +90,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button
               size="lg"
-              className="group relative h-12 px-6 bg-gradient-to-r from-brand via-indigo-500 to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient"
+              className="group relative h-12 px-6 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shine" />
               <span className="relative">Enroll Now</span>{" "}
@@ -136,7 +136,7 @@ export function Hero() {
           <div className="relative mx-auto max-w-md aspect-[4/5]" style={{ perspective: "1200px" }}>
             {/* Glow ring */}
             <div
-              className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-cyan-400 to-indigo-500 blur-2xl opacity-40 animate-pulse-slow"
+              className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-accent to-navy blur-2xl opacity-40 animate-pulse-slow"
               aria-hidden
             />
             {/* Dotted bg */}
@@ -172,12 +172,12 @@ export function Hero() {
                 </div>
               </div>
               <div className="mt-3 h-1.5 rounded-full bg-secondary overflow-hidden">
-                <div className="h-full w-[78%] bg-gradient-to-r from-brand to-cyan-400" />
+                <div className="h-full w-[78%] bg-gradient-to-r from-brand to-accent" />
               </div>
               <div className="mt-1 text-[10px] text-muted-foreground">78% seats filled</div>
             </div>
 
-            <div className="absolute -right-4 top-32 rounded-2xl bg-gradient-to-br from-brand to-indigo-600 text-white shadow-brand-lg p-4 w-44 animate-float-soft [animation-delay:1.2s]">
+            <div className="absolute -right-4 top-32 rounded-2xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-brand-lg p-4 w-44 animate-float-soft [animation-delay:1.2s]">
               <div className="text-[10px] uppercase tracking-widest opacity-80">All India Rank</div>
               <div className="mt-1 text-3xl font-display font-bold">AIR 12</div>
               <div className="text-xs opacity-90">CA Final DT — May '25</div>
@@ -189,7 +189,7 @@ export function Hero() {
                   {[1, 2, 3, 4].map((i) => (
                     <div
                       key={i}
-                      className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-cyan-400"
+                      className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-accent"
                     />
                   ))}
                 </div>

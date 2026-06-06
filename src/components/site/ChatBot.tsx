@@ -61,7 +61,7 @@ export function ChatBot() {
         className="fixed bottom-5 right-5 z-50 group"
       >
         <span className="absolute inset-0 rounded-full bg-brand/40 blur-xl animate-pulse-slow" />
-        <span className="relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-brand via-brand-600 to-indigo-600 text-white shadow-brand-lg hover:scale-110 transition-transform">
+        <span className="relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-brand via-brand-600 to-brand-800 text-white shadow-brand-lg hover:scale-110 transition-transform">
           {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
           {!open && (
             <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 border-2 border-white animate-pulse" />
@@ -82,7 +82,7 @@ export function ChatBot() {
             style={{ height: "min(70vh, 600px)" }}
           >
             {/* Header */}
-            <div className="relative px-4 py-3 bg-gradient-to-br from-brand via-brand-600 to-indigo-700 text-white">
+            <div className="relative px-4 py-3 bg-gradient-to-br from-brand via-brand-600 to-brand-800 text-white">
               <div className="absolute inset-0 bg-grid-dots opacity-20" />
               <div className="relative flex items-center gap-3">
                 <div className="relative">

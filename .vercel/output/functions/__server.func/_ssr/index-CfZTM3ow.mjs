@@ -1,31 +1,29 @@
 import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
-import { S as Slot } from "../_libs/radix-ui__react-slot.mjs";
-import { c as cva } from "../_libs/class-variance-authority.mjs";
-import { c as clsx } from "../_libs/clsx.mjs";
-import { t as twMerge } from "../_libs/tailwind-merge.mjs";
+import { N as Navbar, F as Footer, C as ChatBot, B as Button, h as heroImg, c as cn } from "./ChatBot-DSJfQySe.mjs";
 import { R as Root2, I as Item, H as Header, T as Trigger2, C as Content2 } from "../_libs/radix-ui__react-accordion.mjs";
 import { R as Root } from "../_libs/radix-ui__react-label.mjs";
-import { u as useChat } from "../_libs/ai-sdk__react.mjs";
-import { D as DefaultChatTransport } from "../_libs/ai.mjs";
-import { P as Phone, C as ChevronDown, B as BookOpen, G as GraduationCap, A as Award, X, M as Menu, S as Sparkles$1, a as ArrowRight, b as Play, U as Users, T as Trophy, c as Star, d as BadgeCheck, e as Scale, L as Lightbulb, f as ChartLine, R as RefreshCcw, F as FileCheckCorner, g as BookMarked, H as Headphones, h as Clock, I as Infinity, i as Check, Z as Zap, Q as Quote, j as TrendingUp, k as ArrowUpRight, N as Newspaper, l as FileText, Y as Youtube, D as Download, m as Send, n as MessageCircle, V as Video, o as Mail, p as MessageSquare, q as MapPin, r as Linkedin, s as Twitter, t as Facebook, u as ChevronLeft, v as Pause, w as ChevronRight } from "../_libs/lucide-react.mjs";
-import { M as Markdown } from "../_libs/react-markdown.mjs";
+import { c as cva } from "../_libs/class-variance-authority.mjs";
+import { a as Sparkles$1, A as ArrowRight, P as Play, U as Users, T as Trophy, b as Star, c as BadgeCheck, d as Scale, e as BookOpen, G as GraduationCap, L as Lightbulb, C as ChartLine, R as RefreshCcw, f as FileCheckCorner, g as BookMarked, H as Headphones, h as Clock, I as Infinity, i as Check, Z as Zap, Q as Quote, j as TrendingUp, k as Award, l as ArrowUpRight, N as Newspaper, F as FileText, Y as Youtube, D as Download, m as Send, M as MessageCircle, V as Video, n as Phone, o as Mail, p as MessageSquare, q as MapPin, r as ChevronLeft, s as Pause, t as ChevronRight, u as ChevronDown } from "../_libs/lucide-react.mjs";
+import "../_libs/radix-ui__react-slot.mjs";
 import "../_libs/radix-ui__react-compose-refs.mjs";
-import "../_libs/radix-ui__react-context.mjs";
-import "../_libs/radix-ui__react-collection.mjs";
-import "../_libs/radix-ui__primitive.mjs";
-import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
-import "../_libs/@radix-ui/react-use-layout-effect+[...].mjs";
-import "../_libs/radix-ui__react-primitive.mjs";
+import "../_libs/clsx.mjs";
+import "../_libs/tailwind-merge.mjs";
+import "../_libs/tanstack__react-router.mjs";
+import "../_libs/tanstack__router-core.mjs";
+import "../_libs/tanstack__history.mjs";
+import "../_libs/cookie-es.mjs";
+import "../_libs/seroval.mjs";
+import "../_libs/seroval-plugins.mjs";
+import "node:stream/web";
+import "node:stream";
 import "../_libs/react-dom.mjs";
 import "util";
 import "crypto";
 import "async_hooks";
 import "stream";
-import "../_libs/radix-ui__react-collapsible.mjs";
-import "../_libs/radix-ui__react-presence.mjs";
-import "../_libs/radix-ui__react-id.mjs";
-import "../_libs/radix-ui__react-direction.mjs";
-import "../_libs/throttleit.mjs";
+import "../_libs/isbot.mjs";
+import "../_libs/ai-sdk__react.mjs";
+import "../_libs/ai.mjs";
 import "../_libs/ai-sdk__gateway.mjs";
 import "../_libs/ai-sdk__provider-utils.mjs";
 import "../_libs/ai-sdk__provider.mjs";
@@ -36,6 +34,8 @@ import "path";
 import "fs";
 import "os";
 import "../_libs/opentelemetry__api.mjs";
+import "../_libs/throttleit.mjs";
+import "../_libs/react-markdown.mjs";
 import "../_libs/devlop.mjs";
 import "../_libs/unified.mjs";
 import "../_libs/bail.mjs";
@@ -89,283 +89,16 @@ import "../_libs/inline-style-parser.mjs";
 import "../_libs/hast-util-whitespace.mjs";
 import "../_libs/estree-util-is-identifier-name.mjs";
 import "../_libs/html-url-attributes.mjs";
-function cn(...inputs) {
-  return twMerge(clsx(inputs));
-}
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline"
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9"
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default"
-    }
-  }
-);
-const Button = reactExports.forwardRef(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Comp, { className: cn(buttonVariants({ variant, size, className })), ref, ...props });
-  }
-);
-Button.displayName = "Button";
-const logo = "/assets/VB-logo-BGlHIX8n.jpg";
-const courseGroups = [
-  {
-    icon: BookOpen,
-    title: "CA Inter",
-    subtitle: "Taxation (DT + GST)",
-    color: "from-sky-500 to-blue-600",
-    items: [
-      { label: "Sep 2026 · Hard Books", price: "₹7,500" },
-      { label: "Sep 2026 · PDF", price: "₹6,000" }
-    ]
-  },
-  {
-    icon: GraduationCap,
-    title: "CA Final",
-    subtitle: "DT · IDT · Combo",
-    color: "from-brand to-indigo-600",
-    items: [
-      { label: "Direct Tax — Nov 26 / May 27", price: "₹8,600+" },
-      { label: "Indirect Tax — Nov 26 / May 27", price: "₹7,500+" },
-      { label: "DT + IDT Combo", price: "₹13,200+" }
-    ]
-  },
-  {
-    icon: Award,
-    title: "CMA Final",
-    subtitle: "DT & IDT — Dec 26 / 27",
-    color: "from-amber-500 to-orange-600",
-    items: [
-      { label: "Direct Tax — Hard Books", price: "₹8,600+" },
-      { label: "Indirect Tax — Hard Books", price: "₹8,600+" }
-    ]
-  }
-];
-const links = [
-  { label: "About", href: "#about" },
-  { label: "Results", href: "#results" },
-  { label: "Resources", href: "#resources" },
-  { label: "Reviews", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" }
-];
-function Navbar() {
-  const [open, setOpen] = reactExports.useState(false);
-  const [scrolled, setScrolled] = reactExports.useState(false);
-  const [coursesOpen, setCoursesOpen] = reactExports.useState(false);
-  reactExports.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "header",
-    {
-      className: `sticky top-0 z-40 transition-all ${scrolled ? "border-b border-border/60 bg-background/85 backdrop-blur-xl shadow-soft" : "bg-background/40 backdrop-blur"}`,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hidden md:block bg-gradient-to-r from-navy via-brand-800 to-navy text-white/90 text-[11px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page flex items-center justify-between h-8", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1.5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "h-3 w-3 text-gold" }),
-              " +91 98307 73655"
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60", children: "|" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "vbtaxclasses@gmail.com" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gold", children: "★ 5.0 / 5.0" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "opacity-60", children: "|" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "50,000+ students trained" })
-          ] })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page flex h-16 items-center justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("a", { href: "#top", className: "flex items-center gap-2.5", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: logo,
-                alt: "VB",
-                className: "h-10 w-10 rounded-xl object-contain bg-white p-0.5 shadow-soft"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leading-tight", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-display text-base font-bold text-foreground", children: "CA Vikram Biyani" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-[0.18em] text-brand font-semibold", children: "Taxation Mentor · VBTC" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "hidden lg:flex items-center gap-7", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "relative",
-                onMouseEnter: () => setCoursesOpen(true),
-                onMouseLeave: () => setCoursesOpen(false),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                    "button",
-                    {
-                      onClick: () => setCoursesOpen((o) => !o),
-                      className: "flex items-center gap-1 text-sm font-medium text-foreground/80 hover:text-brand transition-colors py-2",
-                      "aria-expanded": coursesOpen,
-                      children: [
-                        "Courses",
-                        " ",
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          ChevronDown,
-                          {
-                            className: `h-3.5 w-3.5 transition-transform ${coursesOpen ? "rotate-180" : ""}`
-                          }
-                        )
-                      ]
-                    }
-                  ),
-                  coursesOpen && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[680px] animate-fade-up", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-elevated p-3 grid grid-cols-3 gap-2", children: [
-                    courseGroups.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "a",
-                      {
-                        href: "#courses",
-                        onClick: () => setCoursesOpen(false),
-                        className: "group relative rounded-2xl p-4 hover:bg-brand-50 transition-colors",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            "div",
-                            {
-                              className: `grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br ${g.color} text-white shadow-soft`,
-                              children: /* @__PURE__ */ jsxRuntimeExports.jsx(g.icon, { className: "h-5 w-5" })
-                            }
-                          ),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-3 font-display text-base font-bold text-foreground", children: g.title }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] text-brand-700 font-medium", children: g.subtitle }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "mt-3 space-y-1.5", children: g.items.map((it) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                            "li",
-                            {
-                              className: "text-[12px] text-foreground/75 flex items-start justify-between gap-2 leading-tight",
-                              children: [
-                                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: it.label }),
-                                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-brand font-semibold whitespace-nowrap", children: it.price })
-                              ]
-                            },
-                            it.label
-                          )) })
-                        ]
-                      },
-                      g.title
-                    )),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "a",
-                      {
-                        href: "#courses",
-                        onClick: () => setCoursesOpen(false),
-                        className: "col-span-3 mt-1 rounded-2xl bg-gradient-to-r from-brand to-indigo-600 text-white px-4 py-3 flex items-center justify-between text-sm font-semibold hover:shadow-brand transition-shadow",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "See all 13 batches with full details" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "→" })
-                        ]
-                      }
-                    )
-                  ] }) })
-                ]
-              }
-            ),
-            links.map((l) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "a",
-              {
-                href: l.href,
-                className: "text-sm font-medium text-foreground/80 hover:text-brand transition-colors relative group",
-                children: [
-                  l.label,
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute -bottom-1 left-0 h-0.5 w-0 bg-brand transition-all group-hover:w-full" })
-                ]
-              },
-              l.href
-            ))
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "hidden lg:flex items-center gap-3", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "a",
-              {
-                href: "https://wa.me/919051903915",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                className: "text-sm font-medium text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1.5",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-2 w-2 rounded-full bg-emerald-500 animate-pulse" }),
-                  " WhatsApp"
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "bg-gradient-to-r from-brand to-indigo-600 text-white hover:shadow-brand", children: "Enroll Now" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              "aria-label": "Toggle menu",
-              className: "lg:hidden p-2",
-              onClick: () => setOpen((o) => !o),
-              children: open ? /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-5 w-5" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Menu, { className: "h-5 w-5" })
-            }
-          )
-        ] }),
-        open && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "lg:hidden border-t border-border bg-background animate-fade-up", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page py-4 flex flex-col gap-1", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-widest text-brand font-bold pt-2 pb-1", children: "Courses" }),
-          courseGroups.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "a",
-            {
-              href: "#courses",
-              onClick: () => setOpen(false),
-              className: "flex items-center gap-3 py-2.5 rounded-xl hover:bg-brand-50 px-2",
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "div",
-                  {
-                    className: `grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br ${g.color} text-white`,
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(g.icon, { className: "h-4 w-4" })
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold text-foreground", children: g.title }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] text-muted-foreground", children: g.subtitle })
-                ] })
-              ]
-            },
-            g.title
-          )),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-px bg-border my-2" }),
-          links.map((l) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "a",
-            {
-              href: l.href,
-              onClick: () => setOpen(false),
-              className: "py-2 text-sm font-medium",
-              children: l.label
-            },
-            l.href
-          )),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "bg-gradient-to-r from-brand to-indigo-600 text-white mt-2", children: "Enroll Now" })
-        ] }) })
-      ]
-    }
-  );
-}
-const vikram = "/assets/viram%20biyani%20profile-LbCwSKju.jpg";
+import "../_libs/radix-ui__react-context.mjs";
+import "../_libs/radix-ui__react-collection.mjs";
+import "../_libs/radix-ui__primitive.mjs";
+import "../_libs/@radix-ui/react-use-controllable-state+[...].mjs";
+import "../_libs/@radix-ui/react-use-layout-effect+[...].mjs";
+import "../_libs/radix-ui__react-primitive.mjs";
+import "../_libs/radix-ui__react-collapsible.mjs";
+import "../_libs/radix-ui__react-presence.mjs";
+import "../_libs/radix-ui__react-id.mjs";
+import "../_libs/radix-ui__react-direction.mjs";
 function WordRotate({
   words,
   className = "",
@@ -494,14 +227,14 @@ function Hero() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: "absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/25 blur-3xl animate-blob [animation-delay:3s] -z-10",
+        className: "absolute -top-20 right-0 h-[24rem] w-[24rem] rounded-full bg-brand-300/20 blur-3xl animate-blob [animation-delay:3s] -z-10",
         "aria-hidden": true
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: "absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-indigo-400/20 blur-3xl animate-blob [animation-delay:6s] -z-10",
+        className: "absolute bottom-0 left-1/3 h-[22rem] w-[22rem] rounded-full bg-accent/30 blur-3xl animate-blob [animation-delay:6s] -z-10",
         "aria-hidden": true
       }
     ),
@@ -551,8 +284,8 @@ function Hero() {
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("defs", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("linearGradient", { id: "u", x1: "0", x2: "1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { stopColor: "oklch(0.55 0.22 264)" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "1", stopColor: "oklch(0.72 0.18 220)" })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { stopColor: "oklch(0.58 0.16 195)" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("stop", { offset: "1", stopColor: "oklch(0.91 0.035 195)" })
                   ] }) })
                 ]
               }
@@ -571,7 +304,7 @@ function Hero() {
             Button,
             {
               size: "lg",
-              className: "group relative h-12 px-6 bg-gradient-to-r from-brand via-indigo-500 to-brand-600 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient",
+              className: "group relative h-12 px-6 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient",
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shine" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "relative", children: "Enroll Now" }),
@@ -615,7 +348,7 @@ function Hero() {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: "absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-cyan-400 to-indigo-500 blur-2xl opacity-40 animate-pulse-slow",
+            className: "absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-accent to-navy blur-2xl opacity-40 animate-pulse-slow",
             "aria-hidden": true
           }
         ),
@@ -630,7 +363,7 @@ function Hero() {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             "img",
             {
-              src: vikram,
+              src: heroImg,
               alt: "CA Vikram Biyani",
               className: "h-full w-full object-cover object-top"
             }
@@ -648,10 +381,10 @@ function Hero() {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold", children: "CA Final Nov '26" })
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-3 h-1.5 rounded-full bg-secondary overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-full w-[78%] bg-gradient-to-r from-brand to-cyan-400" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-3 h-1.5 rounded-full bg-secondary overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-full w-[78%] bg-gradient-to-r from-brand to-accent" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-[10px] text-muted-foreground", children: "78% seats filled" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -right-4 top-32 rounded-2xl bg-gradient-to-br from-brand to-indigo-600 text-white shadow-brand-lg p-4 w-44 animate-float-soft [animation-delay:1.2s]", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -right-4 top-32 rounded-2xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-brand-lg p-4 w-44 animate-float-soft [animation-delay:1.2s]", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-widest opacity-80", children: "All India Rank" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 text-3xl font-display font-bold", children: "AIR 12" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs opacity-90", children: "CA Final DT — May '25" })
@@ -660,7 +393,7 @@ function Hero() {
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex -space-x-2", children: [1, 2, 3, 4].map((i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             "div",
             {
-              className: "h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-cyan-400"
+              className: "h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand to-accent"
             },
             i
           )) }),
@@ -706,7 +439,7 @@ function About() {
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "rounded-3xl overflow-hidden border border-border shadow-elevated", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "img",
         {
-          src: vikram,
+          src: heroImg,
           alt: "CA Vikram Biyani",
           width: 1024,
           height: 1280,
@@ -1056,113 +789,177 @@ const courses = [
 ];
 function Courses() {
   const [active, setActive] = reactExports.useState("All");
+  const [selectedCourse, setSelectedCourse] = reactExports.useState(courses[0]);
   const filtered = active === "All" ? courses : courses.filter((c) => c.cat === active || c.media === active);
+  const displayCourse = filtered.some(
+    (c) => c.title === selectedCourse.title && c.batch === selectedCourse.batch
+  ) ? selectedCourse : filtered[0] || courses[0];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "courses", className: "py-24 lg:py-32 relative", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-grid-dots opacity-30 -z-10", "aria-hidden": true }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-end justify-between gap-6", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs uppercase tracking-[0.2em] text-brand font-semibold", children: "Our Courses" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "mt-3 font-display text-4xl md:text-5xl font-bold text-foreground", children: [
-            "Built for every ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gradient-brand", children: "taxation aspirant" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-muted-foreground", children: "Regular, fast-track, live and recorded batches — built for CA Inter, CA Final and CMA students." })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl mb-12", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs uppercase tracking-[0.2em] text-brand font-semibold", children: "Our Courses" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "mt-3 font-display text-4xl md:text-5xl font-bold text-foreground", children: [
+          "Built for every ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gradient-brand", children: "taxation aspirant" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", className: "border-brand/30 text-brand-700 hover:bg-brand-50", children: "View all courses" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-muted-foreground", children: "Regular, fast-track, live and recorded batches — choose a course from the ledger to view details." })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 flex flex-wrap gap-2", children: categories.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          onClick: () => setActive(c),
-          className: `rounded-full px-4 py-2 text-sm font-medium border transition-all ${active === c ? "bg-gradient-to-r from-brand to-brand-600 text-white border-transparent shadow-brand" : "bg-card text-foreground/80 border-border hover:border-brand/40 hover:text-brand-700"}`,
-          children: c
-        },
-        c
-      )) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6", children: filtered.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(TiltCard, { className: "group rounded-2xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "relative rounded-2xl border border-border bg-card overflow-hidden flex flex-col h-full shadow-soft hover:shadow-elevated transition-shadow", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative aspect-square overflow-hidden bg-secondary", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "img",
-            {
-              src: c.img,
-              alt: c.title,
-              loading: "lazy",
-              className: "h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute top-3 left-3 flex gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-white/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-2.5 py-1", children: c.tag }),
-            c.live && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "rounded-full bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 inline-flex items-center gap-1", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-white animate-pulse" }),
-              " Live"
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              "aria-label": "Preview",
-              className: "absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-white text-brand shadow-elevated opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { className: "h-4 w-4 fill-current" })
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-5 flex-1 flex flex-col", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-display text-lg font-semibold text-foreground leading-snug min-h-[3.5rem]", children: c.title }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-1 text-xs text-brand font-medium", children: [
-            c.batch,
-            " batch"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 grid grid-cols-3 gap-2 text-[11px]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "h-3 w-3" }),
-              c.hours
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "h-3 w-3" }),
-              c.books
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Infinity, { className: "h-3 w-3" }),
-              "Unlimited"
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 flex items-center gap-1 text-amber-500 text-sm", children: [
-            [...Array(5)].map((_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-3.5 w-3.5 fill-current" }, i)),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "ml-1 text-xs text-muted-foreground", children: [
-              c.rating,
-              " · 2.4k students"
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-5 pt-5 border-t border-border flex items-end justify-between", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-display text-2xl font-bold text-foreground", children: [
-                "₹",
-                c.price.toLocaleString("en-IN")
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-muted-foreground line-through", children: [
-                  "₹",
-                  c.mrp.toLocaleString("en-IN")
-                ] }),
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-emerald-600 font-semibold", children: [
-                  Math.round((1 - c.price / c.mrp) * 100),
-                  "% off"
-                ] })
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid lg:grid-cols-12 gap-10 items-start", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "lg:col-span-5 lg:sticky lg:top-24 self-start animate-fade-up", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TiltCard, { className: "rounded-3xl shadow-elevated border border-border bg-card overflow-hidden", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative aspect-[16/10] overflow-hidden bg-secondary", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: displayCourse.img,
+                alt: displayCourse.title,
+                className: "h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute top-4 left-4 flex gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "rounded-full bg-white/95 dark:bg-navy/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-3 py-1", children: displayCourse.tag }),
+              displayCourse.live && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "rounded-full bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 inline-flex items-center gap-1.5 shadow-soft", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-white animate-pulse" }),
+                " Live"
               ] })
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Button,
-              {
-                size: "sm",
-                className: "bg-gradient-to-r from-brand to-brand-600 text-white hover:shadow-brand",
-                children: "Enroll"
-              }
-            )
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute bottom-4 left-4 right-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-white/80 uppercase tracking-widest font-semibold", children: [
+              displayCourse.batch,
+              " Batch"
+            ] }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8 flex flex-col", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-display text-2xl md:text-3xl font-bold text-foreground leading-tight min-h-[3.5rem]", children: displayCourse.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 grid grid-cols-3 gap-2 text-center text-xs", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "h-4.5 w-4.5 text-brand mx-auto mb-1.5" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-foreground", children: displayCourse.hours }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mt-0.5", children: "Duration" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "h-4.5 w-4.5 text-brand mx-auto mb-1.5" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-foreground truncate", children: displayCourse.media }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mt-0.5", children: "Format" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Infinity, { className: "h-4.5 w-4.5 text-brand mx-auto mb-1.5" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-foreground", children: "Unlimited" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] text-muted-foreground mt-0.5", children: "Validity" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-6 space-y-2.5 border-t border-border pt-6", children: [
+              "Full syllabus coverage for CA & CMA examinations",
+              "Visual mapping with special VB charts & revision guides",
+              "Comprehensive MCQ question bank & mock tests",
+              "24/7 dedicated query resolution & mentorship support"
+            ].map((inc, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5 text-sm text-foreground/80", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-4.5 w-4.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold", children: "✓" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: inc })
+            ] }, i)) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-8 pt-6 border-t border-border flex items-center justify-between gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-widest text-muted-foreground", children: "Price (Inclusive of GST)" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-baseline gap-2 mt-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-display text-3xl font-extrabold text-foreground", children: [
+                    "₹",
+                    displayCourse.price.toLocaleString("en-IN")
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm text-muted-foreground line-through", children: [
+                    "₹",
+                    displayCourse.mrp.toLocaleString("en-IN")
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full inline-block mt-1", children: [
+                  "Save ",
+                  Math.round((1 - displayCourse.price / displayCourse.mrp) * 100),
+                  "% Today"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Button,
+                {
+                  size: "lg",
+                  className: "bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg px-8 h-12 shrink-0",
+                  children: "Enroll"
+                }
+              )
+            ] })
           ] })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lg:col-span-7 flex flex-col gap-6 w-full", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2 border-b border-border/60 pb-5", children: categories.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: () => setActive(c),
+              className: `rounded-full px-4.5 py-2 text-xs font-semibold uppercase tracking-wider border transition-all cursor-pointer ${active === c ? "bg-brand text-white border-brand shadow-brand" : "bg-card text-foreground/80 border-border hover:border-brand/40 hover:text-brand"}`,
+              children: c
+            },
+            c
+          )) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col gap-3 max-h-[680px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-border hover:scrollbar-thumb-brand-300", children: filtered.map((c) => {
+            const isSelected = c.title === displayCourse.title && c.batch === displayCourse.batch;
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                onClick: () => setSelectedCourse(c),
+                className: `group relative rounded-2xl border p-4 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all ${isSelected ? "bg-brand-50/50 dark:bg-secondary/40 border-brand shadow-soft" : "bg-card border-border hover:border-brand/30 hover:shadow-soft"}`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative w-full sm:w-24 aspect-[4/3] rounded-xl overflow-hidden bg-secondary shrink-0", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "img",
+                      {
+                        src: c.img,
+                        alt: c.title,
+                        className: "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      }
+                    ),
+                    c.live && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute top-1.5 left-1.5 rounded-full bg-red-500 text-white text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5", children: "Live" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0 text-center sm:text-left", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-center sm:justify-start gap-2 text-[10px] font-bold uppercase tracking-wider text-brand", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: c.tag }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "•" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-muted-foreground", children: c.hours })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "mt-1 font-display text-lg font-bold text-foreground leading-snug group-hover:text-brand transition-colors truncate", children: c.title }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-1 text-xs text-muted-foreground flex flex-wrap justify-center sm:justify-start gap-x-3 gap-y-0.5", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                        "Batch: ",
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "text-foreground/85", children: c.batch })
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                        "Books: ",
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "text-foreground/85", children: c.books })
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 w-full sm:w-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-border shrink-0", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-display text-xl font-bold text-foreground", children: [
+                        "₹",
+                        c.price.toLocaleString("en-IN")
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold", children: [
+                        Math.round((1 - c.price / c.mrp) * 100),
+                        "% OFF"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "div",
+                      {
+                        className: `hidden sm:grid h-7 w-7 place-items-center rounded-full border transition-all ${isSelected ? "bg-brand border-brand text-white" : "border-border text-muted-foreground group-hover:border-brand/40 group-hover:text-brand"}`,
+                        children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs", children: "→" })
+                      }
+                    )
+                  ] })
+                ]
+              },
+              `${c.title}-${c.batch}`
+            );
+          }) })
         ] })
-      ] }) }, c.title)) })
+      ] })
     ] })
   ] });
 }
@@ -1178,18 +975,18 @@ const inclusions = [
   "24×7 doubt support"
 ];
 function Featured() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-indigo-900 text-white", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-navy via-brand-900 to-navy text-white", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: "absolute -top-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-cyan-400/30 blur-3xl animate-blob",
+        className: "absolute -top-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-brand-500/20 blur-3xl animate-blob",
         "aria-hidden": true
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: "absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-indigo-500/30 blur-3xl animate-blob [animation-delay:4s]",
+        className: "absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-accent/20 blur-3xl animate-blob [animation-delay:4s]",
         "aria-hidden": true
       }
     ),
@@ -1243,7 +1040,7 @@ function Featured() {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
-                className: "absolute -inset-6 rounded-3xl bg-gradient-to-br from-cyan-400 via-brand to-indigo-500 blur-2xl opacity-50",
+                className: "absolute -inset-6 rounded-3xl bg-gradient-to-br from-accent via-brand to-navy blur-2xl opacity-50",
                 "aria-hidden": true
               }
             ),
@@ -1292,12 +1089,12 @@ function TestimonialCarousel({ reviews: reviews2 }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
-        className: "absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-indigo-400/15 to-gold/20 blur-2xl opacity-70",
+        className: "absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-accent/15 to-gold/20 blur-2xl opacity-70",
         "aria-hidden": true
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative overflow-hidden rounded-3xl border border-border bg-background shadow-elevated", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-[360px] md:h-[300px]", children: reviews2.map((r, i) => {
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative h-[440px] sm:h-[360px] md:h-[320px]", children: reviews2.map((r, i) => {
         const offset = i - index;
         const active = i === index;
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -1322,13 +1119,13 @@ function TestimonialCarousel({ reviews: reviews2 }) {
                 },
                 j
               )) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("blockquote", { className: "mt-4 text-base md:text-lg text-foreground/85 leading-relaxed flex-1 line-clamp-5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("blockquote", { className: "mt-4 text-base md:text-lg text-foreground/85 leading-relaxed flex-1", children: [
                 '"',
                 r.text,
                 '"'
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("figcaption", { className: "mt-5 pt-4 border-t border-border flex items-center gap-3", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-11 w-11 rounded-full bg-gradient-to-br from-brand to-indigo-500 grid place-items-center text-white font-semibold", children: r.name.split(" ").map((n) => n[0]).join("").slice(0, 2) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-11 w-11 rounded-full bg-gradient-to-br from-brand to-brand-700 grid place-items-center text-white font-semibold", children: r.name.split(" ").map((n) => n[0]).join("").slice(0, 2) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-navy truncate", children: r.name }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] text-muted-foreground truncate", children: r.meta })
@@ -1342,7 +1139,7 @@ function TestimonialCarousel({ reviews: reviews2 }) {
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-1 w-full bg-secondary overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
-          className: "h-full bg-gradient-to-r from-brand via-indigo-500 to-gold",
+          className: "h-full bg-gradient-to-r from-brand via-brand-600 to-gold",
           style: {
             animation: playing ? "progress 5s linear forwards" : "none",
             width: playing ? void 0 : "0%"
@@ -1514,7 +1311,7 @@ function Testimonials() {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5", children: reviews.slice(0, 6).map((r, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(Reveal, { delay: i * 80, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("figure", { className: "group relative h-full rounded-2xl border border-border bg-background p-6 flex flex-col hover:-translate-y-1 hover:shadow-elevated transition-all", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Quote, { className: "absolute top-5 right-5 h-8 w-8 text-gold/30 group-hover:text-gold/60 transition-colors" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-1 text-gold", children: [...Array(5)].map((_, j) => /* @__PURE__ */ jsxRuntimeExports.jsx(Star, { className: "h-3.5 w-3.5 fill-current" }, j)) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("blockquote", { className: "mt-4 text-foreground/80 leading-relaxed text-sm flex-1 line-clamp-5", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("blockquote", { className: "mt-4 text-foreground/80 leading-relaxed text-sm flex-1", children: [
         '"',
         r.text,
         '"'
@@ -1844,257 +1641,6 @@ function Contact() {
       }
     )
   ] }) });
-}
-function Footer() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("footer", { className: "bg-navy text-navy-foreground", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page py-16 grid md:grid-cols-2 lg:grid-cols-4 gap-10", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lg:col-span-2 max-w-sm", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "grid h-9 w-9 place-items-center rounded-lg bg-gold text-gold-foreground font-display text-lg font-bold", children: "V" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-display text-base font-semibold", children: "CA Vikram Biyani" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[10px] uppercase tracking-[0.18em] text-gold", children: "Taxation Mentor" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-5 text-sm text-navy-foreground/70 leading-relaxed", children: "India's trusted taxation faculty for CA & CMA students. Master Direct Tax and GST with structured, exam-focused learning." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-6 flex gap-3", children: [
-          { Icon: Linkedin, href: "https://www.linkedin.com/in/vikram-biyani-44810817b/" },
-          { Icon: Twitter, href: "https://x.com/CAVikramBiyani" },
-          { Icon: Facebook, href: "https://www.facebook.com/CaVikramBiyani/" }
-        ].map(({ Icon, href }, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            className: "grid h-10 w-10 place-items-center rounded-lg bg-white/5 border border-white/10 hover:bg-gold hover:text-gold-foreground hover:border-gold transition-colors",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { className: "h-4 w-4" })
-          },
-          i
-        )) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold text-gold uppercase tracking-wider", children: "Quick Links" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "mt-5 space-y-3 text-sm text-navy-foreground/80", children: ["Courses", "About", "Student Reviews", "Resources", "Blog", "Contact"].map((l) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "hover:text-gold transition-colors", children: l }) }, l)) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold text-gold uppercase tracking-wider", children: "Contact" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "mt-5 space-y-3 text-sm text-navy-foreground/80", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex items-start gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "h-4 w-4 mt-0.5 text-gold shrink-0" }),
-            " Kenderdine Ln, Bowbazar, Kolkata, WB 700012"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "h-4 w-4 text-gold shrink-0" }),
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "tel:+919830773655", className: "hover:text-gold", children: "+91 98307 73655" })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "h-4 w-4 text-gold shrink-0" }),
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "a",
-              {
-                href: "https://wa.me/919051903915",
-                target: "_blank",
-                rel: "noopener noreferrer",
-                className: "hover:text-gold",
-                children: "+91 90519 03915 (WhatsApp)"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex items-center gap-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "h-4 w-4 text-gold shrink-0" }),
-            " ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:vbtaxclasses@gmail.com", className: "hover:text-gold", children: "vbtaxclasses@gmail.com" })
-          ] })
-        ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-t border-white/10", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-navy-foreground/60", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        "© ",
-        (/* @__PURE__ */ new Date()).getFullYear(),
-        " CA Vikram Biyani. All rights reserved."
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-5", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "hover:text-gold", children: "Privacy" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "hover:text-gold", children: "Terms" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "hover:text-gold", children: "Refund Policy" })
-      ] })
-    ] }) })
-  ] });
-}
-const SUGGESTIONS = [
-  "What's the fee for CA Inter Taxation?",
-  "Difference between Hard Books and PDF?",
-  "Which batch is best for May 2027?",
-  "How do I enrol?"
-];
-const GREETING = {
-  id: "welcome",
-  role: "assistant",
-  parts: [
-    {
-      type: "text",
-      text: "Namaste 🙏 I'm **Vikram Sir Bot** — here to help you choose the right CA / CMA Taxation course. Ask me anything about batches, fees, books or admissions!"
-    }
-  ]
-};
-function ChatBot() {
-  const [open, setOpen] = reactExports.useState(false);
-  const [input, setInput] = reactExports.useState("");
-  const scrollRef = reactExports.useRef(null);
-  const inputRef = reactExports.useRef(null);
-  const { messages, sendMessage, status } = useChat({
-    id: "vbtc-bot",
-    messages: [GREETING],
-    transport: new DefaultChatTransport({ api: "/api/chat" })
-  });
-  const busy = status === "submitted" || status === "streaming";
-  reactExports.useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, status]);
-  reactExports.useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100);
-  }, [open]);
-  const submit = (text) => {
-    const t = text.trim();
-    if (!t || busy) return;
-    sendMessage({ text: t });
-    setInput("");
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "button",
-      {
-        onClick: () => setOpen((o) => !o),
-        "aria-label": "Open chat",
-        className: "fixed bottom-5 right-5 z-50 group",
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute inset-0 rounded-full bg-brand/40 blur-xl animate-pulse-slow" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "relative grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-brand via-brand-600 to-indigo-600 text-white shadow-brand-lg hover:scale-110 transition-transform", children: [
-            open ? /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-6 w-6" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCircle, { className: "h-6 w-6" }),
-            !open && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-500 border-2 border-white animate-pulse" })
-          ] }),
-          !open && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-foreground text-background text-xs font-medium px-3 py-1.5 shadow-elevated opacity-0 group-hover:opacity-100 transition-opacity", children: "Ask Vikram Sir Bot" })
-        ]
-      }
-    ),
-    open && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed bottom-24 right-4 sm:right-5 z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-w-md animate-fade-up", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: "rounded-3xl bg-background border border-border shadow-elevated overflow-hidden flex flex-col",
-        style: { height: "min(70vh, 600px)" },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative px-4 py-3 bg-gradient-to-br from-brand via-brand-600 to-indigo-700 text-white", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-grid-dots opacity-20" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex items-center gap-3", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "img",
-                  {
-                    src: vikram,
-                    alt: "VB",
-                    className: "h-11 w-11 rounded-full object-cover object-top border-2 border-white/80 shadow-soft"
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-400 border-2 border-white" })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-display text-base font-bold flex items-center gap-1.5", children: [
-                  "Vikram Sir Bot ",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles$1, { className: "h-3.5 w-3.5" })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-[11px] opacity-90", children: "Usually replies instantly · CA & CMA counselling" })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "button",
-                {
-                  onClick: () => setOpen(false),
-                  "aria-label": "Close",
-                  className: "p-1.5 rounded-lg hover:bg-white/10 transition-colors",
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
-                }
-              )
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              ref: scrollRef,
-              className: "flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gradient-to-b from-brand-50/40 to-background",
-              children: [
-                messages.map((m) => {
-                  const text = m.parts.map((p) => p.type === "text" ? p.text : "").join("");
-                  if (!text) return null;
-                  const mine = m.role === "user";
-                  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `flex ${mine ? "justify-end" : "justify-start"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "div",
-                    {
-                      className: `max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-soft ${mine ? "bg-gradient-to-br from-brand to-brand-600 text-white rounded-br-md" : "bg-card border border-border text-foreground rounded-bl-md"}`,
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Markdown, { children: text }) })
-                    }
-                  ) }, m.id);
-                }),
-                status === "submitted" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-start", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-card border border-border rounded-2xl rounded-bl-md px-4 py-3 shadow-soft", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1", children: [0, 1, 2].map((i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "span",
-                  {
-                    className: "h-2 w-2 rounded-full bg-brand/60 animate-bounce",
-                    style: { animationDelay: `${i * 120}ms` }
-                  },
-                  i
-                )) }) }) })
-              ]
-            }
-          ),
-          messages.length <= 1 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-3 pb-2 flex flex-wrap gap-1.5 border-t border-border pt-3 bg-background", children: SUGGESTIONS.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              onClick: () => submit(s),
-              disabled: busy,
-              className: "text-[11px] px-2.5 py-1.5 rounded-full border border-brand/30 text-brand-700 bg-brand-50 hover:bg-brand hover:text-white transition-colors disabled:opacity-50",
-              children: s
-            },
-            s
-          )) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "form",
-            {
-              onSubmit: (e) => {
-                e.preventDefault();
-                submit(input);
-              },
-              className: "flex items-center gap-2 px-3 py-3 border-t border-border bg-background",
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "input",
-                  {
-                    ref: inputRef,
-                    value: input,
-                    onChange: (e) => setInput(e.target.value),
-                    placeholder: "Ask about courses, fees, batches…",
-                    disabled: busy,
-                    className: "flex-1 h-11 px-4 rounded-full bg-secondary text-sm focus:outline-none focus:ring-2 focus:ring-brand/40 disabled:opacity-60"
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
-                  {
-                    type: "submit",
-                    disabled: busy || !input.trim(),
-                    className: "grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-brand to-brand-600 text-white shadow-brand disabled:opacity-40 hover:scale-105 transition-transform",
-                    "aria-label": "Send",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Send, { className: "h-4 w-4" })
-                  }
-                )
-              ]
-            }
-          )
-        ]
-      }
-    ) })
-  ] });
 }
 function Index() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background", children: [

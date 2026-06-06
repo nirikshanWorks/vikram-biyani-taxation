@@ -19,13 +19,13 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
     <div className="relative">
       {/* glow */}
       <div
-        className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-indigo-400/15 to-gold/20 blur-2xl opacity-70"
+        className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-brand/20 via-accent/15 to-gold/20 blur-2xl opacity-70"
         aria-hidden
       />
 
       <div className="relative overflow-hidden rounded-3xl border border-border bg-background shadow-elevated">
         {/* slides */}
-        <div className="relative h-[360px] md:h-[300px]">
+        <div className="relative h-[440px] sm:h-[360px] md:h-[320px]">
           {reviews.map((r, i) => {
             const offset = i - index;
             const active = i === index;
@@ -54,11 +54,11 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
                     />
                   ))}
                 </div>
-                <blockquote className="mt-4 text-base md:text-lg text-foreground/85 leading-relaxed flex-1 line-clamp-5">
+                <blockquote className="mt-4 text-base md:text-lg text-foreground/85 leading-relaxed flex-1">
                   "{r.text}"
                 </blockquote>
                 <figcaption className="mt-5 pt-4 border-t border-border flex items-center gap-3">
-                  <div className="h-11 w-11 rounded-full bg-gradient-to-br from-brand to-indigo-500 grid place-items-center text-white font-semibold">
+                  <div className="h-11 w-11 rounded-full bg-gradient-to-br from-brand to-brand-700 grid place-items-center text-white font-semibold">
                     {r.name
                       .split(" ")
                       .map((n) => n[0])
@@ -79,7 +79,7 @@ export function TestimonialCarousel({ reviews }: { reviews: Review[] }) {
         <div className="h-1 w-full bg-secondary overflow-hidden">
           <div
             key={`${index}-${playing}`}
-            className="h-full bg-gradient-to-r from-brand via-indigo-500 to-gold"
+            className="h-full bg-gradient-to-r from-brand via-brand-600 to-gold"
             style={{
               animation: playing ? "progress 5s linear forwards" : "none",
               width: playing ? undefined : "0%",

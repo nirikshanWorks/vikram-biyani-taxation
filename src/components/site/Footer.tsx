@@ -1,4 +1,5 @@
 import { Linkedin, Facebook, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
@@ -44,10 +45,18 @@ export function Footer() {
             Quick Links
           </div>
           <ul className="mt-5 space-y-3 text-sm text-navy-foreground/80">
-            {["Courses", "About", "Student Reviews", "Resources", "Blog", "Contact"].map((l) => (
-              <li key={l}>
-                <a href="#" className="hover:text-gold transition-colors">
-                  {l}
+            {[
+              { label: "Courses", href: "/#courses" },
+              { label: "About", href: "/#about" },
+              { label: "Student Reviews", href: "/#testimonials" },
+              { label: "Resources", href: "/#resources" },
+              { label: "Results", href: "/#results" },
+              { label: "FAQ", href: "/#faq" },
+              { label: "Contact", href: "/#contact" },
+            ].map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className="hover:text-gold transition-colors">
+                  {link.label}
                 </a>
               </li>
             ))}
@@ -91,15 +100,15 @@ export function Footer() {
         <div className="container-page py-6 flex flex-wrap items-center justify-between gap-3 text-xs text-navy-foreground/60">
           <div>© {new Date().getFullYear()} CA Vikram Biyani. All rights reserved.</div>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-gold">
+            <Link to="/privacy" className="hover:text-gold">
               Privacy
-            </a>
-            <a href="#" className="hover:text-gold">
+            </Link>
+            <Link to="/terms" className="hover:text-gold">
               Terms
-            </a>
-            <a href="#" className="hover:text-gold">
+            </Link>
+            <Link to="/refund-policy" className="hover:text-gold">
               Refund Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>

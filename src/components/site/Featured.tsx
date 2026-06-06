@@ -15,13 +15,13 @@ const inclusions = [
 
 export function Featured() {
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-indigo-900 text-white">
+    <section className="py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-navy via-brand-900 to-navy text-white">
       <div
-        className="absolute -top-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-cyan-400/30 blur-3xl animate-blob"
+        className="absolute -top-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-brand-500/20 blur-3xl animate-blob"
         aria-hidden
       />
       <div
-        className="absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-indigo-500/30 blur-3xl animate-blob [animation-delay:4s]"
+        className="absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-accent/20 blur-3xl animate-blob [animation-delay:4s]"
         aria-hidden
       />
       <div className="absolute inset-0 bg-grid-dots opacity-20" aria-hidden />
@@ -78,7 +78,7 @@ export function Featured() {
             style={{ transform: "rotateY(-12deg) rotateX(6deg)", transformStyle: "preserve-3d" }}
           >
             <div
-              className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-cyan-400 via-brand to-indigo-500 blur-2xl opacity-50"
+              className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-accent via-brand to-navy blur-2xl opacity-50"
               aria-hidden
             />
             <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-2xl">

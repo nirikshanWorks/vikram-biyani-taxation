@@ -205,127 +205,227 @@ const courses = [
 
 export function Courses() {
   const [active, setActive] = useState("All");
+  const [selectedCourse, setSelectedCourse] = useState(courses[0]);
+
   const filtered =
     active === "All" ? courses : courses.filter((c) => c.cat === active || c.media === active);
+
+  // Derive the displayed course, fallback to first item of filtered list if current selection is filtered out
+  const displayCourse = filtered.some(
+    (c) => c.title === selectedCourse.title && c.batch === selectedCourse.batch
+  )
+    ? selectedCourse
+    : filtered[0] || courses[0];
 
   return (
     <section id="courses" className="py-24 lg:py-32 relative">
       <div className="absolute inset-0 bg-grid-dots opacity-30 -z-10" aria-hidden />
+      
       <div className="container-page">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <div className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">
-              Our Courses
-            </div>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold text-foreground">
-              Built for every <span className="text-gradient-brand">taxation aspirant</span>
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Regular, fast-track, live and recorded batches — built for CA Inter, CA Final and CMA
-              students.
-            </p>
+        {/* Section Header */}
+        <div className="max-w-2xl mb-12">
+          <div className="text-xs uppercase tracking-[0.2em] text-brand font-semibold">
+            Our Courses
           </div>
-          <Button variant="outline" className="border-brand/30 text-brand-700 hover:bg-brand-50">
-            View all courses
-          </Button>
+          <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold text-foreground">
+            Built for every <span className="text-gradient-brand">taxation aspirant</span>
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Regular, fast-track, live and recorded batches — choose a course from the ledger to view details.
+          </p>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
-          {categories.map((c) => (
-            <button
-              key={c}
-              onClick={() => setActive(c)}
-              className={`rounded-full px-4 py-2 text-sm font-medium border transition-all ${
-                active === c
-                  ? "bg-gradient-to-r from-brand to-brand-600 text-white border-transparent shadow-brand"
-                  : "bg-card text-foreground/80 border-border hover:border-brand/40 hover:text-brand-700"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((c) => (
-            <TiltCard key={c.title} className="group rounded-2xl">
-              <article className="relative rounded-2xl border border-border bg-card overflow-hidden flex flex-col h-full shadow-soft hover:shadow-elevated transition-shadow">
-                <div className="relative aspect-square overflow-hidden bg-secondary">
-                  <img
-                    src={c.img}
-                    alt={c.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute top-3 left-3 flex gap-2">
-                    <span className="rounded-full bg-white/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-2.5 py-1">
-                      {c.tag}
+        {/* Split Pane Container */}
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          {/* Left sticky showcase panel */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 self-start animate-fade-up">
+            <TiltCard className="rounded-3xl shadow-elevated border border-border bg-card overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
+                <img
+                  src={displayCourse.img}
+                  alt={displayCourse.title}
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute top-4 left-4 flex gap-2">
+                  <span className="rounded-full bg-white/95 dark:bg-navy/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-3 py-1">
+                    {displayCourse.tag}
+                  </span>
+                  {displayCourse.live && (
+                    <span className="rounded-full bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 inline-flex items-center gap-1.5 shadow-soft">
+                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Live
                     </span>
-                    {c.live && (
-                      <span className="rounded-full bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 inline-flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Live
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    aria-label="Preview"
-                    className="absolute bottom-3 right-3 grid h-11 w-11 place-items-center rounded-full bg-white text-brand shadow-elevated opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0"
-                  >
-                    <Play className="h-4 w-4 fill-current" />
-                  </button>
+                  )}
                 </div>
-                <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="font-display text-lg font-semibold text-foreground leading-snug min-h-[3.5rem]">
-                    {c.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-brand font-medium">{c.batch} batch</p>
-                  <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
-                    <span className="rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium">
-                      <Clock className="h-3 w-3" />
-                      {c.hours}
-                    </span>
-                    <span className="rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium">
-                      <BookOpen className="h-3 w-3" />
-                      {c.books}
-                    </span>
-                    <span className="rounded-lg bg-brand-50 text-brand-700 px-2 py-1.5 inline-flex items-center gap-1 font-medium">
-                      <InfinityIcon className="h-3 w-3" />
-                      Unlimited
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="text-xs text-white/80 uppercase tracking-widest font-semibold">
+                    {displayCourse.batch} Batch
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 md:p-8 flex flex-col">
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground leading-tight min-h-[3.5rem]">
+                  {displayCourse.title}
+                </h3>
+                
+                {/* Key specifications */}
+                <div className="mt-6 grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3">
+                    <Clock className="h-4.5 w-4.5 text-brand mx-auto mb-1.5" />
+                    <div className="font-semibold text-foreground">{displayCourse.hours}</div>
+                    <div className="text-[10px] text-muted-foreground mt-0.5">Duration</div>
+                  </div>
+                  <div className="rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3">
+                    <BookOpen className="h-4.5 w-4.5 text-brand mx-auto mb-1.5" />
+                    <div className="font-semibold text-foreground truncate">{displayCourse.media}</div>
+                    <div className="text-[10px] text-muted-foreground mt-0.5">Format</div>
+                  </div>
+                  <div className="rounded-xl bg-brand-50/60 dark:bg-secondary/40 border border-brand-100/30 p-3">
+                    <InfinityIcon className="h-4.5 w-4.5 text-brand mx-auto mb-1.5" />
+                    <div className="font-semibold text-foreground">Unlimited</div>
+                    <div className="text-[10px] text-muted-foreground mt-0.5">Validity</div>
+                  </div>
+                </div>
+
+                {/* Inclusions checklist */}
+                <div className="mt-6 space-y-2.5 border-t border-border pt-6">
+                  {[
+                    "Full syllabus coverage for CA & CMA examinations",
+                    "Visual mapping with special VB charts & revision guides",
+                    "Comprehensive MCQ question bank & mock tests",
+                    "24/7 dedicated query resolution & mentorship support",
+                  ].map((inc, i) => (
+                    <div key={i} className="flex items-center gap-2.5 text-sm text-foreground/80">
+                      <span className="h-4.5 w-4.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold">
+                        ✓
+                      </span>
+                      <span>{inc}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pricing and Action */}
+                <div className="mt-8 pt-6 border-t border-border flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Price (Inclusive of GST)</div>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <span className="font-display text-3xl font-extrabold text-foreground">
+                        ₹{displayCourse.price.toLocaleString("en-IN")}
+                      </span>
+                      <span className="text-sm text-muted-foreground line-through">
+                        ₹{displayCourse.mrp.toLocaleString("en-IN")}
+                      </span>
+                    </div>
+                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full inline-block mt-1">
+                      Save {Math.round((1 - displayCourse.price / displayCourse.mrp) * 100)}% Today
                     </span>
                   </div>
-                  <div className="mt-4 flex items-center gap-1 text-amber-500 text-sm">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-current" />
-                    ))}
-                    <span className="ml-1 text-xs text-muted-foreground">
-                      {c.rating} · 2.4k students
-                    </span>
-                  </div>
-                  <div className="mt-5 pt-5 border-t border-border flex items-end justify-between">
-                    <div>
-                      <div className="font-display text-2xl font-bold text-foreground">
-                        ₹{c.price.toLocaleString("en-IN")}
+                  
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg px-8 h-12 shrink-0"
+                  >
+                    Enroll
+                  </Button>
+                </div>
+              </div>
+            </TiltCard>
+          </div>
+
+          {/* Right ledger list */}
+          <div className="lg:col-span-7 flex flex-col gap-6 w-full">
+            {/* Category Filter bar */}
+            <div className="flex flex-wrap gap-2 border-b border-border/60 pb-5">
+              {categories.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setActive(c)}
+                  className={`rounded-full px-4.5 py-2 text-xs font-semibold uppercase tracking-wider border transition-all cursor-pointer ${
+                    active === c
+                      ? "bg-brand text-white border-brand shadow-brand"
+                      : "bg-card text-foreground/80 border-border hover:border-brand/40 hover:text-brand"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {/* Courses list Ledger */}
+            <div className="flex flex-col gap-3 max-h-[680px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-border hover:scrollbar-thumb-brand-300">
+              {filtered.map((c) => {
+                const isSelected =
+                  c.title === displayCourse.title && c.batch === displayCourse.batch;
+                return (
+                  <div
+                    key={`${c.title}-${c.batch}`}
+                    onClick={() => setSelectedCourse(c)}
+                    className={`group relative rounded-2xl border p-4 flex flex-col sm:flex-row items-center gap-4 cursor-pointer transition-all ${
+                      isSelected
+                        ? "bg-brand-50/50 dark:bg-secondary/40 border-brand shadow-soft"
+                        : "bg-card border-border hover:border-brand/30 hover:shadow-soft"
+                    }`}
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative w-full sm:w-24 aspect-[4/3] rounded-xl overflow-hidden bg-secondary shrink-0">
+                      <img
+                        src={c.img}
+                        alt={c.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {c.live && (
+                        <span className="absolute top-1.5 left-1.5 rounded-full bg-red-500 text-white text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5">
+                          Live
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex-1 min-w-0 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 text-[10px] font-bold uppercase tracking-wider text-brand">
+                        <span>{c.tag}</span>
+                        <span>•</span>
+                        <span className="text-muted-foreground">{c.hours}</span>
                       </div>
-                      <div className="text-xs">
-                        <span className="text-muted-foreground line-through">
-                          ₹{c.mrp.toLocaleString("en-IN")}
-                        </span>{" "}
-                        <span className="text-emerald-600 font-semibold">
-                          {Math.round((1 - c.price / c.mrp) * 100)}% off
+                      <h4 className="mt-1 font-display text-lg font-bold text-foreground leading-snug group-hover:text-brand transition-colors truncate">
+                        {c.title}
+                      </h4>
+                      <div className="mt-1 text-xs text-muted-foreground flex flex-wrap justify-center sm:justify-start gap-x-3 gap-y-0.5">
+                        <span>
+                          Batch: <strong className="text-foreground/85">{c.batch}</strong>
+                        </span>
+                        <span>
+                          Books: <strong className="text-foreground/85">{c.books}</strong>
                         </span>
                       </div>
                     </div>
-                    <Button
-                      size="sm"
-                      className="bg-gradient-to-r from-brand to-brand-600 text-white hover:shadow-brand"
-                    >
-                      Enroll
-                    </Button>
+
+                    {/* Price & showcase selector */}
+                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 w-full sm:w-auto border-t sm:border-t-0 pt-3 sm:pt-0 border-border shrink-0">
+                      <div className="text-right">
+                        <div className="font-display text-xl font-bold text-foreground">
+                          ₹{c.price.toLocaleString("en-IN")}
+                        </div>
+                        <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                          {Math.round((1 - c.price / c.mrp) * 100)}% OFF
+                        </div>
+                      </div>
+                      <div
+                        className={`hidden sm:grid h-7 w-7 place-items-center rounded-full border transition-all ${
+                          isSelected
+                            ? "bg-brand border-brand text-white"
+                            : "border-border text-muted-foreground group-hover:border-brand/40 group-hover:text-brand"
+                        }`}
+                      >
+                        <span className="text-xs">→</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </article>
-            </TiltCard>
-          ))}
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>

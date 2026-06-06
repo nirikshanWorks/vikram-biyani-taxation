@@ -27,7 +27,7 @@ import "path";
 import "fs";
 import "os";
 import "../_libs/opentelemetry__api.mjs";
-const appCss = "/assets/styles-BjCefb-X.css";
+const appCss = "/assets/styles-Cefv8BPu.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -91,7 +91,7 @@ function ErrorComponent({ error, reset }) {
     ] })
   ] }) });
 }
-const Route$2 = createRootRouteWithContext()({
+const Route$5 = createRootRouteWithContext()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -109,7 +109,7 @@ const Route$2 = createRootRouteWithContext()({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap"
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
       },
       {
         rel: "stylesheet",
@@ -132,10 +132,46 @@ function RootShell({ children }) {
   ] });
 }
 function RootComponent() {
-  const { queryClient } = Route$2.useRouteContext();
+  const { queryClient } = Route$5.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter = () => import("./index-BiUv87P_.mjs");
+const $$splitComponentImporter$3 = () => import("./terms-DGqilXXP.mjs");
+const Route$4 = createFileRoute("/terms")({
+  head: () => ({
+    meta: [{
+      title: "Terms and Conditions — CA Vikram Biyani"
+    }, {
+      name: "description",
+      content: "Read the Terms of Service for enrollment, lecture access, and code of conduct under VBTC."
+    }]
+  }),
+  component: lazyRouteComponent($$splitComponentImporter$3, "component")
+});
+const $$splitComponentImporter$2 = () => import("./refund-policy-C8LSO1Fm.mjs");
+const Route$3 = createFileRoute("/refund-policy")({
+  head: () => ({
+    meta: [{
+      title: "Refund Policy — CA Vikram Biyani"
+    }, {
+      name: "description",
+      content: "Understand the terms of cancelations, refunds, and batch transfer policies for CA Vikram Biyani courses."
+    }]
+  }),
+  component: lazyRouteComponent($$splitComponentImporter$2, "component")
+});
+const $$splitComponentImporter$1 = () => import("./privacy-C6PDaKbq.mjs");
+const Route$2 = createFileRoute("/privacy")({
+  head: () => ({
+    meta: [{
+      title: "Privacy Policy — CA Vikram Biyani"
+    }, {
+      name: "description",
+      content: "Learn how CA Vikram Biyani (VBTC) collects, uses, and safeguards student data."
+    }]
+  }),
+  component: lazyRouteComponent($$splitComponentImporter$1, "component")
+});
+const $$splitComponentImporter = () => import("./index-CfZTM3ow.mjs");
 const Route$1 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -237,21 +273,39 @@ const Route = createFileRoute("/api/chat")({
     }
   }
 });
+const TermsRoute = Route$4.update({
+  id: "/terms",
+  path: "/terms",
+  getParentRoute: () => Route$5
+});
+const RefundPolicyRoute = Route$3.update({
+  id: "/refund-policy",
+  path: "/refund-policy",
+  getParentRoute: () => Route$5
+});
+const PrivacyRoute = Route$2.update({
+  id: "/privacy",
+  path: "/privacy",
+  getParentRoute: () => Route$5
+});
 const IndexRoute = Route$1.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$2
+  getParentRoute: () => Route$5
 });
 const ApiChatRoute = Route.update({
   id: "/api/chat",
   path: "/api/chat",
-  getParentRoute: () => Route$2
+  getParentRoute: () => Route$5
 });
 const rootRouteChildren = {
   IndexRoute,
+  PrivacyRoute,
+  RefundPolicyRoute,
+  TermsRoute,
   ApiChatRoute
 };
-const routeTree = Route$2._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$5._addFileChildren(rootRouteChildren)._addFileTypes();
 const getRouter = () => {
   const queryClient = new QueryClient();
   const router = createRouter({

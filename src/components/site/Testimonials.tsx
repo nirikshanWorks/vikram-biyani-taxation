@@ -102,7 +102,7 @@ export function Testimonials() {
                     <Star key={j} className="h-3.5 w-3.5 fill-current" />
                   ))}
                 </div>
-                <blockquote className="mt-4 text-foreground/80 leading-relaxed text-sm flex-1 line-clamp-5">
+                <blockquote className="mt-4 text-foreground/80 leading-relaxed text-sm flex-1">
                   "{r.text}"
                 </blockquote>
                 <figcaption className="mt-6 pt-5 border-t border-border flex items-center gap-3">

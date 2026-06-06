@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown, GraduationCap, BookOpen, Award, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/VB-logo.jpg";
+import { ThemeToggle } from "./ThemeToggle";
 
 const courseGroups = [
   {
@@ -18,7 +19,7 @@ const courseGroups = [
     icon: GraduationCap,
     title: "CA Final",
     subtitle: "DT · IDT · Combo",
-    color: "from-brand to-indigo-600",
+    color: "from-brand to-brand-700",
     items: [
       { label: "Direct Tax — Nov 26 / May 27", price: "₹8,600+" },
       { label: "Indirect Tax — Nov 26 / May 27", price: "₹7,500+" },
@@ -149,7 +150,7 @@ export function Navbar() {
                   <a
                     href="#courses"
                     onClick={() => setCoursesOpen(false)}
-                    className="col-span-3 mt-1 rounded-2xl bg-gradient-to-r from-brand to-indigo-600 text-white px-4 py-3 flex items-center justify-between text-sm font-semibold hover:shadow-brand transition-shadow"
+                    className="col-span-3 mt-1 rounded-2xl bg-gradient-to-r from-brand to-brand-700 text-white px-4 py-3 flex items-center justify-between text-sm font-semibold hover:shadow-brand transition-shadow"
                   >
                     <span>See all 13 batches with full details</span>
                     <span>→</span>
@@ -180,7 +181,8 @@ export function Navbar() {
           >
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> WhatsApp
           </a>
-          <Button className="bg-gradient-to-r from-brand to-indigo-600 text-white hover:shadow-brand">
+          <ThemeToggle />
+          <Button className="bg-gradient-to-r from-brand to-brand-700 text-white hover:shadow-brand">
             Enroll Now
           </Button>
         </div>
@@ -230,9 +232,13 @@ export function Navbar() {
                 {l.label}
               </a>
             ))}
-            <Button className="bg-gradient-to-r from-brand to-indigo-600 text-white mt-2">
+            <Button className="bg-gradient-to-r from-brand to-brand-700 text-white mt-2">
               Enroll Now
             </Button>
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+              <span className="text-sm font-medium text-foreground/80">Toggle Theme</span>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       )}
