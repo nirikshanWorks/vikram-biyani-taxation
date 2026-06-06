@@ -2,25 +2,33 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Clock, Globe, Star, Play, BookOpen, Infinity as InfinityIcon } from "lucide-react";
 import { TiltCard } from "./TiltCard";
-import dt from "@/assets/course-dt.jpg.asset.json";
-import idt from "@/assets/course-idt.jpg.asset.json";
-import dtIdtHard from "@/assets/course-dt-idt-hard.jpg.asset.json";
-import dtIdtPdf from "@/assets/course-dt-idt-pdf.jpg.asset.json";
+import ca1 from "@/assets/ca1.jpg.asset.json";
+import ca2 from "@/assets/ca2.jpg.asset.json";
+import ca3 from "@/assets/ca3.jpg.asset.json";
+import ca4 from "@/assets/ca4.jpg.asset.json";
+import ca5 from "@/assets/ca5.jpg.asset.json";
+import ca6 from "@/assets/ca6.jpg.asset.json";
+import ca7 from "@/assets/ca7.jpg.asset.json";
+import ca8 from "@/assets/ca8.jpg.asset.json";
+import ca9 from "@/assets/ca9.jpg.asset.json";
 
-const categories = ["All", "CA Final", "CA Inter", "CMA", "Combo", "Live"];
+const categories = ["All", "CA Final", "CA Inter", "Combo", "Hard Books", "PDF"];
 
 const courses = [
-  { img: dtIdtHard.url, tag: "CA Final", title: "CA Final — DT + IDT Combo (Hard Books)", batch: "November 2026", hours: "350 hrs", books: "Hard Books", price: 15000, mrp: 19999, rating: 4.9, live: true, cat: "Combo" },
-  { img: dt.url, tag: "CA Final", title: "CA Final — Direct Tax", batch: "November 2026", hours: "200 hrs", books: "5 Vol Coloured", price: 8600, mrp: 11500, rating: 4.9, live: true, cat: "CA Final" },
-  { img: idt.url, tag: "CA Final", title: "CA Final — Indirect Tax (GST)", batch: "November 2026", hours: "150 hrs", books: "4 Vol Coloured", price: 7500, mrp: 9999, rating: 4.9, live: true, cat: "CA Final" },
-  { img: dtIdtPdf.url, tag: "CA Final", title: "CA Final — DT + IDT (PDF Books)", batch: "November 2026", hours: "350 hrs", books: "PDF", price: 13200, mrp: 17500, rating: 4.8, live: false, cat: "Combo" },
-  { img: dt.url, tag: "CA Inter", title: "CA Inter — Taxation Complete", batch: "May 2026", hours: "180 hrs", books: "Hard Books", price: 8499, mrp: 11999, rating: 4.9, live: true, cat: "CA Inter" },
-  { img: idt.url, tag: "CMA", title: "CMA Inter — Taxation Full", batch: "Dec 2026", hours: "150 hrs", books: "Hard Books", price: 7499, mrp: 9999, rating: 4.8, live: false, cat: "CMA" },
+  { img: ca1.url, tag: "CA Final", title: "CA Final — Direct Tax (Hard Books)", batch: "May 2027", hours: "200 hrs", books: "Hard Books · 5 Vol", price: 10500, mrp: 13500, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
+  { img: ca2.url, tag: "CA Final", title: "CA Final — Direct Tax (Hard Books)", batch: "November 2026", hours: "200 hrs", books: "Hard Books · 5 Vol", price: 8600, mrp: 11500, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
+  { img: ca3.url, tag: "CA Final", title: "CA Final — DT + IDT Combo (Hard Books)", batch: "November 2026", hours: "350 hrs", books: "Hard Books", price: 15000, mrp: 19999, rating: 4.9, live: true, cat: "Combo", media: "Hard Books" },
+  { img: ca4.url, tag: "CA Final", title: "CA Final — DT + IDT Combo (PDF)", batch: "November 2026", hours: "350 hrs", books: "PDF", price: 13200, mrp: 17500, rating: 4.8, live: false, cat: "Combo", media: "PDF" },
+  { img: ca5.url, tag: "CA Final", title: "CA Final — DT + IDT Combo (Hard Books)", batch: "May 2027", hours: "350 hrs", books: "Hard Books", price: 16500, mrp: 21000, rating: 4.9, live: true, cat: "Combo", media: "Hard Books" },
+  { img: ca6.url, tag: "CA Final", title: "CA Final — Indirect Tax (Hard Books)", batch: "May 2027", hours: "150 hrs", books: "Hard Books · 4 Vol", price: 8600, mrp: 11000, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
+  { img: ca7.url, tag: "CA Final", title: "CA Final — Indirect Tax (Hard Books)", batch: "November 2026", hours: "150 hrs", books: "Hard Books · 4 Vol", price: 7500, mrp: 9999, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
+  { img: ca8.url, tag: "CA Inter", title: "CA Inter — Taxation DT + GST (Hard Books)", batch: "Sep 2026", hours: "220 hrs", books: "Hard Books · 4 Vol", price: 7500, mrp: 9999, rating: 4.9, live: true, cat: "CA Inter", media: "Hard Books" },
+  { img: ca9.url, tag: "CA Inter", title: "CA Inter — Taxation DT + GST (PDF)", batch: "Sep 2026", hours: "220 hrs", books: "PDF", price: 6000, mrp: 8500, rating: 4.8, live: false, cat: "CA Inter", media: "PDF" },
 ];
 
 export function Courses() {
   const [active, setActive] = useState("All");
-  const filtered = active === "All" ? courses : courses.filter(c => c.cat === active || (active === "Live" && c.live));
+  const filtered = active === "All" ? courses : courses.filter(c => c.cat === active || c.media === active);
 
   return (
     <section id="courses" className="py-24 lg:py-32 relative">
