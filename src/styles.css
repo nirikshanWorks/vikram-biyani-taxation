@@ -212,6 +212,10 @@
   0% { transform: translateX(-100%) skewX(-12deg); }
   100% { transform: translateX(250%) skewX(-12deg); }
 }
+@keyframes progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
 
 @utility animate-float-soft { animation: float-soft 6s ease-in-out infinite; }
 @utility animate-fade-up { animation: fade-up 0.7s ease-out both; }
