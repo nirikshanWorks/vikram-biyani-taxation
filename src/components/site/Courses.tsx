@@ -11,8 +11,12 @@ import ca6 from "@/assets/ca6.jpg.asset.json";
 import ca7 from "@/assets/ca7.jpg.asset.json";
 import ca8 from "@/assets/ca8.jpg.asset.json";
 import ca9 from "@/assets/ca9.jpg.asset.json";
+import cma1 from "@/assets/cma1.jpg.asset.json";
+import cma2 from "@/assets/cma2.jpg.asset.json";
+import cma3 from "@/assets/cma3.jpg.asset.json";
+import cma4 from "@/assets/cma4.jpg.asset.json";
 
-const categories = ["All", "CA Final", "CA Inter", "Combo", "Hard Books", "PDF"];
+const categories = ["All", "CA Final", "CA Inter", "CMA Final", "Combo", "Hard Books", "PDF"];
 
 const courses = [
   { img: ca1.url, tag: "CA Final", title: "CA Final — Direct Tax (Hard Books)", batch: "May 2027", hours: "200 hrs", books: "Hard Books · 5 Vol", price: 10500, mrp: 13500, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
@@ -24,6 +28,10 @@ const courses = [
   { img: ca7.url, tag: "CA Final", title: "CA Final — Indirect Tax (Hard Books)", batch: "November 2026", hours: "150 hrs", books: "Hard Books · 4 Vol", price: 7500, mrp: 9999, rating: 4.9, live: true, cat: "CA Final", media: "Hard Books" },
   { img: ca8.url, tag: "CA Inter", title: "CA Inter — Taxation DT + GST (Hard Books)", batch: "Sep 2026", hours: "220 hrs", books: "Hard Books · 4 Vol", price: 7500, mrp: 9999, rating: 4.9, live: true, cat: "CA Inter", media: "Hard Books" },
   { img: ca9.url, tag: "CA Inter", title: "CA Inter — Taxation DT + GST (PDF)", batch: "Sep 2026", hours: "220 hrs", books: "PDF", price: 6000, mrp: 8500, rating: 4.8, live: false, cat: "CA Inter", media: "PDF" },
+  { img: cma1.url, tag: "CMA Final", title: "CMA Final — Direct Tax (Hard Books)", batch: "June & Dec 2027", hours: "200 hrs", books: "Hard Books", price: 10600, mrp: 13500, rating: 4.9, live: true, cat: "CMA Final", media: "Hard Books" },
+  { img: cma2.url, tag: "CMA Final", title: "CMA Final — Direct Tax (Hard Books)", batch: "December 2026", hours: "200 hrs", books: "Hard Books", price: 8600, mrp: 11000, rating: 4.9, live: true, cat: "CMA Final", media: "Hard Books" },
+  { img: cma3.url, tag: "CMA Final", title: "CMA Final — Indirect Tax (Hard Books)", batch: "June & Dec 2027", hours: "150 hrs", books: "Hard Books", price: 8600, mrp: 11000, rating: 4.9, live: true, cat: "CMA Final", media: "Hard Books" },
+  { img: cma4.url, tag: "CMA Final", title: "CMA Final — Indirect Tax (Hard Books)", batch: "December 2026", hours: "150 hrs", books: "Hard Books", price: 8600, mrp: 11000, rating: 4.9, live: true, cat: "CMA Final", media: "Hard Books" },
 ];
 
 export function Courses() {
