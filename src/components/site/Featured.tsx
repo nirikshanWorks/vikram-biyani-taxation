@@ -1,80 +1,74 @@
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
+import { Check, Sparkles, ArrowRight, Zap } from "lucide-react";
+import course from "@/assets/course-dt-idt-hard.jpg.asset.json";
 
 const inclusions = [
   "Complete Direct Tax syllabus",
-  "Complete GST syllabus",
-  "Printed + digital revision notes",
+  "Complete GST + Customs syllabus",
+  "5 Volume coloured hard books",
+  "350+ hours live mentorship",
+  "Unlimited views & validity",
   "10,000+ MCQ question bank",
-  "Full-length mock tests",
-  "Recorded sessions, lifetime access",
+  "Full-length mock test series",
   "24×7 doubt support",
-  "Live mentorship with Vikram Sir",
 ];
 
 export function Featured() {
   return (
-    <section className="py-20 lg:py-28 bg-navy text-navy-foreground relative overflow-hidden">
-      <div className="absolute inset-0 opacity-20 -z-0" style={{
-        background: "radial-gradient(circle at 20% 20%, oklch(0.78 0.14 82 / 0.5), transparent 40%), radial-gradient(circle at 80% 80%, oklch(0.78 0.14 82 / 0.3), transparent 40%)"
-      }} />
-      <div className="container-page relative grid lg:grid-cols-2 gap-12 items-center">
+    <section className="py-24 lg:py-32 relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-indigo-900 text-white">
+      <div className="absolute -top-40 -right-40 h-[30rem] w-[30rem] rounded-full bg-cyan-400/30 blur-3xl animate-blob" aria-hidden />
+      <div className="absolute -bottom-40 -left-40 h-[30rem] w-[30rem] rounded-full bg-indigo-500/30 blur-3xl animate-blob [animation-delay:4s]" aria-hidden />
+      <div className="absolute inset-0 bg-grid-dots opacity-20" aria-hidden />
+
+      <div className="container-page relative grid lg:grid-cols-2 gap-14 items-center">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-3 py-1.5 text-xs font-medium text-gold">
-            <Sparkles className="h-3.5 w-3.5" /> Bestselling Batch
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur px-3 py-1.5 text-xs font-medium">
+            <Sparkles className="h-3.5 w-3.5 text-amber-300" /> Bestselling · #1 in CA Final 2026
           </div>
-          <h2 className="mt-5 font-display text-3xl md:text-5xl font-bold leading-tight">
-            CA Inter Taxation <span className="text-gradient-gold">Complete Batch</span>
+          <h2 className="mt-5 font-display text-4xl md:text-6xl font-bold leading-[1.05]">
+            CA Final — <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 bg-clip-text text-transparent">DT + IDT</span> Combo
           </h2>
-          <p className="mt-4 text-navy-foreground/80 max-w-lg">
-            One batch. Both papers. Everything you need to score exemption in CA Inter Taxation —
-            Direct Tax + GST + notes + mocks + doubt support.
+          <p className="mt-5 text-white/80 max-w-lg text-lg">
+            One batch. Both papers. Everything you need to crack CA Final Taxation — Direct Tax + GST + Customs with hard books, mocks & live mentorship.
           </p>
 
           <div className="mt-8 grid sm:grid-cols-2 gap-x-6 gap-y-3">
             {inclusions.map(i => (
               <div key={i} className="flex items-start gap-2.5 text-sm">
-                <Check className="h-4.5 w-4.5 text-gold mt-0.5 shrink-0" />
-                <span className="text-navy-foreground/90">{i}</span>
+                <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-emerald-400/20 text-emerald-300 shrink-0">
+                  <Check className="h-3 w-3" strokeWidth={3} />
+                </span>
+                <span className="text-white/90">{i}</span>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button size="lg" className="h-12 bg-gold text-gold-foreground hover:bg-gold/90">
-              Enroll Now <ArrowRight className="ml-1 h-4 w-4" />
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Button size="lg" className="h-12 bg-white text-brand-700 hover:bg-white/90 hover:shadow-2xl group">
+              Enroll Now <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
             <div className="text-sm">
-              <div className="text-gold font-semibold">Limited Time · Early bird</div>
-              <div className="text-navy-foreground/70">Save ₹4,000 — offer ends soon</div>
+              <div className="text-amber-300 font-semibold flex items-center gap-1.5"><Zap className="h-3.5 w-3.5 fill-current" /> Early bird · Limited seats</div>
+              <div className="text-white/60">Save ₹4,999 — offer ends soon</div>
             </div>
           </div>
         </div>
 
-        <div className="relative">
-          <div className="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm p-8">
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-5xl font-bold text-gold">₹13,499</span>
-              <span className="text-navy-foreground/60 line-through">₹17,999</span>
+        {/* 3D tilted poster */}
+        <div className="relative" style={{ perspective: "1500px" }}>
+          <div className="relative animate-float-soft" style={{ transform: "rotateY(-12deg) rotateX(6deg)", transformStyle: "preserve-3d" }}>
+            <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-cyan-400 via-brand to-indigo-500 blur-2xl opacity-50" aria-hidden />
+            <div className="relative rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
+              <img src={course.url} alt="CA Final DT IDT Combo" className="w-full h-auto" />
             </div>
-            <div className="mt-1 text-sm text-gold">25% off · 18 months validity</div>
-
-            <div className="mt-8 space-y-4">
-              {[
-                { k: "Duration", v: "200+ hours" },
-                { k: "Language", v: "Hindi + English" },
-                { k: "Mode", v: "Live + Recorded" },
-                { k: "Faculty", v: "CA Vikram Biyani" },
-                { k: "Start Date", v: "1st of every month" },
-              ].map(r => (
-                <div key={r.k} className="flex justify-between text-sm pb-3 border-b border-white/10 last:border-0">
-                  <span className="text-navy-foreground/60">{r.k}</span>
-                  <span className="font-medium">{r.v}</span>
-                </div>
-              ))}
+            <div className="absolute -top-5 -right-5 rounded-2xl bg-white text-brand-700 shadow-2xl px-4 py-3" style={{ transform: "translateZ(40px)" }}>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Starting</div>
+              <div className="font-display text-2xl font-bold">₹15,000<span className="text-sm font-medium text-muted-foreground">/-</span></div>
             </div>
-
-            <Button className="mt-8 w-full bg-white text-navy hover:bg-white/90 h-12">Start Free Trial</Button>
+            <div className="absolute -bottom-5 -left-5 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-2xl px-4 py-3" style={{ transform: "translateZ(40px)" }}>
+              <div className="text-[10px] uppercase tracking-widest opacity-90">Save</div>
+              <div className="font-display text-2xl font-bold">₹4,999</div>
+            </div>
           </div>
         </div>
       </div>
