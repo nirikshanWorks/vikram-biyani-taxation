@@ -14,6 +14,7 @@ import { Faq } from "@/components/site/Faq";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 import { ChatBot } from "@/components/site/ChatBot";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,17 +37,17 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <Stats />
-        <About />
-        <WhyChoose />
-        <Courses />
-        <Featured />
+        <Reveal><Stats /></Reveal>
+        <Reveal><About /></Reveal>
+        <Reveal><WhyChoose /></Reveal>
+        <Reveal><Courses /></Reveal>
+        <Reveal><Featured /></Reveal>
         <Testimonials />
-        <Results />
-        <Resources />
-        <Community />
-        <Faq />
-        <Contact />
+        <Reveal><Results /></Reveal>
+        <Reveal><Resources /></Reveal>
+        <Reveal><Community /></Reveal>
+        <Reveal><Faq /></Reveal>
+        <Reveal><Contact /></Reveal>
       </main>
       <Footer />
       <ChatBot />
