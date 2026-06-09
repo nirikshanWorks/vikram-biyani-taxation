@@ -57,7 +57,17 @@ export function Featured() {
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Button
               size="lg"
-              className="h-12 bg-white text-brand-700 hover:bg-white/90 hover:shadow-2xl group"
+              onClick={() => window.dispatchEvent(new CustomEvent("trigger-enroll", {
+                detail: {
+                  title: "CA Final — DT + IDT Combo (Hard Books)",
+                  batch: "November 2026",
+                  tag: "CA Final",
+                  price: 15000,
+                  books: "Hard Books",
+                  hours: "350 hrs"
+                }
+              }))}
+              className="h-12 bg-white text-brand-700 hover:bg-white/90 hover:shadow-2xl group cursor-pointer"
             >
               Enroll Now{" "}
               <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />

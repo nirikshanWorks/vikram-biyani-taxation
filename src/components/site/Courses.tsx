@@ -18,7 +18,7 @@ import cma4 from "@/assets/cma4.jpeg";
 
 const categories = ["All", "CA Final", "CA Inter", "CMA Final", "Combo", "Hard Books", "PDF"];
 
-const courses = [
+export const courses = [
   {
     img: ca1,
     tag: "CA Final",
@@ -324,7 +324,8 @@ export function Courses() {
                   
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg px-8 h-12 shrink-0"
+                    onClick={() => window.dispatchEvent(new CustomEvent("trigger-enroll", { detail: displayCourse }))}
+                    className="bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg px-8 h-12 shrink-0 cursor-pointer"
                   >
                     Enroll
                   </Button>

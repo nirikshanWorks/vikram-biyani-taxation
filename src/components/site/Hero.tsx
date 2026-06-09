@@ -90,7 +90,8 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button
               size="lg"
-              className="group relative h-12 px-6 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient"
+              onClick={() => window.dispatchEvent(new CustomEvent("trigger-enroll", { detail: null }))}
+              className="group relative h-12 px-6 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg hover:-translate-y-0.5 transition-all overflow-hidden animate-gradient cursor-pointer"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:animate-shine" />
               <span className="relative">Enroll Now</span>{" "}

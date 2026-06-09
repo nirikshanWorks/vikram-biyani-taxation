@@ -11,9 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiVerifyOtpRouteImport } from './routes/api/verify-otp'
+import { Route as ApiSendOtpRouteImport } from './routes/api/send-otp'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiAdminDataRouteImport } from './routes/api/admin-data'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -23,6 +27,11 @@ const TermsRoute = TermsRouteImport.update({
 const RefundPolicyRoute = RefundPolicyRouteImport.update({
   id: '/refund-policy',
   path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -35,48 +44,107 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiVerifyOtpRoute = ApiVerifyOtpRouteImport.update({
+  id: '/api/verify-otp',
+  path: '/api/verify-otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSendOtpRoute = ApiSendOtpRouteImport.update({
+  id: '/api/send-otp',
+  path: '/api/send-otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminDataRoute = ApiAdminDataRouteImport.update({
+  id: '/api/admin-data',
+  path: '/api/admin-data',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
+  '/api/admin-data': typeof ApiAdminDataRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/send-otp': typeof ApiSendOtpRoute
+  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
+  '/api/admin-data': typeof ApiAdminDataRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/send-otp': typeof ApiSendOtpRoute
+  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
+  '/api/admin-data': typeof ApiAdminDataRoute
   '/api/chat': typeof ApiChatRoute
+  '/api/send-otp': typeof ApiSendOtpRoute
+  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/privacy' | '/refund-policy' | '/terms' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/privacy'
+    | '/profile'
+    | '/refund-policy'
+    | '/terms'
+    | '/api/admin-data'
+    | '/api/chat'
+    | '/api/send-otp'
+    | '/api/verify-otp'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/privacy' | '/refund-policy' | '/terms' | '/api/chat'
-  id: '__root__' | '/' | '/privacy' | '/refund-policy' | '/terms' | '/api/chat'
+  to:
+    | '/'
+    | '/privacy'
+    | '/profile'
+    | '/refund-policy'
+    | '/terms'
+    | '/api/admin-data'
+    | '/api/chat'
+    | '/api/send-otp'
+    | '/api/verify-otp'
+  id:
+    | '__root__'
+    | '/'
+    | '/privacy'
+    | '/profile'
+    | '/refund-policy'
+    | '/terms'
+    | '/api/admin-data'
+    | '/api/chat'
+    | '/api/send-otp'
+    | '/api/verify-otp'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivacyRoute: typeof PrivacyRoute
+  ProfileRoute: typeof ProfileRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   TermsRoute: typeof TermsRoute
+  ApiAdminDataRoute: typeof ApiAdminDataRoute
   ApiChatRoute: typeof ApiChatRoute
+  ApiSendOtpRoute: typeof ApiSendOtpRoute
+  ApiVerifyOtpRoute: typeof ApiVerifyOtpRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +163,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RefundPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -109,11 +184,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/verify-otp': {
+      id: '/api/verify-otp'
+      path: '/api/verify-otp'
+      fullPath: '/api/verify-otp'
+      preLoaderRoute: typeof ApiVerifyOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/send-otp': {
+      id: '/api/send-otp'
+      path: '/api/send-otp'
+      fullPath: '/api/send-otp'
+      preLoaderRoute: typeof ApiSendOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin-data': {
+      id: '/api/admin-data'
+      path: '/api/admin-data'
+      fullPath: '/api/admin-data'
+      preLoaderRoute: typeof ApiAdminDataRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -122,9 +218,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivacyRoute: PrivacyRoute,
+  ProfileRoute: ProfileRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   TermsRoute: TermsRoute,
+  ApiAdminDataRoute: ApiAdminDataRoute,
   ApiChatRoute: ApiChatRoute,
+  ApiSendOtpRoute: ApiSendOtpRoute,
+  ApiVerifyOtpRoute: ApiVerifyOtpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

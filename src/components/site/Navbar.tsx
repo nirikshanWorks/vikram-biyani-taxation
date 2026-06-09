@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ChevronDown, GraduationCap, BookOpen, Award, Phone } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Menu, X, ChevronDown, GraduationCap, BookOpen, Award, Phone, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/VB-logo.jpg";
 import { ThemeToggle } from "./ThemeToggle";
+import { EnrollmentDialog } from "./EnrollmentDialog";
+import { supabase } from "@/integrations/supabase/client";
 
 const courseGroups = [
   {
@@ -51,12 +54,35 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
+  const [enrollDialogOpen, setEnrollDialogOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const [preselectedCourse, setPreselectedCourse] = useState<any>(null);
+
+  useEffect(() => {
+    const handleTriggerEnroll = (e: CustomEvent) => {
+      setPreselectedCourse(e.detail || null);
+      setEnrollDialogOpen(true);
+    };
+    window.addEventListener("trigger-enroll" as any, handleTriggerEnroll);
+    return () => window.removeEventListener("trigger-enroll" as any, handleTriggerEnroll);
   }, []);
 
   return (
@@ -170,6 +196,15 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand transition-all group-hover:w-full" />
             </a>
           ))}
+          {user && (
+            <Link
+              to="/profile"
+              className="text-sm font-bold text-brand hover:text-brand-700 transition-colors relative group"
+            >
+              Dashboard
+              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand transition-all group-hover:w-full" />
+            </Link>
+          )}
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -182,7 +217,19 @@ export function Navbar() {
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" /> WhatsApp
           </a>
           <ThemeToggle />
-          <Button className="bg-gradient-to-r from-brand to-brand-700 text-white hover:shadow-brand">
+          {user && (
+            <Button
+              variant="outline"
+              onClick={() => supabase.auth.signOut()}
+              className="border-red-200/50 hover:bg-red-50 text-red-600 hover:text-red-700 flex items-center gap-1.5 rounded-xl cursor-pointer"
+            >
+              <LogOut className="h-4 w-4" /> Sign Out
+            </Button>
+          )}
+          <Button
+            onClick={() => setEnrollDialogOpen(true)}
+            className="bg-gradient-to-r from-brand to-brand-700 text-white hover:shadow-brand cursor-pointer"
+          >
             Enroll Now
           </Button>
         </div>
@@ -232,9 +279,36 @@ export function Navbar() {
                 {l.label}
               </a>
             ))}
-            <Button className="bg-gradient-to-r from-brand to-brand-700 text-white mt-2">
+            {user && (
+              <Link
+                to="/profile"
+                onClick={() => setOpen(false)}
+                className="py-2 text-sm font-bold text-brand"
+              >
+                Dashboard
+              </Link>
+            )}
+            <Button
+              onClick={() => {
+                setOpen(false);
+                setEnrollDialogOpen(true);
+              }}
+              className="bg-gradient-to-r from-brand to-brand-700 text-white mt-2 cursor-pointer"
+            >
               Enroll Now
             </Button>
+            {user && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setOpen(false);
+                  supabase.auth.signOut();
+                }}
+                className="border-red-200/50 text-red-600 hover:bg-red-50 mt-1 flex items-center justify-center gap-1.5 cursor-pointer w-full"
+              >
+                <LogOut className="h-4 w-4" /> Sign Out
+              </Button>
+            )}
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
               <span className="text-sm font-medium text-foreground/80">Toggle Theme</span>
               <ThemeToggle />
@@ -242,6 +316,11 @@ export function Navbar() {
           </div>
         </div>
       )}
+      <EnrollmentDialog
+        open={enrollDialogOpen}
+        onOpenChange={setEnrollDialogOpen}
+        preselectedCourse={preselectedCourse}
+      />
     </header>
   );
 }
