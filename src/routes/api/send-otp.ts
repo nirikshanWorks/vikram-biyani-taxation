@@ -9,13 +9,24 @@ export const Route = createFileRoute("/api/send-otp")({
     handlers: {
       POST: async ({ request }) => {
         try {
-          const { email } = (await request.json()) as { email?: string };
+          const { email, purpose } = (await request.json()) as { email?: string; purpose?: string };
 
           if (!email || !email.includes("@")) {
             return new Response(JSON.stringify({ error: "Valid email address is required" }), {
               status: 400,
               headers: { "Content-Type": "application/json" },
             });
+          }
+
+          // Admin-only allowlist for the admin panel
+          if (purpose === "admin") {
+            const ADMIN_EMAILS = ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"];
+            if (!ADMIN_EMAILS.includes(email.toLowerCase().trim())) {
+              return new Response(
+                JSON.stringify({ error: "Access denied. This email is not authorized for admin access." }),
+                { status: 403, headers: { "Content-Type": "application/json" } }
+              );
+            }
           }
 
           // Generate 6-digit OTP code

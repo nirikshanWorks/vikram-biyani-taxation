@@ -181,7 +181,7 @@ export function EnrollmentDialog({
       const derivedPassword = data.password;
 
       // 2. Try to log in with derived password
-      let authResult = await supabase.auth.signInWithPassword({
+      let authResult: any = await supabase.auth.signInWithPassword({
         email,
         password: derivedPassword,
       });
