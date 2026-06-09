@@ -180,19 +180,11 @@ export function EnrollmentDialog({
 
       const derivedPassword = data.password;
 
-      // 2. Try to log in with derived password
-      let authResult: any = await supabase.auth.signInWithPassword({
+      // 2. Sign in with derived password (server has provisioned the user)
+      const authResult: any = await supabase.auth.signInWithPassword({
         email,
         password: derivedPassword,
       });
-
-      // 3. If user doesn't exist, sign up
-      if (authResult.error && authResult.error.message.includes("Invalid login credentials")) {
-        authResult = await supabase.auth.signUp({
-          email,
-          password: derivedPassword,
-        });
-      }
 
       if (authResult.error) {
         throw authResult.error;
