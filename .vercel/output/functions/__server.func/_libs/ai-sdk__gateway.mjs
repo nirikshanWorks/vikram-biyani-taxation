@@ -1,6 +1,6 @@
 import { w as withoutTrailingSlash, r as resolve, p as postJsonToApi, c as createJsonErrorResponseHandler, a as createJsonResponseHandler, b as combineHeaders, d as withUserAgentSuffix, l as loadOptionalSetting, e as parseJsonEventStream, g as getFromApi, s as safeValidateTypes, f as convertUint8ArrayToBase64, h as createEventSourceResponseHandler, i as createProviderToolFactoryWithOutputSchema, j as lazySchema, z as zodSchema } from "./ai-sdk__provider-utils.mjs";
 import { A as APICallError } from "./ai-sdk__provider.mjs";
-import { d as distExports } from "./@vercel/oidc.mjs";
+import { d as distExports } from "./vercel__oidc.mjs";
 import { a as any, o as object, r as record, b as array, d as discriminatedUnion, l as literal, u as unknown, n as number, c as string, e as union, _ as _enum, f as boolean } from "./zod.mjs";
 var marker = "vercel.ai.gateway.error";
 var symbol = Symbol.for(marker);
@@ -186,11 +186,31 @@ var GatewayInternalServerError = class extends (_b6 = GatewayError, _a6 = symbol
     return GatewayError.hasMarker(error) && symbol6 in error;
   }
 };
-var name6 = "GatewayResponseError";
+var name6 = "GatewayFailedDependencyError";
 var marker7 = `vercel.ai.gateway.error.${name6}`;
 var symbol7 = Symbol.for(marker7);
 var _a7, _b7;
-var GatewayResponseError = class extends (_b7 = GatewayError, _a7 = symbol7, _b7) {
+var GatewayFailedDependencyError = class extends (_b7 = GatewayError, _a7 = symbol7, _b7) {
+  constructor({
+    message = "Failed dependency",
+    statusCode = 424,
+    cause,
+    generationId
+  } = {}) {
+    super({ message, statusCode, cause, generationId });
+    this[_a7] = true;
+    this.name = name6;
+    this.type = "failed_dependency";
+  }
+  static isInstance(error) {
+    return GatewayError.hasMarker(error) && symbol7 in error;
+  }
+};
+var name7 = "GatewayResponseError";
+var marker8 = `vercel.ai.gateway.error.${name7}`;
+var symbol8 = Symbol.for(marker8);
+var _a8, _b8;
+var GatewayResponseError = class extends (_b8 = GatewayError, _a8 = symbol8, _b8) {
   constructor({
     message = "Invalid response from Gateway",
     statusCode = 502,
@@ -200,14 +220,14 @@ var GatewayResponseError = class extends (_b7 = GatewayError, _a7 = symbol7, _b7
     generationId
   } = {}) {
     super({ message, statusCode, cause, generationId });
-    this[_a7] = true;
-    this.name = name6;
+    this[_a8] = true;
+    this.name = name7;
     this.type = "response_error";
     this.response = response;
     this.validationError = validationError;
   }
   static isInstance(error) {
-    return GatewayError.hasMarker(error) && symbol7 in error;
+    return GatewayError.hasMarker(error) && symbol8 in error;
   }
 };
 async function createGatewayErrorFromResponse({
@@ -217,7 +237,7 @@ async function createGatewayErrorFromResponse({
   cause,
   authMethod
 }) {
-  var _a9;
+  var _a10;
   const parseResult = await safeValidateTypes({
     value: response,
     schema: gatewayErrorResponseSchema
@@ -236,7 +256,7 @@ async function createGatewayErrorFromResponse({
   const validatedResponse = parseResult.value;
   const errorType = validatedResponse.error.type;
   const message = validatedResponse.error.message;
-  const generationId = (_a9 = validatedResponse.generationId) != null ? _a9 : void 0;
+  const generationId = (_a10 = validatedResponse.generationId) != null ? _a10 : void 0;
   switch (errorType) {
     case "authentication_error":
       return GatewayAuthenticationError.createContextualError({
@@ -280,6 +300,13 @@ async function createGatewayErrorFromResponse({
         cause,
         generationId
       });
+    case "failed_dependency":
+      return new GatewayFailedDependencyError({
+        message,
+        statusCode,
+        cause,
+        generationId
+      });
     default:
       return new GatewayInternalServerError({
         message,
@@ -315,11 +342,11 @@ function extractApiCallResponse(error) {
   }
   return {};
 }
-var name7 = "GatewayTimeoutError";
-var marker8 = `vercel.ai.gateway.error.${name7}`;
-var symbol8 = Symbol.for(marker8);
-var _a8, _b8;
-var GatewayTimeoutError = class _GatewayTimeoutError extends (_b8 = GatewayError, _a8 = symbol8, _b8) {
+var name8 = "GatewayTimeoutError";
+var marker9 = `vercel.ai.gateway.error.${name8}`;
+var symbol9 = Symbol.for(marker9);
+var _a9, _b9;
+var GatewayTimeoutError = class _GatewayTimeoutError extends (_b9 = GatewayError, _a9 = symbol9, _b9) {
   constructor({
     message = "Request timed out",
     statusCode = 408,
@@ -327,12 +354,12 @@ var GatewayTimeoutError = class _GatewayTimeoutError extends (_b8 = GatewayError
     generationId
   } = {}) {
     super({ message, statusCode, cause, generationId });
-    this[_a8] = true;
-    this.name = name7;
+    this[_a9] = true;
+    this.name = name8;
     this.type = "timeout_error";
   }
   static isInstance(error) {
-    return GatewayError.hasMarker(error) && symbol8 in error;
+    return GatewayError.hasMarker(error) && symbol9 in error;
   }
   /**
    * Creates a helpful timeout error message with troubleshooting guidance
@@ -370,7 +397,7 @@ function isTimeoutError(error) {
   return false;
 }
 async function asGatewayError(error, authMethod) {
-  var _a9;
+  var _a10;
   if (GatewayError.isInstance(error)) {
     return error;
   }
@@ -389,7 +416,7 @@ async function asGatewayError(error, authMethod) {
     }
     return await createGatewayErrorFromResponse({
       response: extractApiCallResponse(error),
-      statusCode: (_a9 = error.statusCode) != null ? _a9 : 500,
+      statusCode: (_a10 = error.statusCode) != null ? _a10 : 500,
       defaultMessage: "Gateway request failed",
       cause: error,
       authMethod
@@ -855,7 +882,7 @@ var GatewayEmbeddingModel = class {
     abortSignal,
     providerOptions
   }) {
-    var _a9;
+    var _a10;
     const resolvedHeaders = await resolve(this.config.headers());
     try {
       const {
@@ -886,7 +913,7 @@ var GatewayEmbeddingModel = class {
       });
       return {
         embeddings: responseBody.embeddings,
-        usage: (_a9 = responseBody.usage) != null ? _a9 : void 0,
+        usage: (_a10 = responseBody.usage) != null ? _a10 : void 0,
         providerMetadata: responseBody.providerMetadata,
         response: { headers: responseHeaders, body: rawValue },
         warnings: []
@@ -936,7 +963,7 @@ var GatewayImageModel = class {
     headers,
     abortSignal
   }) {
-    var _a9, _b9, _c, _d;
+    var _a10, _b10, _c, _d;
     const resolvedHeaders = await resolve(this.config.headers());
     try {
       const {
@@ -976,7 +1003,7 @@ var GatewayImageModel = class {
       return {
         images: responseBody.images,
         // Always base64 strings from server
-        warnings: (_a9 = responseBody.warnings) != null ? _a9 : [],
+        warnings: (_a10 = responseBody.warnings) != null ? _a10 : [],
         providerMetadata: responseBody.providerMetadata,
         response: {
           timestamp: /* @__PURE__ */ new Date(),
@@ -985,7 +1012,7 @@ var GatewayImageModel = class {
         },
         ...responseBody.usage != null && {
           usage: {
-            inputTokens: (_b9 = responseBody.usage.inputTokens) != null ? _b9 : void 0,
+            inputTokens: (_b10 = responseBody.usage.inputTokens) != null ? _b10 : void 0,
             outputTokens: (_c = responseBody.usage.outputTokens) != null ? _c : void 0,
             totalTokens: (_d = responseBody.usage.totalTokens) != null ? _d : void 0
           }
@@ -1068,7 +1095,7 @@ var GatewayVideoModel = class {
     headers,
     abortSignal
   }) {
-    var _a9;
+    var _a10;
     const resolvedHeaders = await resolve(this.config.headers());
     try {
       const { responseHeaders, value: responseBody } = await postJsonToApi({
@@ -1164,7 +1191,7 @@ var GatewayVideoModel = class {
       });
       return {
         videos: responseBody.videos,
-        warnings: (_a9 = responseBody.warnings) != null ? _a9 : [],
+        warnings: (_a10 = responseBody.warnings) != null ? _a10 : [],
         providerMetadata: responseBody.providerMetadata,
         response: {
           timestamp: /* @__PURE__ */ new Date(),
@@ -1494,18 +1521,18 @@ var gatewayTools = {
   perplexitySearch
 };
 async function getVercelRequestId() {
-  var _a9;
-  return (_a9 = distExports.getContext().headers) == null ? void 0 : _a9["x-vercel-id"];
+  var _a10;
+  return (_a10 = distExports.getContext().headers) == null ? void 0 : _a10["x-vercel-id"];
 }
-var VERSION = "3.0.125";
+var VERSION = "3.0.126";
 var AI_GATEWAY_PROTOCOL_VERSION = "0.0.1";
 function createGatewayProvider(options = {}) {
-  var _a9, _b9;
+  var _a10, _b10;
   let pendingMetadata = null;
   let metadataCache = null;
-  const cacheRefreshMillis = (_a9 = options.metadataCacheRefreshMillis) != null ? _a9 : 1e3 * 60 * 5;
+  const cacheRefreshMillis = (_a10 = options.metadataCacheRefreshMillis) != null ? _a10 : 1e3 * 60 * 5;
   let lastFetchTime = 0;
-  const baseURL = (_b9 = withoutTrailingSlash(options.baseURL)) != null ? _b9 : "https://ai-gateway.vercel.sh/v3/ai";
+  const baseURL = (_b10 = withoutTrailingSlash(options.baseURL)) != null ? _b10 : "https://ai-gateway.vercel.sh/v3/ai";
   const getHeaders = async () => {
     try {
       const auth = await getGatewayAuthToken(options);
@@ -1565,8 +1592,8 @@ function createGatewayProvider(options = {}) {
     });
   };
   const getAvailableModels = async () => {
-    var _a10, _b10, _c;
-    const now = (_c = (_b10 = (_a10 = options._internal) == null ? void 0 : _a10.currentDate) == null ? void 0 : _b10.call(_a10).getTime()) != null ? _c : Date.now();
+    var _a11, _b11, _c;
+    const now = (_c = (_b11 = (_a11 = options._internal) == null ? void 0 : _a11.currentDate) == null ? void 0 : _b11.call(_a11).getTime()) != null ? _c : Date.now();
     if (!pendingMetadata || now - lastFetchTime > cacheRefreshMillis) {
       lastFetchTime = now;
       pendingMetadata = new GatewayFetchMetadata({

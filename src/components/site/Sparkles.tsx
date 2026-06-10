@@ -1,6 +1,12 @@
-import { useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export function Sparkles({ count = 14, className = "" }: { count?: number; className?: string }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const sparkles = useMemo(
     () =>
       Array.from({ length: count }).map((_, i) => ({
@@ -13,6 +19,8 @@ export function Sparkles({ count = 14, className = "" }: { count?: number; class
       })),
     [count],
   );
+
+  if (!mounted) return null;
 
   return (
     <div
@@ -40,3 +48,4 @@ export function Sparkles({ count = 14, className = "" }: { count?: number; class
     </div>
   );
 }
+

@@ -595,7 +595,7 @@ function detectMediaType({
   }
   return void 0;
 }
-var VERSION = "6.0.197";
+var VERSION = "6.0.198";
 var download = async ({
   url,
   maxBytes,

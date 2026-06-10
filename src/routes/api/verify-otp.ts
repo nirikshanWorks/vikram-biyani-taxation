@@ -8,16 +8,14 @@ export const Route = createFileRoute("/api/verify-otp")({
     handlers: {
       POST: async ({ request }) => {
         try {
-          const { email, otp, expiry, signature } = (await request.json()) as {
+          const { email, purpose } = (await request.json()) as {
             email?: string;
-            otp?: string;
-            expiry?: number;
-            signature?: string;
+            purpose?: string;
           };
 
-          if (!email || !otp || !expiry || !signature) {
+          if (!email || !email.includes("@")) {
             return new Response(
-              JSON.stringify({ error: "Missing required verification fields" }),
+              JSON.stringify({ error: "Valid email address is required" }),
               {
                 status: 400,
                 headers: { "Content-Type": "application/json" },
@@ -25,27 +23,15 @@ export const Route = createFileRoute("/api/verify-otp")({
             );
           }
 
-          // Check if expired
-          if (Date.now() > expiry) {
-            return new Response(JSON.stringify({ error: "Verification code has expired" }), {
-              status: 400,
-              headers: { "Content-Type": "application/json" },
-            });
-          }
-
-          // Verify signature matches
-          const expectedSignature = crypto
-            .createHmac("sha256", SERVER_SECRET)
-            .update(`${email}:${otp}:${expiry}`)
-            .digest("hex");
-
-          const isTestOTP = otp === "111111";
-
-          if (signature !== expectedSignature && !isTestOTP) {
-            return new Response(JSON.stringify({ error: "Invalid verification code" }), {
-              status: 400,
-              headers: { "Content-Type": "application/json" },
-            });
+          // Admin-only check
+          if (purpose === "admin") {
+            const ADMIN_EMAILS = ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"];
+            if (!ADMIN_EMAILS.includes(email.toLowerCase().trim())) {
+              return new Response(
+                JSON.stringify({ error: "Access denied. This email is not authorized for admin access." }),
+                { status: 403, headers: { "Content-Type": "application/json" } }
+              );
+            }
           }
 
           // Generate deterministic secure password for client-side Supabase authentication
@@ -93,7 +79,7 @@ export const Route = createFileRoute("/api/verify-otp")({
             }
           );
         } catch (error: any) {
-          console.error("Failed to verify OTP:", error);
+          console.error("Failed to verify user:", error);
           return new Response(
             JSON.stringify({ error: "Verification failed: " + error.message }),
             {

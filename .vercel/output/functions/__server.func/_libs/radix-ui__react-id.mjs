@@ -7,7 +7,7 @@ function useId(deterministicId) {
   useLayoutEffect2(() => {
     setId((reactId) => reactId ?? String(count++));
   }, [deterministicId]);
-  return id ? `radix-${id}` : "";
+  return deterministicId || (id ? `radix-${id}` : "");
 }
 export {
   useId as u

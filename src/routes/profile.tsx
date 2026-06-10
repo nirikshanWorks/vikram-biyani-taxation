@@ -257,7 +257,7 @@ function ProfilePage() {
                     onClick={() => setAuthDialogOpen(true)}
                     className="w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold cursor-pointer"
                   >
-                    Log In with OTP
+                    Log In with Email
                   </Button>
                 </CardContent>
                 <CardFooter className="justify-center border-t border-border pt-4 mt-4 text-xs text-muted-foreground">

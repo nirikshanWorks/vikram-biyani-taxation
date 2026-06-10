@@ -23,7 +23,7 @@ export const Route = createFileRoute("/admin")({
   component: AdminPanel,
 });
 
-type Stage = "email" | "otp" | "dashboard";
+type Stage = "email" | "dashboard";
 
 interface TableData {
   profiles: any[];
@@ -34,49 +34,20 @@ interface TableData {
 function AdminPanel() {
   const [stage, setStage] = useState<Stage>("email");
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [otpMeta, setOtpMeta] = useState<{ expiry: number; signature: string } | null>(null);
   const [data, setData] = useState<TableData | null>(null);
 
-  async function sendOtp(e: React.FormEvent) {
+  async function loginAdmin(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch("/api/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim().toLowerCase(), purpose: "admin" }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to send OTP");
-      setOtpMeta({ expiry: json.expiry, signature: json.signature });
-      setStage("otp");
-      toast.success("OTP sent to your email");
-    } catch (err: any) {
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function verifyOtp(e: React.FormEvent) {
-    e.preventDefault();
-    if (!otpMeta) return;
     setLoading(true);
     try {
       const res = await fetch("/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          otp,
-          expiry: otpMeta.expiry,
-          signature: otpMeta.signature,
-        }),
+        body: JSON.stringify({ email: email.trim().toLowerCase(), purpose: "admin" }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Invalid OTP");
+      if (!res.ok) throw new Error(json.error || "Login failed");
 
       // Load admin data
       const dataRes = await fetch("/api/admin-data");
@@ -100,8 +71,6 @@ function AdminPanel() {
   function logout() {
     setStage("email");
     setEmail("");
-    setOtp("");
-    setOtpMeta(null);
     setData(null);
   }
 
@@ -118,51 +87,26 @@ function AdminPanel() {
                 </div>
                 <CardTitle>Admin Access</CardTitle>
                 <CardDescription>
-                  {stage === "email"
-                    ? "Restricted to authorized administrators only."
-                    : `Enter the 6-digit code sent to ${email}`}
+                  Restricted to authorized administrators only.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {stage === "email" ? (
-                  <form onSubmit={sendOtp} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Admin Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="admin@vbtc.com"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full" disabled={loading}>
-                      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4 mr-2" />Send OTP</>}
-                    </Button>
-                  </form>
-                ) : (
-                  <form onSubmit={verifyOtp} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="otp">6-digit code</Label>
-                      <Input
-                        id="otp"
-                        required
-                        maxLength={6}
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                        placeholder="123456"
-                        className="text-center text-2xl tracking-widest font-mono"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full" disabled={loading || otp.length !== 6}>
-                      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify & Continue"}
-                    </Button>
-                    <Button type="button" variant="ghost" className="w-full" onClick={() => setStage("email")}>
-                      Use a different email
-                    </Button>
-                  </form>
-                )}
+                <form onSubmit={loginAdmin} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Admin Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="admin@vbtc.com"
+                    />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Lock className="w-4 h-4 mr-2" />Login</>}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </div>

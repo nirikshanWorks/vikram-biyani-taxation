@@ -2041,12 +2041,10 @@ var RouterCore = class {
   */
   constructor(options, getStoreConfig) {
     this.tempLocationKey = `${Math.round(Math.random() * 1e7)}`;
-    this.resetNextScroll = true;
+    this._scroll = { next: true };
     this.shouldViewTransition = void 0;
     this.isViewTransitionTypesSupported = void 0;
     this.subscribers = /* @__PURE__ */ new Set();
-    this.isScrollRestoring = false;
-    this.isScrollRestorationSetup = false;
     this.routeBranchCache = /* @__PURE__ */ new WeakMap();
     this.startTransition = (fn) => fn();
     this.update = (newOptions) => {
@@ -2386,7 +2384,7 @@ var RouterCore = class {
         historyAction = next.replace ? "REPLACE" : "PUSH";
         this.history[historyAction === "REPLACE" ? "replace" : "push"](nextHistory.publicHref, nextHistory.state, { ignoreBlocker });
       }
-      this.resetNextScroll = next.resetScroll ?? true;
+      this._scroll.next = next.resetScroll ?? true;
       if (!this.history.subscribers.size) this.load(historyAction ? { action: { type: historyAction } } : void 0);
       return this.commitLocationPromise;
     };
@@ -3071,7 +3069,9 @@ function buildMiddlewareChain(destRoutes) {
     if (index >= middlewares.length) {
       if (!dest.search) return {};
       if (dest.search === true) return currentSearch;
-      return functionalUpdate(dest.search, currentSearch);
+      const result = functionalUpdate(dest.search, currentSearch);
+      if (meta) meta.explicit = result;
+      return result;
     }
     const next = (newSearch, collectMeta) => {
       if (collectMeta) {

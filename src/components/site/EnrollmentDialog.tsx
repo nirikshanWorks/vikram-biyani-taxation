@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { InputOTP, InputOTPSlot, InputOTPGroup } from "@/components/ui/input-otp";
 import { toast } from "sonner";
 import {
   GraduationCap,
@@ -41,7 +40,7 @@ interface EnrollmentDialogProps {
   preselectedCourse?: Course | null;
 }
 
-type Step = "auth-email" | "auth-otp" | "enroll-details" | "success";
+type Step = "auth-email" | "enroll-details" | "success";
 
 export function EnrollmentDialog({
   open,
@@ -55,10 +54,6 @@ export function EnrollmentDialog({
   
   // Auth states
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [expiry, setExpiry] = useState<number>(0);
-  const [signature, setSignature] = useState("");
-  const [countdown, setCountdown] = useState(0);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   // Profile details states
@@ -85,14 +80,6 @@ export function EnrollmentDialog({
     }
   }, [open]);
 
-  // Countdown timer for OTP resend
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
-
   // Fetch student profile details from Supabase
   const fetchProfile = async (userId: string) => {
     try {
@@ -116,8 +103,8 @@ export function EnrollmentDialog({
     }
   };
 
-  // Step 1: Send OTP to User's Email via SMTP Backend
-  const handleSendOtp = async (e: React.FormEvent) => {
+  // Login User via direct email provisioning and supabase authentication
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address");
@@ -128,7 +115,8 @@ export function EnrollmentDialog({
     setError("");
 
     try {
-      const response = await fetch("/api/send-otp", {
+      // 1. Authenticate and provision password on backend
+      const response = await fetch("/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -137,50 +125,12 @@ export function EnrollmentDialog({
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to send verification code");
-      }
-
-      setExpiry(data.expiry);
-      setSignature(data.signature);
-      setCountdown(60); // 60 seconds cooldown for resending
-      setStep("auth-otp");
-      toast.success("Verification code sent to your email!");
-    } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.");
-      toast.error(err.message || "Failed to send code");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Step 2: Verify OTP & Login User using Supabase with Derived Password
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (otp.length < 6) {
-      setError("Please enter the 6-digit verification code");
-      return;
-    }
-
-    setIsLoading(true);
-    setError("");
-
-    try {
-      // 1. Verify code on backend
-      const response = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp, expiry, signature }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Verification failed");
+        throw new Error(data.error || "Login failed");
       }
 
       const derivedPassword = data.password;
 
-      // 2. Sign in with derived password (server has provisioned the user)
+      // 2. Sign in with derived password
       const authResult: any = await supabase.auth.signInWithPassword({
         email,
         password: derivedPassword,
@@ -197,8 +147,8 @@ export function EnrollmentDialog({
         toast.success("Successfully authenticated!");
       }
     } catch (err: any) {
-      setError(err.message || "OTP verification failed. Please try again.");
-      toast.error(err.message || "Verification failed");
+      setError(err.message || "Login failed. Please try again.");
+      toast.error(err.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -296,7 +246,7 @@ export function EnrollmentDialog({
             </div>
             <div>
               <DialogTitle className="text-xl font-bold tracking-tight text-white font-display">
-                {step === "auth-email" || step === "auth-otp" ? "Sign In to VBTC" : "Enrollment Details"}
+                {step === "auth-email" ? "Sign In to VBTC" : "Enrollment Details"}
               </DialogTitle>
               <DialogDescription className="text-white/70 text-xs mt-0.5">
                 {preselectedCourse ? `Course: ${preselectedCourse.title}` : "CA & CMA Taxation Batches"}
@@ -314,7 +264,7 @@ export function EnrollmentDialog({
 
           {/* STEP 1: Email Input */}
           {step === "auth-email" && (
-            <form onSubmit={handleSendOtp} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs font-bold text-foreground/80 uppercase tracking-wider">
                   Email ID
@@ -339,84 +289,17 @@ export function EnrollmentDialog({
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Code...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing In...
                   </>
                 ) : (
                   <>
-                    Send OTP <ArrowRight className="ml-1 h-4 w-4" />
+                    Continue <ArrowRight className="ml-1 h-4 w-4" />
                   </>
                 )}
               </Button>
               <p className="text-[11px] text-muted-foreground text-center mt-3">
                 By signing in, you agree to our Terms of Service & Privacy Policy.
               </p>
-            </form>
-          )}
-
-          {/* STEP 2: OTP Entry */}
-          {step === "auth-otp" && (
-            <form onSubmit={handleVerifyOtp} className="space-y-5 text-center">
-              <div className="space-y-2">
-                <Label className="text-xs font-bold text-foreground/80 uppercase tracking-wider block text-left">
-                  Verification Code
-                </Label>
-                <p className="text-xs text-muted-foreground text-left">
-                  We've sent a 6-digit verification code to <strong className="text-foreground">{email}</strong>.
-                </p>
-                <div className="flex justify-center pt-2">
-                  <InputOTP
-                    maxLength={6}
-                    value={otp}
-                    onChange={(value) => setOtp(value)}
-                  >
-                    <InputOTPGroup className="gap-2">
-                      <InputOTPSlot index={0} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                      <InputOTPSlot index={1} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                      <InputOTPSlot index={2} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                      <InputOTPSlot index={3} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                      <InputOTPSlot index={4} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                      <InputOTPSlot index={5} className="w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2.5">
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verifying...
-                    </>
-                  ) : (
-                    "Verify & Login"
-                  )}
-                </Button>
-
-                <div className="flex items-center justify-between text-xs mt-1 px-1">
-                  <button
-                    type="button"
-                    onClick={() => setStep("auth-email")}
-                    className="text-muted-foreground hover:text-brand font-semibold"
-                  >
-                    Change Email
-                  </button>
-                  {countdown > 0 ? (
-                    <span className="text-muted-foreground">Resend OTP in {countdown}s</span>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleSendOtp}
-                      className="text-brand hover:text-brand-700 font-bold"
-                    >
-                      Resend Code
-                    </button>
-                  )}
-                </div>
-              </div>
             </form>
           )}
 
