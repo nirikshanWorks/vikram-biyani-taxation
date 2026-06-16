@@ -60,7 +60,11 @@ function AdminPanel() {
         enrollments: dataJson.enrollments,
       });
       setStage("dashboard");
-      toast.success("Welcome, admin");
+      if (dataJson.isSandbox) {
+        toast.info(dataJson.message || "Running in sandbox mode with demo data.");
+      } else {
+        toast.success("Welcome, admin");
+      }
     } catch (err: any) {
       toast.error(err.message);
     } finally {

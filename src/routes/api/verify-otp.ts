@@ -43,25 +43,29 @@ export const Route = createFileRoute("/api/verify-otp")({
           // Ensure the auth user exists and is email-confirmed so client signInWithPassword
           // succeeds with a real session (otherwise RLS-protected inserts fail).
           try {
-            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-            const { data: list } = await supabaseAdmin.auth.admin.listUsers({
-              page: 1,
-              perPage: 200,
-            });
-            const existing = list?.users?.find(
-              (u) => (u.email || "").toLowerCase() === email.toLowerCase()
-            );
-            if (!existing) {
-              await supabaseAdmin.auth.admin.createUser({
-                email,
-                password: derivedPassword,
-                email_confirm: true,
+            if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+              const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+              const { data: list } = await supabaseAdmin.auth.admin.listUsers({
+                page: 1,
+                perPage: 200,
               });
+              const existing = list?.users?.find(
+                (u) => (u.email || "").toLowerCase() === email.toLowerCase()
+              );
+              if (!existing) {
+                await supabaseAdmin.auth.admin.createUser({
+                  email,
+                  password: derivedPassword,
+                  email_confirm: true,
+                });
+              } else {
+                await supabaseAdmin.auth.admin.updateUserById(existing.id, {
+                  password: derivedPassword,
+                  email_confirm: true,
+                });
+              }
             } else {
-              await supabaseAdmin.auth.admin.updateUserById(existing.id, {
-                password: derivedPassword,
-                email_confirm: true,
-              });
+              console.log("[Supabase] Skipping admin user provisioning because SUPABASE_SERVICE_ROLE_KEY or SUPABASE_URL is missing.");
             }
           } catch (e) {
             console.error("Admin provisioning failed:", e);

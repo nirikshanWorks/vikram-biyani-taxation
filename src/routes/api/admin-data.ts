@@ -12,9 +12,49 @@ export const Route = createFileRoute("/api/admin-data")({
           if (!key || !url) {
             return new Response(
               JSON.stringify({
-                success: false,
-                error: "service_role_key_missing",
+                success: true,
+                isSandbox: true,
                 message: "Missing Supabase service role key. Displaying sandbox demo data.",
+                profiles: [
+                  {
+                    id: "demo-user-1",
+                    full_name: "Demo Student 1",
+                    email: "vbtaxclasses@gmail.com",
+                    phone: "+91 98765 43210",
+                    course_level: "CA Final",
+                    city: "Mumbai",
+                    created_at: new Date().toISOString(),
+                  },
+                  {
+                    id: "demo-user-2",
+                    full_name: "Demo Student 2",
+                    email: "student2@example.com",
+                    phone: "+91 87654 32109",
+                    course_level: "CA Inter",
+                    city: "Delhi",
+                    created_at: new Date(Date.now() - 86400000).toISOString(),
+                  }
+                ],
+                orders: [
+                  {
+                    id: "demo-order-1",
+                    course_title: "CA Final Direct Tax (Regular)",
+                    course_batch: "May 2026",
+                    amount_inr: 12500,
+                    status: "paid",
+                    phonepe_merchant_txn_id: "TXN123456789",
+                    created_at: new Date().toISOString(),
+                  }
+                ],
+                enrollments: [
+                  {
+                    id: "demo-enrollment-1",
+                    course_title: "CA Final Direct Tax (Regular)",
+                    course_batch: "May 2026",
+                    access_status: "active",
+                    enrolled_at: new Date().toISOString(),
+                  }
+                ]
               }),
               {
                 status: 200,
