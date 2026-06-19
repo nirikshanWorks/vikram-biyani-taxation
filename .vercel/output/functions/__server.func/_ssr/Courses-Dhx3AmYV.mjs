@@ -1,5 +1,5 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { B as Button } from "./Footer-BaHlnXZP.mjs";
+import { B as Button } from "./Footer-DgUPFLtU.mjs";
 import { O as Clock, h as BookOpen, W as Infinity } from "../_libs/lucide-react.mjs";
 function TiltCard({
   children,

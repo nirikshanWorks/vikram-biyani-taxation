@@ -1,5 +1,5 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { c as cn } from "./Footer-BaHlnXZP.mjs";
+import { c as cn } from "./Footer-DgUPFLtU.mjs";
 const Card = reactExports.forwardRef(
   ({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",

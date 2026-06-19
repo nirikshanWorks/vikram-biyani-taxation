@@ -1,11 +1,10 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { N as Navbar, B as Button, L as Label, I as Input, F as Footer, E as EnrollmentDialog } from "./Footer-BaHlnXZP.mjs";
+import { N as Navbar, B as Button, L as Label, I as Input, F as Footer, E as EnrollmentDialog } from "./Footer-DgUPFLtU.mjs";
 import { C as ChatBot } from "./ChatBot-BXnRggGO.mjs";
 import { s as supabase } from "./client-CbFIo5u-.mjs";
-import { c as courses } from "./Courses-C8yWqFAJ.mjs";
-import { C as Card, a as CardHeader, b as CardTitle, c as CardDescription, d as CardContent, e as CardFooter } from "./card-DYFJxc7g.mjs";
+import { c as courses } from "./Courses-Dhx3AmYV.mjs";
+import { C as Card, a as CardHeader, b as CardTitle, c as CardDescription, d as CardContent, e as CardFooter } from "./card-B8kpRT0G.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-import "../_libs/input-otp.mjs";
 import { L as LoaderCircle, a as Lock, S as ShieldCheck, U as User, b as BookMarked, c as ShoppingBag, d as LogOut, P as Pen, M as Mail, e as Phone, f as MapPin, g as UserCheck, h as BookOpen, C as CircleCheckBig, i as Compass } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -291,7 +290,7 @@ function ProfilePage() {
             /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "font-display text-2xl font-bold", children: "Access Denied" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Please log in to access your student profile, view active batches, and enroll in new courses." })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: () => setAuthDialogOpen(true), className: "w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold cursor-pointer", children: "Log In with OTP" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: () => setAuthDialogOpen(true), className: "w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold cursor-pointer", children: "Log In with Email" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(CardFooter, { className: "justify-center border-t border-border pt-4 mt-4 text-xs text-muted-foreground", children: "Need assistance? Contact us at +91 98307 73655" })
         ] }) })
       ) : (

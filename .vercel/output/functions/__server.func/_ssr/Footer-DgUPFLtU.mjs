@@ -7,9 +7,8 @@ import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { s as supabase } from "./client-CbFIo5u-.mjs";
 import { R as Root$1, P as Portal, C as Content, a as Close, T as Title, D as Description, O as Overlay } from "../_libs/radix-ui__react-dialog.mjs";
 import { R as Root } from "../_libs/radix-ui__react-label.mjs";
-import { L as Lt, j as jt } from "../_libs/input-otp.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-import { e as Phone, K as ChevronDown, h as BookOpen, G as GraduationCap, v as Award, d as LogOut, X, _ as Menu, $ as Linkedin, a0 as Twitter, a1 as Facebook, f as MapPin, M as Mail, L as LoaderCircle, A as ArrowRight, l as Sparkles, a2 as CircleCheck, a3 as Sun, a4 as Moon, a5 as Minus } from "../_libs/lucide-react.mjs";
+import { e as Phone, K as ChevronDown, h as BookOpen, G as GraduationCap, v as Award, d as LogOut, X, _ as Menu, $ as Linkedin, a0 as Twitter, a1 as Facebook, f as MapPin, M as Mail, L as LoaderCircle, A as ArrowRight, l as Sparkles, a2 as CircleCheck, a3 as Sun, a4 as Moon } from "../_libs/lucide-react.mjs";
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -168,44 +167,6 @@ const labelVariants = cva(
 );
 const Label = reactExports.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(Root, { ref, className: cn(labelVariants(), className), ...props }));
 Label.displayName = Root.displayName;
-const InputOTP = reactExports.forwardRef(({ className, containerClassName, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-  Lt,
-  {
-    ref,
-    containerClassName: cn(
-      "flex items-center gap-2 has-[:disabled]:opacity-50",
-      containerClassName
-    ),
-    className: cn("disabled:cursor-not-allowed", className),
-    ...props
-  }
-));
-InputOTP.displayName = "InputOTP";
-const InputOTPGroup = reactExports.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, className: cn("flex items-center", className), ...props }));
-InputOTPGroup.displayName = "InputOTPGroup";
-const InputOTPSlot = reactExports.forwardRef(({ index, className, ...props }, ref) => {
-  const inputOTPContext = reactExports.useContext(jt);
-  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
-    {
-      ref,
-      className: cn(
-        "relative flex h-9 w-9 items-center justify-center border-y border-r border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-        isActive && "z-10 ring-1 ring-ring",
-        className
-      ),
-      ...props,
-      children: [
-        char,
-        hasFakeCaret && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-4 w-px animate-caret-blink bg-foreground duration-1000" }) })
-      ]
-    }
-  );
-});
-InputOTPSlot.displayName = "InputOTPSlot";
-const InputOTPSeparator = reactExports.forwardRef(({ ...props }, ref) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref, role: "separator", ...props, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Minus, {}) }));
-InputOTPSeparator.displayName = "InputOTPSeparator";
 function EnrollmentDialog({
   open,
   onOpenChange,
@@ -215,10 +176,6 @@ function EnrollmentDialog({
   const [isLoading, setIsLoading] = reactExports.useState(false);
   const [error, setError] = reactExports.useState("");
   const [email, setEmail] = reactExports.useState("");
-  const [otp, setOtp] = reactExports.useState("");
-  const [expiry, setExpiry] = reactExports.useState(0);
-  const [signature, setSignature] = reactExports.useState("");
-  const [countdown, setCountdown] = reactExports.useState(0);
   const [currentUser, setCurrentUser] = reactExports.useState(null);
   const [fullName, setFullName] = reactExports.useState("");
   const [phone, setPhone] = reactExports.useState("");
@@ -240,12 +197,6 @@ function EnrollmentDialog({
       checkUser();
     }
   }, [open]);
-  reactExports.useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1e3);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
   const fetchProfile = async (userId) => {
     try {
       const { data, error: error2 } = await supabase.from("profiles").select("*").eq("id", userId).single();
@@ -262,7 +213,7 @@ function EnrollmentDialog({
       setCourseLevel(preselectedCourse?.tag || "CA Inter");
     }
   };
-  const handleSendOtp = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address");
@@ -271,44 +222,14 @@ function EnrollmentDialog({
     setIsLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/send-otp", {
+      const response = await fetch("/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "Failed to send verification code");
-      }
-      setExpiry(data.expiry);
-      setSignature(data.signature);
-      setCountdown(60);
-      setStep("auth-otp");
-      toast.success("Verification code sent to your email!");
-    } catch (err) {
-      setError(err.message || "Something went wrong. Please try again.");
-      toast.error(err.message || "Failed to send code");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    if (otp.length < 6) {
-      setError("Please enter the 6-digit verification code");
-      return;
-    }
-    setIsLoading(true);
-    setError("");
-    try {
-      const response = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp, expiry, signature })
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Verification failed");
+        throw new Error(data.error || "Login failed");
       }
       const derivedPassword = data.password;
       const authResult = await supabase.auth.signInWithPassword({
@@ -325,8 +246,8 @@ function EnrollmentDialog({
         toast.success("Successfully authenticated!");
       }
     } catch (err) {
-      setError(err.message || "OTP verification failed. Please try again.");
-      toast.error(err.message || "Verification failed");
+      setError(err.message || "Login failed. Please try again.");
+      toast.error(err.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -392,14 +313,14 @@ function EnrollmentDialog({
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex items-center gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20", children: /* @__PURE__ */ jsxRuntimeExports.jsx(GraduationCap, { className: "h-5 w-5 text-gold" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "text-xl font-bold tracking-tight text-white font-display", children: step === "auth-email" || step === "auth-otp" ? "Sign In to VBTC" : "Enrollment Details" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "text-xl font-bold tracking-tight text-white font-display", children: step === "auth-email" ? "Sign In to VBTC" : "Enrollment Details" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "text-white/70 text-xs mt-0.5", children: preselectedCourse ? `Course: ${preselectedCourse.title}` : "CA & CMA Taxation Batches" })
         ] })
       ] })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 md:p-8", children: [
       error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4 text-xs font-semibold text-red-600 bg-red-50 dark:bg-red-950/30 dark:text-red-400 p-3 rounded-xl border border-red-200/40 animate-fade-in", children: error }),
-      step === "auth-email" && /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSendOtp, className: "space-y-4", children: [
+      step === "auth-email" && /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleLogin, className: "space-y-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "email", className: "text-xs font-bold text-foreground/80 uppercase tracking-wider", children: "Email ID" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
@@ -426,78 +347,14 @@ function EnrollmentDialog({
             className: "w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold mt-2",
             children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "mr-2 h-4 w-4 animate-spin" }),
-              " Sending Code..."
+              " Signing In..."
             ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-              "Send OTP ",
+              "Continue ",
               /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight, { className: "ml-1 h-4 w-4" })
             ] })
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-muted-foreground text-center mt-3", children: "By signing in, you agree to our Terms of Service & Privacy Policy." })
-      ] }),
-      step === "auth-otp" && /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleVerifyOtp, className: "space-y-5 text-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { className: "text-xs font-bold text-foreground/80 uppercase tracking-wider block text-left", children: "Verification Code" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-muted-foreground text-left", children: [
-            "We've sent a 6-digit verification code to ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "text-foreground", children: email }),
-            "."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center pt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            InputOTP,
-            {
-              maxLength: 6,
-              value: otp,
-              onChange: (value) => setOtp(value),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(InputOTPGroup, { className: "gap-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 0, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 1, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 2, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 3, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 4, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(InputOTPSlot, { index: 5, className: "w-11 h-12 text-lg font-bold rounded-xl border-border bg-card/50 text-foreground" })
-              ] })
-            }
-          ) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2.5", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Button,
-            {
-              type: "submit",
-              disabled: isLoading,
-              className: "w-full h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold",
-              children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "mr-2 h-4 w-4 animate-spin" }),
-                " Verifying..."
-              ] }) : "Verify & Login"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-xs mt-1 px-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                onClick: () => setStep("auth-email"),
-                className: "text-muted-foreground hover:text-brand font-semibold",
-                children: "Change Email"
-              }
-            ),
-            countdown > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-muted-foreground", children: [
-              "Resend OTP in ",
-              countdown,
-              "s"
-            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                onClick: handleSendOtp,
-                className: "text-brand hover:text-brand-700 font-bold",
-                children: "Resend Code"
-              }
-            )
-          ] })
-        ] })
       ] }),
       step === "enroll-details" && /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleCompleteEnrollment, className: "space-y-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [

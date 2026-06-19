@@ -1,7 +1,6 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer } from "./Footer-BaHlnXZP.mjs";
+import { N as Navbar, F as Footer } from "./Footer-DgUPFLtU.mjs";
 import { C as ChatBot } from "./ChatBot-BXnRggGO.mjs";
-import "../_libs/input-otp.mjs";
 import "../_libs/sonner.mjs";
 import { F as FileText } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__react-router.mjs";

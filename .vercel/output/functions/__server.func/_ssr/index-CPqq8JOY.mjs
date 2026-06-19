@@ -1,9 +1,8 @@
 import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer, B as Button, L as Label, I as Input, c as cn } from "./Footer-BaHlnXZP.mjs";
+import { N as Navbar, F as Footer, B as Button, L as Label, I as Input, c as cn } from "./Footer-DgUPFLtU.mjs";
 import { C as ChatBot, h as heroImg } from "./ChatBot-BXnRggGO.mjs";
-import { C as Courses } from "./Courses-C8yWqFAJ.mjs";
+import { C as Courses } from "./Courses-Dhx3AmYV.mjs";
 import { R as Root2, I as Item, H as Header, T as Trigger2, C as Content2 } from "../_libs/radix-ui__react-accordion.mjs";
-import "../_libs/input-otp.mjs";
 import "../_libs/sonner.mjs";
 import { l as Sparkles$1, A as ArrowRight, m as Play, k as Users, T as Trophy, n as Star, o as BadgeCheck, p as Scale, h as BookOpen, G as GraduationCap, q as Lightbulb, r as ChartLine, R as RefreshCcw, s as FileCheckCorner, b as BookMarked, H as Headphones, t as Check, Z as Zap, Q as Quote, u as TrendingUp, v as Award, w as ArrowUpRight, N as Newspaper, F as FileText, Y as Youtube, D as Download, x as Send, y as MessageCircle, V as Video, e as Phone, M as Mail, z as MessageSquare, f as MapPin, E as ChevronLeft, I as Pause, J as ChevronRight, K as ChevronDown } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__react-router.mjs";

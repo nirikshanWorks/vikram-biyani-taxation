@@ -8,12 +8,12 @@ import require$$7 from "net";
 import require$$5 from "dns";
 import require$$7$1 from "os";
 import require$$0$5 from "path";
-import require$$1$2 from "tls";
+import require$$1$3 from "tls";
 import require$$0$7 from "child_process";
 import { g as getDefaultExportFromCjs } from "./react.mjs";
 import require$$0$4 from "util";
 import require$$0$2 from "stream";
-import crypto from "crypto";
+import require$$1$2 from "crypto";
 var nodemailer$1 = {};
 var shared = { exports: {} };
 var fetch = { exports: {} };
@@ -4555,7 +4555,7 @@ var hasRequiredMimeNode;
 function requireMimeNode() {
   if (hasRequiredMimeNode) return mimeNode;
   hasRequiredMimeNode = 1;
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   const fs = require$$1$1;
   const punycode = requirePunycode();
   const { PassThrough } = require$$0$2;
@@ -4574,7 +4574,7 @@ function requireMimeNode() {
     constructor(contentType, options) {
       this.nodeCounter = 0;
       options = options || {};
-      this.baseBoundary = options.baseBoundary || crypto$1.randomBytes(8).toString("hex");
+      this.baseBoundary = options.baseBoundary || crypto.randomBytes(8).toString("hex");
       this.boundaryPrefix = options.boundaryPrefix || "--_NmP";
       this.disableFileAccess = !!options.disableFileAccess;
       this.disableUrlAccess = !!options.disableUrlAccess;
@@ -5533,8 +5533,8 @@ function requireMimeNode() {
     _generateMessageId() {
       return "<" + [2, 2, 2, 6].reduce(
         // crux to generate UUID-like random strings
-        (prev, len) => prev + "-" + crypto$1.randomBytes(len).toString("hex"),
-        crypto$1.randomBytes(4).toString("hex")
+        (prev, len) => prev + "-" + crypto.randomBytes(len).toString("hex"),
+        crypto.randomBytes(4).toString("hex")
       ) + "@" + // try to use the domain of the FROM address or fallback to server hostname
       (this.getEnvelope().from || this.hostname || "localhost").split("@").pop() + ">";
     }
@@ -6129,14 +6129,14 @@ function requireRelaxedBody() {
   if (hasRequiredRelaxedBody) return relaxedBody;
   hasRequiredRelaxedBody = 1;
   const { Transform } = require$$0$2;
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   class RelaxedBody extends Transform {
     constructor(options) {
       super();
       options = options || {};
       this.chunkBuffer = [];
       this.chunkBufferLen = 0;
-      this.bodyHash = crypto$1.createHash(options.hashAlgo || "sha1");
+      this.bodyHash = crypto.createHash(options.hashAlgo || "sha1");
       this.remainder = "";
       this.byteLength = 0;
       this.debug = options.debug;
@@ -6239,7 +6239,7 @@ function requireSign() {
   hasRequiredSign = 1;
   const punycode = requirePunycode();
   const mimeFuncs2 = requireMimeFuncs();
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   sign.exports = (headers, hashAlgo, bodyHash, options) => {
     options = options || {};
     const defaultFieldNames = "From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive";
@@ -6247,7 +6247,7 @@ function requireSign() {
     const canonicalizedHeaderData = relaxedHeaders(headers, fieldNames, options.skipFields);
     const dkimHeader = generateDKIMHeader(options.domainName, options.keySelector, canonicalizedHeaderData.fieldNames, hashAlgo, bodyHash);
     canonicalizedHeaderData.headers += "dkim-signature:" + relaxedHeaderLine(dkimHeader);
-    const signer = crypto$1.createSign(("rsa-" + hashAlgo).toUpperCase());
+    const signer = crypto.createSign(("rsa-" + hashAlgo).toUpperCase());
     signer.update(canonicalizedHeaderData.headers);
     let signature;
     try {
@@ -6316,7 +6316,7 @@ function requireDkim() {
   const { PassThrough } = require$$0$2;
   const fs = require$$1$1;
   const path = require$$0$5;
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   const DKIM_ALGO = "sha256";
   const MAX_MESSAGE_SIZE = 2 * 1024 * 1024;
   class DKIMSigner {
@@ -6329,7 +6329,7 @@ function requireDkim() {
       this.chunks = [];
       this.chunklen = 0;
       this.readPos = 0;
-      this.cachePath = this.cacheDir ? path.join(this.cacheDir, "message." + Date.now() + "-" + crypto$1.randomBytes(14).toString("hex")) : false;
+      this.cachePath = this.cacheDir ? path.join(this.cacheDir, "message." + Date.now() + "-" + crypto.randomBytes(14).toString("hex")) : false;
       this.cache = false;
       this.headers = false;
       this.bodyHash = false;
@@ -6506,7 +6506,7 @@ function requireHttpProxyClient() {
   if (hasRequiredHttpProxyClient) return httpProxyClient_1;
   hasRequiredHttpProxyClient = 1;
   const net = require$$7;
-  const tls = require$$1$2;
+  const tls = require$$1$3;
   const urllib = require$$0$1;
   const errors2 = requireErrors();
   function httpProxyClient(proxyUrl, destinationPort, destinationHost, callback) {
@@ -6879,7 +6879,7 @@ function requireMailer() {
   const MailMessage = requireMailMessage();
   const net = require$$7;
   const dns = require$$5;
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   class Mail extends EventEmitter {
     constructor(transporter, options, defaults) {
       super();
@@ -7222,7 +7222,7 @@ function requireMailer() {
           html = (html || "").toString().replace(
             /(<img\b[^<>]{0,1024} src\s{0,20}=[\s"']{0,20})(data:([^;]+);[^"'>\s]+)/gi,
             (match, prefix, dataUri, mimeType) => {
-              const cid = crypto$1.randomBytes(10).toString("hex") + "@localhost";
+              const cid = crypto.randomBytes(10).toString("hex") + "@localhost";
               if (!mail.data.attachments) {
                 mail.data.attachments = [];
               }
@@ -7347,9 +7347,9 @@ function requireSmtpConnection() {
   const packageInfo = require$$10;
   const { EventEmitter } = require$$0$6;
   const net = require$$7;
-  const tls = require$$1$2;
+  const tls = require$$1$3;
   const os = require$$7$1;
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   const DataStream = requireDataStream();
   const { PassThrough } = require$$0$2;
   const shared2 = requireShared();
@@ -7369,7 +7369,7 @@ function requireSmtpConnection() {
   class SMTPConnection extends EventEmitter {
     constructor(options) {
       super(options);
-      this.id = crypto$1.randomBytes(8).toString("base64").replace(/\W/g, "");
+      this.id = crypto.randomBytes(8).toString("base64").replace(/\W/g, "");
       this.stage = "init";
       this.options = options || {};
       this.secureConnection = !!this.options.secure;
@@ -8529,7 +8529,7 @@ function requireSmtpConnection() {
         );
       }
       const base64decoded = Buffer.from(challengeMatch[1], "base64").toString("ascii");
-      const hmacMD5 = crypto$1.createHmac("md5", this._auth.credentials.pass);
+      const hmacMD5 = crypto.createHmac("md5", this._auth.credentials.pass);
       hmacMD5.update(base64decoded);
       const prepended = this._auth.credentials.user + " " + hmacMD5.digest("hex");
       this._responseActions.push((str2) => {
@@ -8822,7 +8822,7 @@ function requireXoauth2() {
   hasRequiredXoauth2 = 1;
   const { Stream } = require$$0$2;
   const nmfetch = requireFetch();
-  const crypto$1 = crypto;
+  const crypto = require$$1$2;
   const shared2 = requireShared();
   const errors2 = requireErrors();
   class XOAuth2 extends Stream {
@@ -9168,7 +9168,7 @@ function requireXoauth2() {
      */
     jwtSignRS256(payload) {
       payload = ['{"alg":"RS256","typ":"JWT"}', JSON.stringify(payload)].map((val) => this.toBase64URL(val)).join(".");
-      const signature = crypto$1.createSign("RSA-SHA256").update(payload).sign(this.options.privateKey);
+      const signature = crypto.createSign("RSA-SHA256").update(payload).sign(this.options.privateKey);
       return payload + "." + this.toBase64URL(signature);
     }
   }

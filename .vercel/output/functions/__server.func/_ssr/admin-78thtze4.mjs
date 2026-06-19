@@ -1,10 +1,9 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { N as Navbar, L as Label, I as Input, B as Button, F as Footer, c as cn } from "./Footer-BaHlnXZP.mjs";
-import { C as Card, a as CardHeader, b as CardTitle, c as CardDescription, d as CardContent } from "./card-DYFJxc7g.mjs";
+import { N as Navbar, L as Label, I as Input, B as Button, F as Footer, c as cn } from "./Footer-DgUPFLtU.mjs";
+import { C as Card, a as CardHeader, b as CardTitle, c as CardDescription, d as CardContent } from "./card-B8kpRT0G.mjs";
 import { R as Root2, L as List, T as Trigger, C as Content } from "../_libs/radix-ui__react-tabs.mjs";
 import { c as cva } from "../_libs/class-variance-authority.mjs";
 import { t as toast } from "../_libs/sonner.mjs";
-import "../_libs/input-otp.mjs";
 import { S as ShieldCheck, L as LoaderCircle, a as Lock, d as LogOut, k as Users, c as ShoppingBag, h as BookOpen } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -175,15 +174,13 @@ function Badge({ className, variant, ...props }) {
 function AdminPanel() {
   const [stage, setStage] = reactExports.useState("email");
   const [email, setEmail] = reactExports.useState("");
-  const [otp, setOtp] = reactExports.useState("");
   const [loading, setLoading] = reactExports.useState(false);
-  const [otpMeta, setOtpMeta] = reactExports.useState(null);
   const [data, setData] = reactExports.useState(null);
-  async function sendOtp(e) {
+  async function loginAdmin(e) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/send-otp", {
+      const res = await fetch("/api/verify-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -194,38 +191,7 @@ function AdminPanel() {
         })
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to send OTP");
-      setOtpMeta({
-        expiry: json.expiry,
-        signature: json.signature
-      });
-      setStage("otp");
-      toast.success("OTP sent to your email");
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-  async function verifyOtp(e) {
-    e.preventDefault();
-    if (!otpMeta) return;
-    setLoading(true);
-    try {
-      const res = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          otp,
-          expiry: otpMeta.expiry,
-          signature: otpMeta.signature
-        })
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Invalid OTP");
+      if (!res.ok) throw new Error(json.error || "Login failed");
       const dataRes = await fetch("/api/admin-data");
       const dataJson = await dataRes.json();
       if (!dataJson.success) throw new Error(dataJson.message || "Failed to load data");
@@ -235,7 +201,11 @@ function AdminPanel() {
         enrollments: dataJson.enrollments
       });
       setStage("dashboard");
-      toast.success("Welcome, admin");
+      if (dataJson.isSandbox) {
+        toast.info(dataJson.message || "Running in sandbox mode with demo data.");
+      } else {
+        toast.success("Welcome, admin");
+      }
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -245,8 +215,6 @@ function AdminPanel() {
   function logout() {
     setStage("email");
     setEmail("");
-    setOtp("");
-    setOtpMeta(null);
     setData(null);
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen flex flex-col", children: [
@@ -255,24 +223,17 @@ function AdminPanel() {
       /* @__PURE__ */ jsxRuntimeExports.jsxs(CardHeader, { className: "text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mx-auto w-12 h-12 rounded-full bg-primary/10 grid place-items-center mb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ShieldCheck, { className: "w-6 h-6 text-primary" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: "Admin Access" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: stage === "email" ? "Restricted to authorized administrators only." : `Enter the 6-digit code sent to ${email}` })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardDescription, { children: "Restricted to authorized administrators only." })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { children: stage === "email" ? /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: sendOtp, className: "space-y-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: loginAdmin, className: "space-y-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "email", children: "Admin Email" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Input, { id: "email", type: "email", required: true, value: email, onChange: (e) => setEmail(e.target.value), placeholder: "admin@vbtc.com" })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "submit", className: "w-full", disabled: loading, children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "w-4 h-4 animate-spin" }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Lock, { className: "w-4 h-4 mr-2" }),
-          "Send OTP"
+          "Login"
         ] }) })
-      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: verifyOtp, className: "space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { htmlFor: "otp", children: "6-digit code" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Input, { id: "otp", required: true, maxLength: 6, value: otp, onChange: (e) => setOtp(e.target.value.replace(/\D/g, "")), placeholder: "123456", className: "text-center text-2xl tracking-widest font-mono" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "submit", className: "w-full", disabled: loading || otp.length !== 6, children: loading ? /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "w-4 h-4 animate-spin" }) : "Verify & Continue" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "button", variant: "ghost", className: "w-full", onClick: () => setStage("email"), children: "Use a different email" })
       ] }) })
     ] }) }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [

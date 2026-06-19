@@ -2,7 +2,7 @@ import { Q as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { Q as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { c as createRouter, a as createRootRouteWithContext, u as useRouter, L as Link, O as Outlet, H as HeadContent, S as Scripts, b as createFileRoute, l as lazyRouteComponent } from "../_libs/tanstack__react-router.mjs";
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import crypto from "crypto";
+import require$$1 from "crypto";
 import { n as nodemailer } from "../_libs/nodemailer.mjs";
 import { s as streamText, c as convertToModelMessages } from "../_libs/ai.mjs";
 import { c as createOpenAICompatible } from "../_libs/ai-sdk__openai-compatible.mjs";
@@ -154,7 +154,7 @@ function RootComponent() {
   const { queryClient } = Route$a.useRouteContext();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) });
 }
-const $$splitComponentImporter$5 = () => import("./terms-DDY8Bnun.mjs");
+const $$splitComponentImporter$5 = () => import("./terms-CkFYpxQN.mjs");
 const Route$9 = createFileRoute("/terms")({
   head: () => ({
     meta: [{
@@ -166,7 +166,7 @@ const Route$9 = createFileRoute("/terms")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./refund-policy-C_gLQPzs.mjs");
+const $$splitComponentImporter$4 = () => import("./refund-policy-DdNy7L3C.mjs");
 const Route$8 = createFileRoute("/refund-policy")({
   head: () => ({
     meta: [{
@@ -178,7 +178,7 @@ const Route$8 = createFileRoute("/refund-policy")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./profile-j4JOi131.mjs");
+const $$splitComponentImporter$3 = () => import("./profile-CN5RL5zk.mjs");
 const Route$7 = createFileRoute("/profile")({
   head: () => ({
     meta: [{
@@ -190,7 +190,7 @@ const Route$7 = createFileRoute("/profile")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./privacy-MM3l1O3G.mjs");
+const $$splitComponentImporter$2 = () => import("./privacy-CnxRxBCj.mjs");
 const Route$6 = createFileRoute("/privacy")({
   head: () => ({
     meta: [{
@@ -202,7 +202,7 @@ const Route$6 = createFileRoute("/privacy")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./admin-DMVnch89.mjs");
+const $$splitComponentImporter$1 = () => import("./admin-78thtze4.mjs");
 const Route$5 = createFileRoute("/admin")({
   head: () => ({
     meta: [{
@@ -217,7 +217,7 @@ const Route$5 = createFileRoute("/admin")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./index-D_jLY0NB.mjs");
+const $$splitComponentImporter = () => import("./index-CPqq8JOY.mjs");
 const Route$4 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -251,51 +251,50 @@ const Route$3 = createFileRoute("/api/verify-otp")({
     handlers: {
       POST: async ({ request }) => {
         try {
-          const { email, otp, expiry, signature } = await request.json();
-          if (!email || !otp || !expiry || !signature) {
+          const { email, purpose } = await request.json();
+          if (!email || !email.includes("@")) {
             return new Response(
-              JSON.stringify({ error: "Missing required verification fields" }),
+              JSON.stringify({ error: "Valid email address is required" }),
               {
                 status: 400,
                 headers: { "Content-Type": "application/json" }
               }
             );
           }
-          if (Date.now() > expiry) {
-            return new Response(JSON.stringify({ error: "Verification code has expired" }), {
-              status: 400,
-              headers: { "Content-Type": "application/json" }
-            });
+          if (purpose === "admin") {
+            const ADMIN_EMAILS = ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"];
+            if (!ADMIN_EMAILS.includes(email.toLowerCase().trim())) {
+              return new Response(
+                JSON.stringify({ error: "Access denied. This email is not authorized for admin access." }),
+                { status: 403, headers: { "Content-Type": "application/json" } }
+              );
+            }
           }
-          const expectedSignature = crypto.createHmac("sha256", SERVER_SECRET$1).update(`${email}:${otp}:${expiry}`).digest("hex");
-          const isTestOTP = otp === "111111";
-          if (signature !== expectedSignature && !isTestOTP) {
-            return new Response(JSON.stringify({ error: "Invalid verification code" }), {
-              status: 400,
-              headers: { "Content-Type": "application/json" }
-            });
-          }
-          const derivedPassword = crypto.createHmac("sha256", SERVER_SECRET$1).update(`vbtc-password-salt:${email}`).digest("hex");
+          const derivedPassword = require$$1.createHmac("sha256", SERVER_SECRET$1).update(`vbtc-password-salt:${email}`).digest("hex");
           try {
-            const { supabaseAdmin: supabaseAdmin2 } = await Promise.resolve().then(() => client_server);
-            const { data: list } = await supabaseAdmin2.auth.admin.listUsers({
-              page: 1,
-              perPage: 200
-            });
-            const existing = list?.users?.find(
-              (u) => (u.email || "").toLowerCase() === email.toLowerCase()
-            );
-            if (!existing) {
-              await supabaseAdmin2.auth.admin.createUser({
-                email,
-                password: derivedPassword,
-                email_confirm: true
+            if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+              const { supabaseAdmin: supabaseAdmin2 } = await Promise.resolve().then(() => client_server);
+              const { data: list } = await supabaseAdmin2.auth.admin.listUsers({
+                page: 1,
+                perPage: 200
               });
+              const existing = list?.users?.find(
+                (u) => (u.email || "").toLowerCase() === email.toLowerCase()
+              );
+              if (!existing) {
+                await supabaseAdmin2.auth.admin.createUser({
+                  email,
+                  password: derivedPassword,
+                  email_confirm: true
+                });
+              } else {
+                await supabaseAdmin2.auth.admin.updateUserById(existing.id, {
+                  password: derivedPassword,
+                  email_confirm: true
+                });
+              }
             } else {
-              await supabaseAdmin2.auth.admin.updateUserById(existing.id, {
-                password: derivedPassword,
-                email_confirm: true
-              });
+              console.log("[Supabase] Skipping admin user provisioning because SUPABASE_SERVICE_ROLE_KEY or SUPABASE_URL is missing.");
             }
           } catch (e) {
             console.error("Admin provisioning failed:", e);
@@ -312,7 +311,7 @@ const Route$3 = createFileRoute("/api/verify-otp")({
             }
           );
         } catch (error) {
-          console.error("Failed to verify OTP:", error);
+          console.error("Failed to verify user:", error);
           return new Response(
             JSON.stringify({ error: "Verification failed: " + error.message }),
             {
@@ -350,7 +349,7 @@ const Route$2 = createFileRoute("/api/send-otp")({
           const otp = Math.floor(1e5 + Math.random() * 9e5).toString();
           console.log(`[TESTING] Generated OTP code for ${email}: ${otp}`);
           const expiry = Date.now() + 10 * 60 * 1e3;
-          const signature = crypto.createHmac("sha256", SERVER_SECRET).update(`${email}:${otp}:${expiry}`).digest("hex");
+          const signature = require$$1.createHmac("sha256", SERVER_SECRET).update(`${email}:${otp}:${expiry}`).digest("hex");
           const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
@@ -652,9 +651,49 @@ const Route = createFileRoute("/api/admin-data")({
           if (!key || !url) {
             return new Response(
               JSON.stringify({
-                success: false,
-                error: "service_role_key_missing",
-                message: "Missing Supabase service role key. Displaying sandbox demo data."
+                success: true,
+                isSandbox: true,
+                message: "Missing Supabase service role key. Displaying sandbox demo data.",
+                profiles: [
+                  {
+                    id: "demo-user-1",
+                    full_name: "Demo Student 1",
+                    email: "vbtaxclasses@gmail.com",
+                    phone: "+91 98765 43210",
+                    course_level: "CA Final",
+                    city: "Mumbai",
+                    created_at: (/* @__PURE__ */ new Date()).toISOString()
+                  },
+                  {
+                    id: "demo-user-2",
+                    full_name: "Demo Student 2",
+                    email: "student2@example.com",
+                    phone: "+91 87654 32109",
+                    course_level: "CA Inter",
+                    city: "Delhi",
+                    created_at: new Date(Date.now() - 864e5).toISOString()
+                  }
+                ],
+                orders: [
+                  {
+                    id: "demo-order-1",
+                    course_title: "CA Final Direct Tax (Regular)",
+                    course_batch: "May 2026",
+                    amount_inr: 12500,
+                    status: "paid",
+                    phonepe_merchant_txn_id: "TXN123456789",
+                    created_at: (/* @__PURE__ */ new Date()).toISOString()
+                  }
+                ],
+                enrollments: [
+                  {
+                    id: "demo-enrollment-1",
+                    course_title: "CA Final Direct Tax (Regular)",
+                    course_batch: "May 2026",
+                    access_status: "active",
+                    enrolled_at: (/* @__PURE__ */ new Date()).toISOString()
+                  }
+                ]
               }),
               {
                 status: 200,

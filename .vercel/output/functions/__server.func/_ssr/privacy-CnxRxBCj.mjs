@@ -1,9 +1,8 @@
 import { j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { N as Navbar, F as Footer } from "./Footer-BaHlnXZP.mjs";
+import { N as Navbar, F as Footer } from "./Footer-DgUPFLtU.mjs";
 import { C as ChatBot } from "./ChatBot-BXnRggGO.mjs";
-import "../_libs/input-otp.mjs";
 import "../_libs/sonner.mjs";
-import { B as BadgeQuestionMark } from "../_libs/lucide-react.mjs";
+import { j as Shield } from "../_libs/lucide-react.mjs";
 import "../_libs/tanstack__react-router.mjs";
 import "../_libs/tanstack__router-core.mjs";
 import "../_libs/tanstack__history.mjs";
@@ -122,63 +121,66 @@ import "../_libs/inline-style-parser.mjs";
 import "../_libs/hast-util-whitespace.mjs";
 import "../_libs/estree-util-is-identifier-name.mjs";
 import "../_libs/html-url-attributes.mjs";
-function RefundPolicyPage() {
+function PrivacyPage() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-background flex flex-col", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Navbar, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "flex-1", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "relative overflow-hidden py-16 md:py-24 bg-gradient-to-br from-navy via-brand-900 to-navy text-white", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-grid-dots opacity-20", "aria-hidden": true }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container-page relative text-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-gold mb-4 shadow-soft", children: /* @__PURE__ */ jsxRuntimeExports.jsx(BadgeQuestionMark, { className: "h-6 w-6 animate-pulse-slow" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-4xl md:text-6xl font-bold tracking-tight", children: "Refund & Cancellation" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-white/70 max-w-md mx-auto text-sm md:text-base", children: "Learn about our parameters for cancellations, returns, and course transfers." })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-gold mb-4 shadow-soft", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Shield, { className: "h-6 w-6 animate-pulse-slow" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-4xl md:text-6xl font-bold tracking-tight", children: "Privacy Policy" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-4 text-white/70 max-w-md mx-auto text-sm md:text-base", children: "Effective date: June 7, 2026. Your privacy and trust are our utmost priority." })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "py-16 md:py-24", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "container-page max-w-3xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "prose prose-slate dark:prose-invert max-w-none space-y-8 text-foreground/80 leading-relaxed text-sm md:text-base", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "1. Policy Overview" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "At VBTC, we aim to offer the highest academic standard in tax mentorship. Because our services consist of digital deliveries (video lectures, streaming access) and physical logistics (custom hard book volumes printed on order), the terms of refund are strictly structured." })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "2. Eligibility for Refunds" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-            "Refund requests must be formally submitted within ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "48 hours" }),
-            " of enrollment/purchase. Requests made after this window are not eligible for a refund."
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Please note that a refund request will only be processed if:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "1. Information We Collect" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "We collect personal details that you voluntarily provide to us during registration, enrollment, or when contacting us through our site. This includes:" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "list-disc pl-6 space-y-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "No video files/lectures have been streamed or downloaded." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "The activation key for the video player has not been registered or utilized." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Physical textbooks have not been dispatched from our printing/warehouse hub. If books have been dispatched, the printing and courier cost will be deducted from the refund sum." })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Personal Identification Details:" }),
+              " Name, email address, phone number, and postal address (for dispatching hard copy study materials)."
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Academic Details:" }),
+              " Course level (CA Inter, CA Final, CMA Final) and batch year."
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Billing Data:" }),
+              " Payments are processed securely via third-party gateways. VBTC does not store or see your credit/debit card numbers or UPI PINs."
+            ] })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "3. Batch/Format Transfers" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "If a student wants to swap formats (e.g. PDF to Hard Books or vice versa) or transfer to a different batch year:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "2. How We Use Your Information" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "The collected information is solely used to facilitate premium educational services:" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { className: "list-disc pl-6 space-y-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Transfers are permissible subject to approval by the support desk." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Students must pay the variance fee (if transferring to a higher cost package)." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "For hard book dispatch swaps, courier fees are paid by the student." })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Delivering lectures, processing admissions, and shipping physical textbook volumes." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Sending automated batch notifications, schedule updates, and exam results." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Providing chatbot-assisted counselling and prompt query support." })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "4. Processing of Refunds" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-            "Approved refunds are processed via the original payment source channel. Please allow ",
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "5 to 7 bank business days" }),
-            " for the credit to reflect in your bank account, depending on your financial institution."
-          ] })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "3. Intellectual Property and Security" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "VBTC values data safety. We implement standard encryption systems to secure user databases. Student accounts, video streams, and portal materials are tied to user access parameters to ensure high security and anti-piracy protection." })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "5. Contact Support for Assistance" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "To request a refund or raise a billing concern, please send a mail detailing your order transaction ID and name to:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "4. Third-Party Services" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "We do not sell, trade, or transfer your personal data to external parties. However, we utilize trusted third-party providers to operate payment channels and logistics/courier services for book deliveries. All external service channels adhere to professional privacy standards." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-2xl md:text-3xl font-bold text-foreground", children: "5. Contact Us" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "If you have questions regarding this Privacy Policy or data storage, please feel free to reach out to us:" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "bg-card border border-border rounded-2xl p-5 mt-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Email:" }),
             " vbtaxclasses@gmail.com",
             /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Phone Support:" }),
-            " +91 98307 73655 / +91 90519 03915"
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Phone:" }),
+            " +91 98307 73655 / +91 90519 03915",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Address:" }),
+            " Kenderdine Ln, Bowbazar, Kolkata, West Bengal 700012"
           ] })
         ] })
       ] }) }) })
@@ -188,5 +190,5 @@ function RefundPolicyPage() {
   ] });
 }
 export {
-  RefundPolicyPage as component
+  PrivacyPage as component
 };
