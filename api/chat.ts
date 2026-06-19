@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
+import { createLovableAiGatewayProvider } from "../src/lib/ai-gateway.server";
 
 const SYSTEM_PROMPT = `You are "Vikram Sir Bot" — the friendly student counsellor for CA Vikram Biyani Tax Classes (VBTC), Kolkata. You help CA Inter, CA Final, CMA Final students and their parents understand the courses, batches and admission process.
 
@@ -177,7 +177,7 @@ How can I help you? I can answer queries about:
 • 🔄 **Refund and Cancellation policies**`;
 }
 
-function createFallbackResponseStream(messages: UIMessage[]): Response {
+async function writeFallbackResponse(messages: UIMessage[], res: VercelResponse) {
   const userMessages = messages.filter((m) => m.role === "user");
   const lastUserMessage = userMessages[userMessages.length - 1];
   const queryText =
@@ -186,70 +186,76 @@ function createFallbackResponseStream(messages: UIMessage[]): Response {
       .join("") || "";
 
   const text = getFallbackResponse(queryText);
-  const encoder = new TextEncoder();
-  const stream = new ReadableStream({
-    async start(controller) {
-      const words = text.split(" ");
-      for (let i = 0; i < words.length; i++) {
-        const chunk = words[i] + (i < words.length - 1 ? " " : "");
-        // Format each chunk as a text parts protocol line: 0:JSON_STRING\n
-        const formattedChunk = `0:${JSON.stringify(chunk)}\n`;
-        controller.enqueue(encoder.encode(formattedChunk));
-        await new Promise((resolve) => setTimeout(resolve, 25));
-      }
+  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  res.setHeader("x-vercel-ai-data-stream", "v1");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
 
-      // Append finish reason/done frame at the end of the stream
-      const doneFrame = `d:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":0}}\n`;
-      controller.enqueue(encoder.encode(doneFrame));
+  const words = text.split(" ");
+  for (let i = 0; i < words.length; i++) {
+    const chunk = words[i] + (i < words.length - 1 ? " " : "");
+    const formattedChunk = `0:${JSON.stringify(chunk)}\n`;
+    res.write(formattedChunk);
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
 
-      controller.close();
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "x-vercel-ai-data-stream": "v1",
-      "Cache-Control": "no-cache",
-      "Connection": "keep-alive",
-    },
-  });
+  const doneFrame = `d:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":0}}\n`;
+  res.write(doneFrame);
+  res.end();
 }
 
-export const Route = createFileRoute("/api/chat")({
-  server: {
-    handlers: {
-      POST: async ({ request }) => {
-        let incomingMessages: UIMessage[] = [];
-        try {
-          const body = (await request.json()) as { messages?: UIMessage[] };
-          if (Array.isArray(body.messages)) {
-            incomingMessages = body.messages;
-          }
-        } catch (_) {}
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== "POST") {
+    res.setHeader("Allow", ["POST"]);
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+  }
 
-        if (incomingMessages.length === 0) {
-          return new Response("Messages are required", { status: 400 });
-        }
+  let incomingMessages: UIMessage[] = [];
+  try {
+    const body = req.body || {};
+    if (Array.isArray(body.messages)) {
+      incomingMessages = body.messages;
+    }
+  } catch (_) {}
 
-        try {
-          const key = process.env.LOVABLE_API_KEY;
-          if (!key) {
-            return createFallbackResponseStream(incomingMessages);
-          }
+  if (incomingMessages.length === 0) {
+    return res.status(400).json({ error: "Messages are required" });
+  }
 
-          const gateway = createLovableAiGatewayProvider(key);
-          const result = streamText({
-            model: gateway("google/gemini-3-flash-preview"),
-            system: SYSTEM_PROMPT,
-            messages: await convertToModelMessages(incomingMessages),
-          });
-          return result.toUIMessageStreamResponse({ originalMessages: incomingMessages });
-        } catch (err) {
-          console.error("chat error, triggering fallback", err);
-          return createFallbackResponseStream(incomingMessages);
-        }
-      },
-    },
-  },
-});
+  try {
+    const key = process.env.LOVABLE_API_KEY;
+    if (!key) {
+      return await writeFallbackResponse(incomingMessages, res);
+    }
+
+    const gateway = createLovableAiGatewayProvider(key);
+    const result = streamText({
+      model: gateway("google/gemini-3-flash-preview"),
+      system: SYSTEM_PROMPT,
+      messages: await convertToModelMessages(incomingMessages),
+    });
+
+    const streamResponse = result.toUIMessageStreamResponse({ originalMessages: incomingMessages });
+    
+    streamResponse.headers.forEach((value, name) => {
+      res.setHeader(name, value);
+    });
+
+    if (streamResponse.body) {
+      const reader = streamResponse.body.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+    }
+    res.end();
+  } catch (err: any) {
+    console.error("chat error, triggering fallback", err);
+    try {
+      return await writeFallbackResponse(incomingMessages, res);
+    } catch (e) {
+      return res.status(500).json({ error: "Chat failed: " + err.message });
+    }
+  }
+}

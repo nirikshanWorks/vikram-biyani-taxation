@@ -15,10 +15,6 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiVerifyOtpRouteImport } from './routes/api/verify-otp'
-import { Route as ApiSendOtpRouteImport } from './routes/api/send-otp'
-import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as ApiAdminDataRouteImport } from './routes/api/admin-data'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -50,26 +46,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiVerifyOtpRoute = ApiVerifyOtpRouteImport.update({
-  id: '/api/verify-otp',
-  path: '/api/verify-otp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiSendOtpRoute = ApiSendOtpRouteImport.update({
-  id: '/api/send-otp',
-  path: '/api/send-otp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/api/chat',
-  path: '/api/chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminDataRoute = ApiAdminDataRouteImport.update({
-  id: '/api/admin-data',
-  path: '/api/admin-data',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -78,10 +54,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
-  '/api/admin-data': typeof ApiAdminDataRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/send-otp': typeof ApiSendOtpRoute
-  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -90,10 +62,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
-  '/api/admin-data': typeof ApiAdminDataRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/send-otp': typeof ApiSendOtpRoute
-  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -103,10 +71,6 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/terms': typeof TermsRoute
-  '/api/admin-data': typeof ApiAdminDataRoute
-  '/api/chat': typeof ApiChatRoute
-  '/api/send-otp': typeof ApiSendOtpRoute
-  '/api/verify-otp': typeof ApiVerifyOtpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,22 +81,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/refund-policy'
     | '/terms'
-    | '/api/admin-data'
-    | '/api/chat'
-    | '/api/send-otp'
-    | '/api/verify-otp'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/admin'
-    | '/privacy'
-    | '/profile'
-    | '/refund-policy'
-    | '/terms'
-    | '/api/admin-data'
-    | '/api/chat'
-    | '/api/send-otp'
-    | '/api/verify-otp'
+  to: '/' | '/admin' | '/privacy' | '/profile' | '/refund-policy' | '/terms'
   id:
     | '__root__'
     | '/'
@@ -141,10 +91,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/refund-policy'
     | '/terms'
-    | '/api/admin-data'
-    | '/api/chat'
-    | '/api/send-otp'
-    | '/api/verify-otp'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -154,10 +100,6 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   TermsRoute: typeof TermsRoute
-  ApiAdminDataRoute: typeof ApiAdminDataRoute
-  ApiChatRoute: typeof ApiChatRoute
-  ApiSendOtpRoute: typeof ApiSendOtpRoute
-  ApiVerifyOtpRoute: typeof ApiVerifyOtpRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,34 +146,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/verify-otp': {
-      id: '/api/verify-otp'
-      path: '/api/verify-otp'
-      fullPath: '/api/verify-otp'
-      preLoaderRoute: typeof ApiVerifyOtpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/send-otp': {
-      id: '/api/send-otp'
-      path: '/api/send-otp'
-      fullPath: '/api/send-otp'
-      preLoaderRoute: typeof ApiSendOtpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/api/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin-data': {
-      id: '/api/admin-data'
-      path: '/api/admin-data'
-      fullPath: '/api/admin-data'
-      preLoaderRoute: typeof ApiAdminDataRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -242,21 +156,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   TermsRoute: TermsRoute,
-  ApiAdminDataRoute: ApiAdminDataRoute,
-  ApiChatRoute: ApiChatRoute,
-  ApiSendOtpRoute: ApiSendOtpRoute,
-  ApiVerifyOtpRoute: ApiVerifyOtpRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
