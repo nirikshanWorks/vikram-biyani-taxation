@@ -1,8 +1,22 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import crypto from "crypto";
-import { supabaseAdmin } from "../src/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
 
 const SERVER_SECRET = process.env.OTP_SECRET_SALT || "vbtc-taxation-otp-secret-salt-2026";
+
+// Initialize Supabase Admin client directly to avoid relative path bundler issues on Vercel
+const getSupabaseAdmin = () => {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key, {
+    auth: {
+      storage: undefined,
+      persistSession: false,
+      autoRefreshToken: false,
+    }
+  });
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -57,7 +71,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Ensure the auth user exists and is email-confirmed so client signInWithPassword
     // succeeds with a real session (otherwise RLS-protected inserts fail).
     try {
-      if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      const supabaseAdmin = getSupabaseAdmin();
+      if (supabaseAdmin) {
         // 1. Try to find the user in the public.profiles table by email
         const { data: profile, error: profileError } = await supabaseAdmin
           .from("profiles")

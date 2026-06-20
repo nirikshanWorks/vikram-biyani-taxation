@@ -1,5 +1,19 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { supabaseAdmin } from "../src/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase Admin client directly to avoid relative path bundler issues on Vercel
+const getSupabaseAdmin = () => {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key, {
+    auth: {
+      storage: undefined,
+      persistSession: false,
+      autoRefreshToken: false,
+    }
+  });
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -10,8 +24,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
     const url = process.env.SUPABASE_URL;
+    const supabaseAdmin = getSupabaseAdmin();
 
-    if (!key || !url) {
+    if (!key || !url || !supabaseAdmin) {
       return res.status(200).json({
         success: true,
         isSandbox: true,
