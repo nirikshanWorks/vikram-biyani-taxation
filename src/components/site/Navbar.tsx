@@ -42,12 +42,12 @@ const courseGroups = [
 ];
 
 const links = [
-  { label: "About", href: "#about" },
-  { label: "Results", href: "#results" },
-  { label: "Resources", href: "#resources" },
-  { label: "Reviews", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Results", href: "/#results" },
+  { label: "Resources", href: "/#resources" },
+  { label: "Reviews", href: "/#testimonials" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {

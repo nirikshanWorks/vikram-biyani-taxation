@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Dialog,
   DialogContent,
@@ -47,6 +48,7 @@ export function EnrollmentDialog({
   onOpenChange,
   preselectedCourse,
 }: EnrollmentDialogProps) {
+  const navigate = useNavigate();
   // Step & Loader states
   const [step, setStep] = useState<Step>("auth-email");
   const [isLoading, setIsLoading] = useState(false);
@@ -268,8 +270,10 @@ export function EnrollmentDialog({
         if (enrollmentError) throw enrollmentError;
       }
 
-      setStep("success");
       toast.success("Successfully enrolled!");
+      onOpenChange(false);
+      navigate({ to: "/profile" });
+      setTimeout(() => setStep("auth-email"), 300);
     } catch (err: any) {
       setError(err.message || "Failed to submit enrollment");
       toast.error(err.message || "Enrollment failed");
