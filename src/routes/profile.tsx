@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
@@ -327,6 +327,18 @@ function ProfilePage() {
                     
                     <div className="h-px bg-border my-2" />
                     
+                    {user && ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"].includes(user.email?.toLowerCase().trim()) && (
+                      <>
+                        <Link
+                          to="/admin"
+                          className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-amber-600 hover:bg-amber-500/10 transition-colors cursor-pointer animate-fade-in"
+                        >
+                          <ShieldCheck className="h-4.5 w-4.5 text-amber-500" /> Admin Dashboard
+                        </Link>
+                        <div className="h-px bg-border my-2" />
+                      </>
+                    )}
+
                     <button
                       onClick={() => supabase.auth.signOut()}
                       className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"

@@ -34,21 +34,58 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         profiles: [
           {
             id: "demo-user-1",
-            full_name: "Demo Student 1",
+            full_name: "CA Student Vikram",
             email: "vbtaxclasses@gmail.com",
-            phone: "+91 98765 43210",
+            phone: "+91 98307 73655",
             course_level: "CA Final",
-            city: "Mumbai",
-            created_at: new Date().toISOString(),
+            city: "Kolkata",
+            created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+            updated_at: new Date(Date.now() - 2 * 60000).toISOString(), // 2 mins ago -> Online
+            last_sign_in_at: new Date(Date.now() - 5 * 60000).toISOString(),
           },
           {
             id: "demo-user-2",
-            full_name: "Demo Student 2",
-            email: "student2@example.com",
-            phone: "+91 87654 32109",
+            full_name: "Rahul Sharma",
+            email: "rahul.sharma@gmail.com",
+            phone: "+91 98765 43210",
             course_level: "CA Inter",
             city: "Delhi",
-            created_at: new Date(Date.now() - 86400000).toISOString(),
+            created_at: new Date(Date.now() - 15 * 86400000).toISOString(),
+            updated_at: new Date(Date.now() - 3 * 3600000).toISOString(), // 3 hours ago -> Idle
+            last_sign_in_at: new Date(Date.now() - 4 * 3600000).toISOString(),
+          },
+          {
+            id: "demo-user-3",
+            full_name: "Priya Patel",
+            email: "priya.patel@yahoo.com",
+            phone: "+91 87654 32109",
+            course_level: "CMA Final",
+            city: "Mumbai",
+            created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+            updated_at: new Date(Date.now() - 1 * 60000).toISOString(), // 1 min ago -> Online
+            last_sign_in_at: new Date(Date.now() - 2 * 60000).toISOString(),
+          },
+          {
+            id: "demo-user-4",
+            full_name: "Ananya Iyer",
+            email: "ananya.iyer@outlook.com",
+            phone: "+91 76543 21098",
+            course_level: "CA Final",
+            city: "Chennai",
+            created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+            updated_at: new Date(Date.now() - 3 * 86400000).toISOString(), // 3 days ago -> Offline
+            last_sign_in_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-user-5",
+            full_name: "Amit Verma",
+            email: "amit.verma@gmail.com",
+            phone: "+91 65432 10987",
+            course_level: "CA Inter",
+            city: "Pune",
+            created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+            updated_at: new Date(Date.now() - 20 * 3600000).toISOString(), // 20 hours ago -> Idle
+            last_sign_in_at: new Date(Date.now() - 20 * 3600000).toISOString(),
           }
         ],
         orders: [
@@ -56,10 +93,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             id: "demo-order-1",
             course_title: "CA Final Direct Tax (Regular)",
             course_batch: "May 2026",
-            amount_inr: 12500,
+            amount_inr: 8600,
             status: "paid",
-            phonepe_merchant_txn_id: "TXN123456789",
-            created_at: new Date().toISOString(),
+            phonepe_merchant_txn_id: "TXN-1718874591",
+            created_at: new Date(Date.now() - 20 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-order-2",
+            course_title: "CA Inter Taxation (DT + GST)",
+            course_batch: "Sep 2026",
+            amount_inr: 7500,
+            status: "paid",
+            phonepe_merchant_txn_id: "TXN-1718960991",
+            created_at: new Date(Date.now() - 12 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-order-3",
+            course_title: "DT + IDT Combo",
+            course_batch: "Nov 2026",
+            amount_inr: 13200,
+            status: "pending",
+            phonepe_merchant_txn_id: "TXN-1719047391",
+            created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-order-4",
+            course_title: "CMA Final Direct Tax",
+            course_batch: "Dec 2026",
+            amount_inr: 8600,
+            status: "paid",
+            phonepe_merchant_txn_id: "TXN-1719133791",
+            created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-order-5",
+            course_title: "CA Final Indirect Tax",
+            course_batch: "May 2027",
+            amount_inr: 7500,
+            status: "failed",
+            phonepe_merchant_txn_id: "TXN-1719220191",
+            created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
           }
         ],
         enrollments: [
@@ -68,7 +141,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             course_title: "CA Final Direct Tax (Regular)",
             course_batch: "May 2026",
             access_status: "active",
-            enrolled_at: new Date().toISOString(),
+            enrolled_at: new Date(Date.now() - 20 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-enrollment-2",
+            course_title: "CA Inter Taxation (DT + GST)",
+            course_batch: "Sep 2026",
+            access_status: "active",
+            enrolled_at: new Date(Date.now() - 12 * 86400000).toISOString(),
+          },
+          {
+            id: "demo-enrollment-3",
+            course_title: "CMA Final Direct Tax",
+            course_batch: "Dec 2026",
+            access_status: "active",
+            enrolled_at: new Date(Date.now() - 2 * 86400000).toISOString(),
           }
         ]
       });
@@ -96,9 +183,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (eErr) throw eErr;
 
+    // Fetch auth users to get last_sign_in_at
+    let authUsersMap: Record<string, any> = {};
+    try {
+      const { data: list, error: uErr } = await supabaseAdmin.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000
+      });
+      if (!uErr && list?.users) {
+        list.users.forEach((u: any) => {
+          authUsersMap[u.id] = {
+            last_sign_in_at: u.last_sign_in_at || null
+          };
+        });
+      }
+    } catch (e) {
+      console.warn("Failed to fetch auth users list:", e);
+    }
+
+    const profilesWithAuth = (profiles || []).map((p: any) => ({
+      ...p,
+      last_sign_in_at: authUsersMap[p.id]?.last_sign_in_at || p.created_at,
+    }));
+
     return res.status(200).json({
       success: true,
-      profiles: profiles || [],
+      profiles: profilesWithAuth,
       orders: orders || [],
       enrollments: enrollments || [],
     });

@@ -31,31 +31,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: "Valid email address is required" });
     }
 
-    // Check if it's admin login
-    const isAdmin = purpose === "admin" && ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"].includes(email.toLowerCase().trim());
+    // Enforce OTP verification for all users (including admins)
+    if (!otp || !expiry || !signature) {
+      return res.status(400).json({ error: "Verification code, expiry, and signature are required" });
+    }
 
-    // Only require OTP verification if the user is not an admin logging in
-    if (!isAdmin) {
-      if (!otp || !expiry || !signature) {
-        return res.status(400).json({ error: "Verification code, expiry, and signature are required" });
-      }
+    // 1. Verify if OTP has expired
+    if (Date.now() > Number(expiry)) {
+      return res.status(400).json({ error: "Verification code has expired. Please request a new code." });
+    }
 
-      // 1. Verify if OTP has expired
-      if (Date.now() > Number(expiry)) {
-        return res.status(400).json({ error: "Verification code has expired. Please request a new code." });
-      }
+    // 2. Re-create HMAC to verify OTP validity
+    const expectedSignature = crypto
+      .createHmac("sha256", SERVER_SECRET)
+      .update(`${email}:${otp}:${expiry}`)
+      .digest("hex");
 
-      // 2. Re-create HMAC to verify OTP validity
-      const expectedSignature = crypto
-        .createHmac("sha256", SERVER_SECRET)
-        .update(`${email}:${otp}:${expiry}`)
-        .digest("hex");
+    if (expectedSignature !== signature) {
+      return res.status(400).json({ error: "Invalid verification code. Please try again." });
+    }
 
-      if (expectedSignature !== signature) {
-        return res.status(400).json({ error: "Invalid verification code. Please try again." });
-      }
-    } else {
-      // For admin check (double-check that the email is allowed)
+    // 3. If it is an admin login, double-check that the email is allowed
+    if (purpose === "admin") {
       const ADMIN_EMAILS = ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"];
       if (!ADMIN_EMAILS.includes(email.toLowerCase().trim())) {
         return res.status(403).json({ error: "Access denied. This email is not authorized for admin access." });

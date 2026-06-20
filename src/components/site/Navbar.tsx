@@ -74,6 +74,27 @@ export function Navbar() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Heartbeat to track active state
+  useEffect(() => {
+    if (!user) return;
+    
+    const updateActiveStatus = async () => {
+      try {
+        await supabase
+          .from("profiles")
+          .update({ updated_at: new Date().toISOString() })
+          .eq("id", user.id);
+      } catch (err) {
+        console.warn("Failed to update active status:", err);
+      }
+    };
+
+    updateActiveStatus();
+
+    const interval = setInterval(updateActiveStatus, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [user]);
+
   const [preselectedCourse, setPreselectedCourse] = useState<any>(null);
 
   useEffect(() => {
@@ -205,6 +226,15 @@ export function Navbar() {
               <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand transition-all group-hover:w-full" />
             </Link>
           )}
+          {user && ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"].includes(user.email?.toLowerCase().trim()) && (
+            <Link
+              to="/admin"
+              className="text-sm font-bold text-amber-600 hover:text-amber-700 transition-colors relative group"
+            >
+              Admin Panel
+              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-amber-600 transition-all group-hover:w-full" />
+            </Link>
+          )}
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -286,6 +316,15 @@ export function Navbar() {
                 className="py-2 text-sm font-bold text-brand"
               >
                 Dashboard
+              </Link>
+            )}
+            {user && ["vbtaxclasses@gmail.com", "ai.nirikshan@gmail.com"].includes(user.email?.toLowerCase().trim()) && (
+              <Link
+                to="/admin"
+                onClick={() => setOpen(false)}
+                className="py-2 text-sm font-bold text-amber-600"
+              >
+                Admin Panel
               </Link>
             )}
             <Button
