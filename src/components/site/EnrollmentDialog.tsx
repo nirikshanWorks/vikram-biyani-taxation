@@ -40,7 +40,7 @@ interface EnrollmentDialogProps {
   preselectedCourse?: Course | null;
 }
 
-type Step = "auth-email" | "enroll-details" | "success";
+type Step = "auth-email" | "verify-otp" | "enroll-details" | "success";
 
 export function EnrollmentDialog({
   open,
@@ -54,6 +54,9 @@ export function EnrollmentDialog({
   
   // Auth states
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [signature, setSignature] = useState("");
+  const [expiry, setExpiry] = useState("");
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   // Profile details states
@@ -103,9 +106,9 @@ export function EnrollmentDialog({
     }
   };
 
-  // Login User via direct email provisioning and supabase authentication
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Send verification code (OTP) via backend
+  const handleSendOtp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address");
       return;
@@ -115,24 +118,66 @@ export function EnrollmentDialog({
     setError("");
 
     try {
-      // 1. Authenticate and provision password on backend
-      const response = await fetch("/api/verify-otp", {
+      const response = await fetch("/api/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed");
+        throw new Error(data.error || "Failed to send verification code");
+      }
+
+      setSignature(data.signature);
+      setExpiry(data.expiry);
+      setOtp("");
+      setStep("verify-otp");
+      toast.success("Verification code sent to your email!");
+    } catch (err: any) {
+      setError(err.message || "Failed to send verification code. Please try again.");
+      toast.error(err.message || "Failed to send verification code");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Verify OTP and complete Supabase sign in
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otp || otp.length !== 6) {
+      setError("Please enter a valid 6-digit code");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      // 1. Verify OTP on backend and get the derived password
+      const response = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          otp,
+          expiry,
+          signature,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Verification failed");
       }
 
       const derivedPassword = data.password;
 
       // 2. Sign in with derived password
       const authResult: any = await supabase.auth.signInWithPassword({
-        email,
+        email: email.trim().toLowerCase(),
         password: derivedPassword,
       });
 
@@ -144,11 +189,11 @@ export function EnrollmentDialog({
         setCurrentUser(authResult.data.user);
         await fetchProfile(authResult.data.user.id);
         setStep("enroll-details");
-        toast.success("Successfully authenticated!");
+        toast.success("Email verified successfully!");
       }
     } catch (err: any) {
-      setError(err.message || "Login failed. Please try again.");
-      toast.error(err.message || "Login failed");
+      setError(err.message || "Verification failed. Please try again.");
+      toast.error(err.message || "Verification failed");
     } finally {
       setIsLoading(false);
     }
@@ -246,7 +291,7 @@ export function EnrollmentDialog({
             </div>
             <div>
               <DialogTitle className="text-xl font-bold tracking-tight text-white font-display">
-                {step === "auth-email" ? "Sign In to VBTC" : "Enrollment Details"}
+                {step === "auth-email" ? "Sign In to VBTC" : step === "verify-otp" ? "Verify OTP" : "Enrollment Details"}
               </DialogTitle>
               <DialogDescription className="text-white/70 text-xs mt-0.5">
                 {preselectedCourse ? `Course: ${preselectedCourse.title}` : "CA & CMA Taxation Batches"}
@@ -264,7 +309,7 @@ export function EnrollmentDialog({
 
           {/* STEP 1: Email Input */}
           {step === "auth-email" && (
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleSendOtp} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs font-bold text-foreground/80 uppercase tracking-wider">
                   Email ID
@@ -289,7 +334,7 @@ export function EnrollmentDialog({
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing In...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Code...
                   </>
                 ) : (
                   <>
@@ -299,6 +344,66 @@ export function EnrollmentDialog({
               </Button>
               <p className="text-[11px] text-muted-foreground text-center mt-3">
                 By signing in, you agree to our Terms of Service & Privacy Policy.
+              </p>
+            </form>
+          )}
+
+          {/* STEP 2: OTP Verification */}
+          {step === "verify-otp" && (
+            <form onSubmit={handleVerifyOtp} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="otp" className="text-xs font-bold text-foreground/80 uppercase tracking-wider">
+                  Enter 6-digit Verification Code
+                </Label>
+                <div className="relative">
+                  <KeyRound className="absolute left-3.5 top-3.5 h-4.5 w-4.5 text-muted-foreground" />
+                  <Input
+                    id="otp"
+                    type="text"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    className="pl-11 h-11 rounded-xl border-border bg-card/50 text-foreground font-medium text-center tracking-[0.4em] text-lg font-bold"
+                    maxLength={6}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={() => setStep("auth-email")}
+                  variant="outline"
+                  className="flex-1 h-11 rounded-xl border-border font-bold text-xs"
+                >
+                  Back
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="flex-[2] h-11 bg-gradient-to-r from-brand to-brand-700 text-white shadow-brand hover:shadow-brand-lg rounded-xl font-bold text-xs"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Verifying...
+                    </>
+                  ) : (
+                    <>
+                      Verify & Continue <ArrowRight className="ml-1 h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-[11px] text-muted-foreground text-center mt-3">
+                Didn't receive code?{" "}
+                <button
+                  type="button"
+                  onClick={() => handleSendOtp()}
+                  disabled={isLoading}
+                  className="text-brand font-bold hover:underline"
+                >
+                  Resend OTP
+                </button>
               </p>
             </form>
           )}

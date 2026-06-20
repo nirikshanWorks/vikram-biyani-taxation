@@ -13,6 +13,7 @@ export const Route = createFileRoute("/terms")({
         content: "Read the Terms of Service for enrollment, lecture access, and code of conduct under VBTC.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://www.vikrambiyani.com/terms" }],
   }),
   component: TermsPage,
 });

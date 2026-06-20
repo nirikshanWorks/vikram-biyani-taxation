@@ -13,6 +13,7 @@ export const Route = createFileRoute("/refund-policy")({
         content: "Understand the terms of cancelations, refunds, and batch transfer policies for CA Vikram Biyani courses.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://www.vikrambiyani.com/refund-policy" }],
   }),
   component: RefundPolicyPage,
 });

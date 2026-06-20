@@ -13,6 +13,7 @@ export const Route = createFileRoute("/privacy")({
         content: "Learn how CA Vikram Biyani (VBTC) collects, uses, and safeguards student data.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://www.vikrambiyani.com/privacy" }],
   }),
   component: PrivacyPage,
 });

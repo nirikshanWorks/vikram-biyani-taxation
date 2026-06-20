@@ -32,9 +32,10 @@ export const Route = createFileRoute("/")({
           "Trusted by 50,000+ CA & CMA students. Direct Tax, GST, live & recorded batches, revision notes and mentorship.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://www.vikrambiyani.com/" },
+      { property: "og:image", content: "https://www.vikrambiyani.com/src/assets/VB-logo.jpg" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://www.vikrambiyani.com/" }],
   }),
   component: Index,
 });

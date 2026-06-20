@@ -44,8 +44,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       port: 587,
       secure: false,
       auth: {
-        user: "ai.nirikshan@gmail.com",
-        pass: "vzmi hxtb dcub ixpk",
+        user: "info@nirikshanai.com",
+        pass: "ypsn jszy kesm hdkc",
       },
     });
 
@@ -73,7 +73,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Send email
     await transporter.sendMail({
-      from: `"VBTC Enrollment Support" <ai.nirikshan@gmail.com>`,
+      from: `"VBTC Enrollment Support" <info@nirikshanai.com>`,
       to: email,
       subject: `${otp} is your VBTC Verification Code`,
       text: `Your verification code is ${otp}. This code is valid for 10 minutes.`,
