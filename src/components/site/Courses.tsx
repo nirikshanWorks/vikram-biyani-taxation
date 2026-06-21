@@ -240,13 +240,13 @@ export function Courses() {
           {/* Left sticky showcase panel */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 self-start animate-fade-up">
             <TiltCard className="rounded-3xl shadow-elevated border border-border bg-card overflow-hidden">
-              <div className="relative aspect-[16/10] overflow-hidden bg-secondary">
+              <div className="relative aspect-[16/10] overflow-hidden bg-white dark:bg-zinc-950 flex items-center justify-center">
                 <img
                   src={displayCourse.img}
                   alt={displayCourse.title}
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                  className="h-full w-full object-contain transition-transform duration-700 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute top-4 left-4 flex gap-2">
                   <span className="rounded-full bg-white/95 dark:bg-navy/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-3 py-1">
                     {displayCourse.tag}
@@ -369,11 +369,11 @@ export function Courses() {
                     }`}
                   >
                     {/* Thumbnail */}
-                    <div className="relative w-full sm:w-24 aspect-[4/3] rounded-xl overflow-hidden bg-secondary shrink-0">
+                    <div className="relative w-full sm:w-24 aspect-[4/3] rounded-xl overflow-hidden bg-white dark:bg-zinc-950 flex items-center justify-center shrink-0 border border-border/40">
                       <img
                         src={c.img}
                         alt={c.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
                       {c.live && (
                         <span className="absolute top-1.5 left-1.5 rounded-full bg-red-500 text-white text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5">

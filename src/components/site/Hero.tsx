@@ -133,20 +133,20 @@ export function Hero() {
         </div>
 
         {/* Right portrait composition */}
-        <div className="lg:col-span-5 relative animate-fade-up [animation-delay:120ms]">
-          <div className="relative mx-auto max-w-md aspect-[4/5]" style={{ perspective: "1200px" }}>
+        <div className="lg:col-span-5 relative animate-fade-up [animation-delay:120ms] mt-12 lg:mt-0">
+          <div className="relative mx-auto max-w-md flex flex-col gap-6 sm:block sm:aspect-[4/5]" style={{ perspective: "1200px" }}>
             {/* Glow ring */}
             <div
-              className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-accent to-navy blur-2xl opacity-40 animate-pulse-slow"
+              className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-brand via-accent to-navy blur-2xl opacity-40 animate-pulse-slow hidden sm:block"
               aria-hidden
             />
             {/* Dotted bg */}
             <div
-              className="absolute inset-0 rounded-[2.5rem] bg-grid-dots opacity-60"
+              className="absolute inset-0 rounded-[2.5rem] bg-grid-dots opacity-60 hidden sm:block"
               aria-hidden
             />
 
-            <div className="relative h-full w-full rounded-[2rem] overflow-hidden border border-white shadow-elevated bg-gradient-to-br from-brand-50 to-white animate-float-soft">
+            <div className="relative w-full aspect-[4/5] sm:h-full sm:w-full rounded-[2rem] overflow-hidden border border-white shadow-elevated bg-gradient-to-br from-brand-50 to-white animate-float-soft shrink-0">
               <img
                 src={vikramAsset}
                 alt="CA Vikram Biyani"
@@ -162,7 +162,7 @@ export function Hero() {
             </div>
 
             {/* Floating cards */}
-            <div className="absolute -left-6 top-10 rounded-2xl bg-white border border-border shadow-elevated p-4 w-52 animate-float-soft [animation-delay:.6s]">
+            <div className="w-full sm:w-52 bg-white border border-border rounded-2xl shadow-elevated p-4 animate-float-soft [animation-delay:.6s] sm:absolute sm:-left-6 sm:top-10">
               <div className="flex items-center gap-2">
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand">
                   <BadgeCheck className="h-4 w-4" />
@@ -178,13 +178,13 @@ export function Hero() {
               <div className="mt-1 text-[10px] text-muted-foreground">78% seats filled</div>
             </div>
 
-            <div className="absolute -right-4 top-32 rounded-2xl bg-gradient-to-br from-brand to-brand-700 text-white shadow-brand-lg p-4 w-44 animate-float-soft [animation-delay:1.2s]">
+            <div className="w-full sm:w-44 bg-gradient-to-br from-brand to-brand-700 text-white shadow-brand-lg p-4 rounded-2xl animate-float-soft [animation-delay:1.2s] sm:absolute sm:-right-4 sm:top-32">
               <div className="text-[10px] uppercase tracking-widest opacity-80">All India Rank</div>
               <div className="mt-1 text-3xl font-display font-bold">AIR 12</div>
               <div className="text-xs opacity-90">CA Final DT — May '25</div>
             </div>
 
-            <div className="absolute -bottom-4 left-8 rounded-2xl bg-white border border-border shadow-elevated p-3 w-56 animate-float-soft [animation-delay:1.8s]">
+            <div className="w-full sm:w-56 bg-white border border-border rounded-2xl shadow-elevated p-3 animate-float-soft [animation-delay:1.8s] sm:absolute sm:-bottom-4 sm:left-8">
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
