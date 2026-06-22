@@ -8,7 +8,7 @@ import {
   BadgeCheck,
   Sparkles as SparkIcon,
 } from "lucide-react";
-import vikramAsset from "@/assets/viram biyani profile.jpg";
+import vikramAsset from "@/assets/heroimage.jpeg";
 import { WordRotate } from "./WordRotate";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { Sparkles } from "./Sparkles";

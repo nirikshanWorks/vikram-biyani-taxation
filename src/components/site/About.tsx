@@ -1,5 +1,5 @@
 import { BadgeCheck, BookOpen, GraduationCap, Scale, Sparkles, Users } from "lucide-react";
-import heroImg from "@/assets/viram biyani profile.jpg";
+import heroImg from "@/assets/about.jpeg";
 
 const features = [
   { icon: Scale, label: "Direct Tax Specialist" },
