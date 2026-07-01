@@ -376,7 +376,10 @@ export function EnrollmentDialog({
               <div className="flex gap-2">
                 <Button
                   type="button"
-                  onClick={() => setStep("auth-email")}
+                  onClick={() => {
+                    setStep("auth-email");
+                    setError("");
+                  }}
                   variant="outline"
                   className="flex-1 h-11 rounded-xl border-border font-bold text-xs"
                 >

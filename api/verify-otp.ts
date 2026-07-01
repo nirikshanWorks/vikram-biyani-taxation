@@ -121,7 +121,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
         }
       } else {
-        console.log("[Supabase] Skipping admin user provisioning because SUPABASE_SERVICE_ROLE_KEY or SUPABASE_URL is missing.");
+        console.error("[Supabase] Missing SUPABASE_SERVICE_ROLE_KEY or SUPABASE_URL.");
+        throw new Error("Server misconfiguration: SUPABASE_SERVICE_ROLE_KEY is missing. Cannot provision user.");
       }
     } catch (e: any) {
       console.error("Admin provisioning failed:", e);
