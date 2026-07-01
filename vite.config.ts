@@ -7,25 +7,18 @@ import { fileURLToPath } from "url";
 import fs from "fs";
 import path from "path";
 
-// Load .env variables into process.env if they are not already set
+// Define __dirname for ES module scope
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import { loadEnv } from "vite";
+
+// Load .env variables into process.env using Vite's loadEnv
 try {
-  const envPath = path.resolve(__dirname, ".env");
-  if (fs.existsSync(envPath)) {
-    const envContent = fs.readFileSync(envPath, "utf-8");
-    envContent.split("\n").forEach((line) => {
-      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
-      if (match) {
-        const key = match[1];
-        let value = match[2] || "";
-        if (value.startsWith('"') && value.endsWith('"')) {
-          value = value.slice(1, -1);
-        }
-        if (!process.env[key]) {
-          process.env[key] = value;
-        }
-      }
-    });
-  }
+  // loadEnv(mode, envDir, prefixes)
+  // We use '' as prefix to load ALL env variables (not just VITE_)
+  const env = loadEnv("development", process.cwd(), "");
+  Object.assign(process.env, env);
 } catch (e) {
   console.error("Error loading .env file in vite.config.ts:", e);
 }
