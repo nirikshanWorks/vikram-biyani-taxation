@@ -16,11 +16,11 @@ export function WordRotate({
   }, [words.length, interval]);
 
   return (
-    <span className={`relative inline-grid align-bottom overflow-hidden ${className}`}>
+    <span className="relative inline-grid align-bottom overflow-hidden">
       {words.map((w, idx) => (
         <span
           key={w}
-          className="col-start-1 row-start-1 transition-all duration-500 ease-out"
+          className={`col-start-1 row-start-1 transition-all duration-500 ease-out ${className}`}
           style={{
             opacity: idx === i ? 1 : 0,
             transform: `translateY(${idx === i ? "0" : idx < i ? "-100%" : "100%"})`,
@@ -31,7 +31,7 @@ export function WordRotate({
         </span>
       ))}
       {/* invisible sizer = longest word */}
-      <span className="col-start-1 row-start-1 invisible whitespace-nowrap">
+      <span className={`col-start-1 row-start-1 invisible whitespace-nowrap ${className}`}>
         {words.reduce((a, b) => (a.length > b.length ? a : b))}
       </span>
     </span>
