@@ -212,37 +212,25 @@ function ProfilePage() {
         screenshotUrl = publicUrlData.publicUrl;
       }
 
-      // 1. Create pending Order
-      const { data: order, error: orderError } = await supabase
-        .from("orders")
-        .insert({
-          user_id: user.id,
-          course_title: purchasingCourse.title,
-          course_batch: purchasingCourse.batch,
-          course_tag: purchasingCourse.tag,
-          amount_inr: purchasingCourse.price,
-          status: "pending",
-          phonepe_merchant_txn_id: paymentUtr,
-          payment_response: { utr: paymentUtr, screenshot_url: screenshotUrl } as any,
-        })
-        .select()
-        .single();
+      // Use secure backend API to create pending order and enrollment
+      const response = await fetch("/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: user.id,
+          courseTitle: purchasingCourse.title,
+          courseBatch: purchasingCourse.batch,
+          courseTag: purchasingCourse.tag,
+          price: purchasingCourse.price,
+          paymentUtr,
+          screenshotUrl,
+        }),
+      });
 
-      if (orderError) throw orderError;
-
-      // 2. Create pending Enrollment
-      const { error: enrollmentError } = await supabase
-        .from("enrollments")
-        .insert({
-          user_id: user.id,
-          order_id: order.id,
-          course_title: purchasingCourse.title,
-          course_batch: purchasingCourse.batch,
-          course_tag: purchasingCourse.tag,
-          access_status: "pending",
-        });
-
-      if (enrollmentError) throw enrollmentError;
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to process enrollment");
+      }
 
       setPaymentStep("success");
       await loadUserData(user.id);

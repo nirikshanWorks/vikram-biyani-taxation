@@ -310,37 +310,25 @@ export function EnrollmentDialog({
       }
 
       if (preselectedCourse) {
-        // 1. Insert Order record as pending
-        const { data: order, error: orderError } = await supabase
-          .from("orders")
-          .insert({
-            user_id: currentUser.id,
-            course_title: preselectedCourse.title,
-            course_batch: preselectedCourse.batch,
-            course_tag: preselectedCourse.tag,
-            amount_inr: preselectedCourse.price,
-            status: "pending",
-            phonepe_merchant_txn_id: paymentUtr,
-            payment_response: { utr: paymentUtr, screenshot_url: screenshotUrl } as any,
-          })
-          .select()
-          .single();
+        // Use secure backend API to create pending order and enrollment
+        const response = await fetch("/api/create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: currentUser.id,
+            courseTitle: preselectedCourse.title,
+            courseBatch: preselectedCourse.batch,
+            courseTag: preselectedCourse.tag,
+            price: preselectedCourse.price,
+            paymentUtr,
+            screenshotUrl,
+          }),
+        });
 
-        if (orderError) throw orderError;
-
-        // 2. Insert Enrollment record as pending
-        const { error: enrollmentError } = await supabase
-          .from("enrollments")
-          .insert({
-            user_id: currentUser.id,
-            order_id: order.id,
-            course_title: preselectedCourse.title,
-            course_batch: preselectedCourse.batch,
-            course_tag: preselectedCourse.tag,
-            access_status: "pending",
-          });
-
-        if (enrollmentError) throw enrollmentError;
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || "Failed to process enrollment");
+        }
       }
 
       setStep("success");
