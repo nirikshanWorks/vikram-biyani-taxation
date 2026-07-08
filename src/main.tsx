@@ -8,7 +8,7 @@ const router = getRouter();
 
 // Mount the React application
 const rootElement = document.getElementById("root");
-if (rootElement && !rootElement.innerHTML) {
+if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <React.StrictMode>
