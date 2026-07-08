@@ -27,7 +27,12 @@ import {
   Edit2,
   BookMarked,
   ShieldCheck,
+  QrCode,
+  Wallet,
+  Landmark,
+  Upload,
 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -61,6 +66,9 @@ function ProfilePage() {
   // Shop states
   const [purchasingCourse, setPurchasingCourse] = useState<any>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
+  const [paymentStep, setPaymentStep] = useState<"confirm" | "payment" | "success">("confirm");
+  const [paymentUtr, setPaymentUtr] = useState("");
+  const [paymentScreenshot, setPaymentScreenshot] = useState<File | null>(null);
 
   // Monitor auth state changes
   useEffect(() => {
@@ -168,16 +176,43 @@ function ProfilePage() {
       return;
     }
     setPurchasingCourse(courseToBuy);
+    setPaymentStep("confirm");
+    setPaymentUtr("");
+    setPaymentScreenshot(null);
   };
 
-  const confirmPurchase = async () => {
-    if (!user || !purchasingCourse) return;
+  const confirmPurchase = () => {
+    setPaymentStep("payment");
+  };
+
+  const submitPaymentDetails = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user || !purchasingCourse || !paymentUtr) return;
     setIsPurchasing(true);
 
     try {
-      const txnId = `TXN-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+      let screenshotUrl = null;
 
-      // 1. Create paid Order
+      if (paymentScreenshot) {
+        const fileExt = paymentScreenshot.name.split('.').pop();
+        const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from("payment_receipts")
+          .upload(fileName, paymentScreenshot);
+
+        if (uploadError) {
+          console.error("Upload error:", uploadError);
+          throw new Error("Failed to upload screenshot. Please ensure the 'payment_receipts' bucket exists and is public.");
+        }
+
+        const { data: publicUrlData } = supabase.storage
+          .from("payment_receipts")
+          .getPublicUrl(fileName);
+        
+        screenshotUrl = publicUrlData.publicUrl;
+      }
+
+      // 1. Create pending Order
       const { data: order, error: orderError } = await supabase
         .from("orders")
         .insert({
@@ -186,15 +221,16 @@ function ProfilePage() {
           course_batch: purchasingCourse.batch,
           course_tag: purchasingCourse.tag,
           amount_inr: purchasingCourse.price,
-          status: "paid",
-          phonepe_merchant_txn_id: txnId,
+          status: "pending",
+          phonepe_merchant_txn_id: paymentUtr,
+          payment_response: { utr: paymentUtr, screenshot_url: screenshotUrl } as any,
         })
         .select()
         .single();
 
       if (orderError) throw orderError;
 
-      // 2. Create active Enrollment
+      // 2. Create pending Enrollment
       const { error: enrollmentError } = await supabase
         .from("enrollments")
         .insert({
@@ -203,17 +239,15 @@ function ProfilePage() {
           course_title: purchasingCourse.title,
           course_batch: purchasingCourse.batch,
           course_tag: purchasingCourse.tag,
-          access_status: "active",
+          access_status: "pending",
         });
 
       if (enrollmentError) throw enrollmentError;
 
-      toast.success(`Enrolled in ${purchasingCourse.title}!`);
-      setPurchasingCourse(null);
+      setPaymentStep("success");
       await loadUserData(user.id);
-      setActiveTab("batches");
     } catch (err: any) {
-      toast.error(err.message || "Enrollment failed");
+      toast.error(err.message || "Payment submission failed");
     } finally {
       setIsPurchasing(false);
     }
@@ -664,67 +698,191 @@ function ProfilePage() {
         </div>
       </main>
 
-      {/* Mock Purchase Confirmation Dialog */}
+      {/* Purchase Dialog */}
       {purchasingCourse && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm animate-fade-in">
           <Card className="max-w-md w-full rounded-3xl border border-border bg-card shadow-elevated p-6 animate-fade-up">
-            <CardHeader className="p-0 pb-4 border-b border-border">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
-                  <ShoppingBag className="h-5 w-5" />
-                </div>
-                <div>
-                  <CardTitle className="font-display text-lg font-bold">Confirm Mock Checkout</CardTitle>
-                  <CardDescription className="text-xs">Secure course activation sandbox</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-0 py-5 space-y-4">
-              <div className="rounded-2xl border border-brand-100 bg-brand-50/20 p-4 space-y-2">
-                <div className="text-[10px] uppercase font-bold tracking-wider text-brand-700">Selected Course</div>
-                <h4 className="font-display text-sm font-bold text-foreground leading-snug">{purchasingCourse.title}</h4>
-                <div className="flex justify-between items-center text-xs pt-2 border-t border-brand-100/30 text-muted-foreground">
-                  <span>Batch: {purchasingCourse.batch}</span>
-                  <span>Material: {purchasingCourse.books}</span>
-                </div>
-              </div>
+            
+            {paymentStep === "confirm" && (
+              <>
+                <CardHeader className="p-0 pb-4 border-b border-border">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+                      <ShoppingBag className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <CardTitle className="font-display text-lg font-bold">Enrollment Details</CardTitle>
+                      <CardDescription className="text-xs">Review before payment</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0 py-5 space-y-4">
+                  <div className="rounded-2xl border border-brand-100 bg-brand-50/20 p-4 space-y-2">
+                    <div className="text-[10px] uppercase font-bold tracking-wider text-brand-700">Selected Course</div>
+                    <h4 className="font-display text-sm font-bold text-foreground leading-snug">{purchasingCourse.title}</h4>
+                    <div className="flex justify-between items-center text-xs pt-2 border-t border-brand-100/30 text-muted-foreground">
+                      <span>Batch: {purchasingCourse.batch}</span>
+                      <span>Material: {purchasingCourse.books}</span>
+                    </div>
+                  </div>
 
-              <div className="flex items-center justify-between text-sm border-b border-border pb-3">
-                <span className="text-muted-foreground">Total Fee (Incl. GST)</span>
-                <span className="font-display font-extrabold text-foreground text-lg">
-                  ₹{purchasingCourse.price.toLocaleString("en-IN")}
-                </span>
+                  <div className="flex items-center justify-between text-sm border-b border-border pb-3">
+                    <span className="text-muted-foreground">Total Fee (Incl. GST)</span>
+                    <span className="font-display font-extrabold text-foreground text-lg">
+                      ₹{purchasingCourse.price.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                </CardContent>
+                <CardFooter className="p-0 pt-2 flex gap-2 justify-end">
+                  <Button
+                    variant="ghost"
+                    onClick={() => setPurchasingCourse(null)}
+                    className="rounded-xl h-11 px-5 cursor-pointer font-semibold"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={confirmPurchase}
+                    className="bg-gradient-to-r from-brand to-brand-700 text-white rounded-xl h-11 px-6 font-bold cursor-pointer shadow-brand hover:shadow-brand-lg"
+                  >
+                    Proceed to Pay
+                  </Button>
+                </CardFooter>
+              </>
+            )}
+
+            {paymentStep === "payment" && (
+              <>
+                <CardHeader className="p-0 pb-4 border-b border-border">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+                      <Wallet className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <CardTitle className="font-display text-lg font-bold">Complete Payment</CardTitle>
+                      <CardDescription className="text-xs">Total: ₹{purchasingCourse.price.toLocaleString("en-IN")}</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0 py-5 space-y-5">
+                  <Tabs defaultValue="qr" className="w-full">
+                    <TabsList className="grid w-full grid-cols-3 h-10 bg-secondary">
+                      <TabsTrigger value="qr" className="text-xs font-bold"><QrCode className="w-3.5 h-3.5 mr-1.5" /> QR</TabsTrigger>
+                      <TabsTrigger value="upi" className="text-xs font-bold"><Wallet className="w-3.5 h-3.5 mr-1.5" /> UPI</TabsTrigger>
+                      <TabsTrigger value="bank" className="text-xs font-bold"><Landmark className="w-3.5 h-3.5 mr-1.5" /> Bank</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="qr" className="mt-3 text-center space-y-3">
+                      <div className="bg-white p-3 rounded-2xl border shadow-sm inline-block mx-auto">
+                        <img src="/payment-qr.png" alt="Payment QR Code" className="w-48 h-48 object-contain mx-auto" onError={(e) => (e.currentTarget.src = "https://via.placeholder.com/200?text=QR+Code+Missing")} />
+                      </div>
+                      <p className="text-xs font-medium text-muted-foreground">Scan with any UPI app to pay</p>
+                    </TabsContent>
+                    <TabsContent value="upi" className="mt-3 text-center space-y-4 py-4">
+                      <div className="text-sm font-semibold mb-2">UPI ID: <span className="font-bold text-foreground">9830773655@ybl</span></div>
+                      <a
+                        href={`upi://pay?pa=9830773655@ybl&pn=VIKRAM%20BIYANI&am=${purchasingCourse.price}&cu=INR&tn=CoursePayment`}
+                        className="inline-flex h-11 items-center justify-center rounded-xl bg-indigo-600 px-6 font-bold text-white transition-colors hover:bg-indigo-700 shadow-lg w-full"
+                      >
+                        Pay via UPI App <Wallet className="ml-2 w-4 h-4" />
+                      </a>
+                    </TabsContent>
+                    <TabsContent value="bank" className="mt-3">
+                      <div className="rounded-xl border bg-secondary/30 p-4 space-y-2 text-sm">
+                        <div className="flex justify-between border-b pb-2">
+                          <span className="text-muted-foreground">A/C No:</span>
+                          <span className="font-bold">909010035115895</span>
+                        </div>
+                        <div className="flex justify-between border-b pb-2">
+                          <span className="text-muted-foreground">IFSC:</span>
+                          <span className="font-bold">UTIB0000411</span>
+                        </div>
+                        <div className="flex justify-between border-b pb-2">
+                          <span className="text-muted-foreground">Holder:</span>
+                          <span className="font-bold">VIKRAM BIYANI</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground shrink-0 mr-4">Address:</span>
+                          <span className="font-bold text-right text-xs pt-0.5">SARAT BOSE ROAD, KOLKATA [WB], 700020</span>
+                        </div>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+
+                  <form id="payment-form" onSubmit={submitPaymentDetails} className="pt-3 border-t space-y-4">
+                    <div className="space-y-3">
+                      <Label className="text-xs font-bold text-foreground/80 uppercase tracking-wider">
+                        Have you made the payment?
+                      </Label>
+                      <div className="space-y-3">
+                        <Input
+                          type="text"
+                          placeholder="Enter UTR / Transaction ID *"
+                          value={paymentUtr}
+                          onChange={(e) => setPaymentUtr(e.target.value)}
+                          className="h-10 rounded-xl bg-card/50"
+                          required
+                        />
+                        <div className="relative">
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setPaymentScreenshot(e.target.files?.[0] || null)}
+                            className="h-10 rounded-xl bg-card/50 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 cursor-pointer text-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </CardContent>
+                <CardFooter className="p-0 flex gap-2 justify-end">
+                  <Button
+                    variant="ghost"
+                    onClick={() => setPaymentStep("confirm")}
+                    className="rounded-xl h-11 px-5 cursor-pointer font-semibold"
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    type="submit"
+                    form="payment-form"
+                    disabled={isPurchasing}
+                    className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl h-11 px-6 font-bold cursor-pointer shadow-lg flex-1"
+                  >
+                    {isPurchasing ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</>
+                    ) : (
+                      <><CheckCircle className="mr-2 h-4 w-4" /> Submit Details</>
+                    )}
+                  </Button>
+                </CardFooter>
+              </>
+            )}
+
+            {paymentStep === "success" && (
+              <div className="text-center py-6 space-y-5 animate-fade-up">
+                <div className="h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-500 mx-auto flex items-center justify-center border-2 border-emerald-500/20">
+                  <CheckCircle className="h-9 w-9" />
+                </div>
+                
+                <div className="space-y-2">
+                  <h3 className="font-display text-xl font-bold text-foreground">Payment Received</h3>
+                  <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+                    Thank you! Your payment is under review. Your course material will be provided soon once verified.
+                  </p>
+                </div>
+                
+                <Button
+                  onClick={() => {
+                    setPurchasingCourse(null);
+                    setActiveTab("batches");
+                  }}
+                  className="w-full rounded-xl h-11 bg-secondary hover:bg-secondary/80 text-foreground font-semibold"
+                  variant="outline"
+                >
+                  Close
+                </Button>
               </div>
-              
-              <div className="text-xs text-muted-foreground flex gap-2 bg-secondary/30 p-3 rounded-xl border border-border/40">
-                <ShieldCheck className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
-                <p>
-                  This is a mock transaction for review purposes. No real money will be charged. Clicking confirm will immediately activate the course.
-                </p>
-              </div>
-            </CardContent>
-            <CardFooter className="p-0 pt-2 flex gap-2 justify-end">
-              <Button
-                variant="ghost"
-                onClick={() => setPurchasingCourse(null)}
-                className="rounded-xl h-11 px-5 cursor-pointer font-semibold"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={confirmPurchase}
-                disabled={isPurchasing}
-                className="bg-gradient-to-r from-brand to-brand-700 text-white rounded-xl h-11 px-6 font-bold cursor-pointer shadow-brand hover:shadow-brand-lg"
-              >
-                {isPurchasing ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Enrolling...
-                  </>
-                ) : (
-                  "Confirm & Activate"
-                )}
-              </Button>
-            </CardFooter>
+            )}
           </Card>
         </div>
       )}

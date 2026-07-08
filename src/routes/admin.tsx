@@ -256,6 +256,32 @@ function AdminPanel() {
     .filter((o: any) => o.status === "paid")
     .reduce((sum: number, o: any) => sum + o.amount_inr, 0) || 0;
 
+  // Handle Order Status Update
+  const handleUpdateOrderStatus = async (orderId: string, status: "paid" | "failed" | "cancelled") => {
+    if (isSandbox) {
+      toast.error("Sandbox Mode: Updates disabled");
+      return;
+    }
+    setLoadingData(true);
+    try {
+      const res = await fetch("/api/update-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, status }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || json.message || "Failed to update order");
+      }
+      toast.success(`Order marked as ${status}`);
+      await loadAdminData();
+    } catch (err: any) {
+      toast.error(err.message || "Failed to update order");
+    } finally {
+      setLoadingData(false);
+    }
+  };
+
   // Filtered Student List
   const filteredProfiles = data ? data.profiles.filter((p) => {
     const matchesSearch = 
@@ -783,8 +809,9 @@ function AdminPanel() {
                           <TableHead className="font-bold text-xs uppercase tracking-wider">Batch Target</TableHead>
                           <TableHead className="font-bold text-xs uppercase tracking-wider">Fee Paid</TableHead>
                           <TableHead className="font-bold text-xs uppercase tracking-wider">Status</TableHead>
-                          <TableHead className="font-bold text-xs uppercase tracking-wider">Merchant Transaction ID</TableHead>
+                          <TableHead className="font-bold text-xs uppercase tracking-wider">Payment Info</TableHead>
                           <TableHead className="font-bold text-xs uppercase tracking-wider">Transaction Date</TableHead>
+                          <TableHead className="font-bold text-xs uppercase tracking-wider text-right pr-6">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -816,8 +843,22 @@ function AdminPanel() {
                                 )}
                               </span>
                             </TableCell>
-                            <TableCell className="text-xs font-mono font-semibold text-muted-foreground">
-                              {o.phonepe_merchant_txn_id}
+                            <TableCell>
+                              <div className="flex flex-col gap-1">
+                                <span className="text-[10px] font-mono font-semibold text-muted-foreground break-all max-w-[150px]">
+                                  {o.phonepe_merchant_txn_id}
+                                </span>
+                                {o.payment_response && (o.payment_response as any).screenshot_url && (
+                                  <a 
+                                    href={(o.payment_response as any).screenshot_url} 
+                                    target="_blank" 
+                                    rel="noreferrer"
+                                    className="text-[10px] text-brand font-bold hover:underline"
+                                  >
+                                    View Receipt
+                                  </a>
+                                )}
+                              </div>
                             </TableCell>
                             <TableCell className="text-xs text-muted-foreground font-semibold">
                               {new Date(o.created_at).toLocaleDateString("en-IN", {
@@ -825,6 +866,28 @@ function AdminPanel() {
                                 month: "short",
                                 day: "numeric"
                               })}
+                            </TableCell>
+                            <TableCell className="text-right pr-6">
+                              {o.status === "pending" && (
+                                <div className="flex justify-end gap-2">
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => handleUpdateOrderStatus(o.id, "paid")}
+                                    className="h-7 text-[10px] border-emerald-200 text-emerald-600 hover:bg-emerald-50"
+                                  >
+                                    Approve
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => handleUpdateOrderStatus(o.id, "failed")}
+                                    className="h-7 text-[10px] border-red-200 text-red-600 hover:bg-red-50"
+                                  >
+                                    Reject
+                                  </Button>
+                                </div>
+                              )}
                             </TableCell>
                           </TableRow>
                         ))}
