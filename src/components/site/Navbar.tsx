@@ -256,12 +256,7 @@ export function Navbar() {
               <LogOut className="h-4 w-4" /> Sign Out
             </Button>
           )}
-          <Button
-            onClick={() => setEnrollDialogOpen(true)}
-            className="bg-gradient-to-r from-brand to-brand-700 text-white hover:shadow-brand cursor-pointer"
-          >
-            Enroll Now
-          </Button>
+
         </div>
 
         <button
@@ -327,15 +322,7 @@ export function Navbar() {
                 Admin Panel
               </Link>
             )}
-            <Button
-              onClick={() => {
-                setOpen(false);
-                setEnrollDialogOpen(true);
-              }}
-              className="bg-gradient-to-r from-brand to-brand-700 text-white mt-2 cursor-pointer"
-            >
-              Enroll Now
-            </Button>
+
             {user && (
               <Button
                 variant="outline"

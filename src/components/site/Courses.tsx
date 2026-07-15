@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, Globe, Star, Play, BookOpen, Infinity as InfinityIcon } from "lucide-react";
+import { Clock, Globe, Star, Play, BookOpen, Infinity as InfinityIcon, Sparkles } from "lucide-react";
 import { TiltCard } from "./TiltCard";
 import ca1 from "@/assets/ca1.jpeg";
 import ca2 from "@/assets/ca2.jpeg";
@@ -15,8 +15,11 @@ import cma1 from "@/assets/cma1.jpeg";
 import cma2 from "@/assets/cma2.jpeg";
 import cma3 from "@/assets/cma3.jpeg";
 import cma4 from "@/assets/cma4.jpeg";
+import offer1 from "@/assets/offer1.jpeg";
+import offer2 from "@/assets/offer2.jpeg";
+import offer3 from "@/assets/offer3.jpeg";
 
-const categories = ["All", "CA Final", "CA Inter", "CMA Final", "Combo", "Hard Books", "PDF"];
+const categories = ["All", "CA Final", "CA Inter", "CMA Final", "Combo", "Add On", "Hard Books", "PDF"];
 
 export const courses = [
   {
@@ -201,6 +204,51 @@ export const courses = [
     cat: "CMA Final",
     media: "Hard Books",
   },
+  {
+    img: offer1,
+    tag: "CMA Final",
+    title: "CMA Final — DT & IDT Combo",
+    batch: "December 2026",
+    hours: "350 hrs",
+    books: "Hard Books",
+    price: 10000,
+    mrp: 14999,
+    rating: 4.9,
+    live: true,
+    cat: "Combo",
+    media: "Hard Books",
+    limitedTime: true,
+  },
+  {
+    img: offer2,
+    tag: "CA Inter",
+    title: "CA Inter — DT & IDT Combo",
+    batch: "Sep 2026 & Jan 2027",
+    hours: "200 hrs",
+    books: "PDF",
+    price: 5000,
+    mrp: 7500,
+    rating: 4.8,
+    live: true,
+    cat: "Combo",
+    media: "PDF",
+    limitedTime: true,
+  },
+  {
+    img: offer3,
+    tag: "CA Final",
+    title: "CA Final — DT & IDT Combo",
+    batch: "November 2026",
+    hours: "350 hrs",
+    books: "Hard Books",
+    price: 10000,
+    mrp: 14999,
+    rating: 4.9,
+    live: true,
+    cat: "Combo",
+    media: "Hard Books",
+    limitedTime: true,
+  },
 ];
 
 export function Courses() {
@@ -247,13 +295,18 @@ export function Courses() {
                   className="h-full w-full object-contain transition-transform duration-700 hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute top-4 left-4 flex gap-2">
+                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                   <span className="rounded-full bg-white/95 dark:bg-navy/95 backdrop-blur text-brand text-[10px] font-bold uppercase tracking-wider px-3 py-1">
                     {displayCourse.tag}
                   </span>
                   {displayCourse.live && (
                     <span className="rounded-full bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 inline-flex items-center gap-1.5 shadow-soft">
                       <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Live
+                    </span>
+                  )}
+                  {"limitedTime" in displayCourse && displayCourse.limitedTime && (
+                    <span className="rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-black text-[10px] font-bold uppercase tracking-wider px-3 py-1 inline-flex items-center gap-1.5 shadow-soft shadow-amber-400/40">
+                      <Sparkles className="h-3 w-3" /> Rath Yatra Offer
                     </span>
                   )}
                 </div>
@@ -378,6 +431,11 @@ export function Courses() {
                       {c.live && (
                         <span className="absolute top-1.5 left-1.5 rounded-full bg-red-500 text-white text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5">
                           Live
+                        </span>
+                      )}
+                      {"limitedTime" in c && c.limitedTime && (
+                        <span className="absolute bottom-1.5 left-1.5 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-black text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 flex items-center gap-1 shadow-soft">
+                          <Sparkles className="h-2 w-2" /> Rath Yatra Offer
                         </span>
                       )}
                     </div>

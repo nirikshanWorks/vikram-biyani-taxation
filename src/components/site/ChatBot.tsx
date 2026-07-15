@@ -78,7 +78,7 @@ function getStaticReply(query: string): string {
   ) {
     return `Enrolling in our classes is very quick and simple:
 
-1. Click the **"Enroll Now"** button in the top navigation header.
+1. Click the **"Enroll"** button on the course cards in the courses section.
 2. Enter your email and verify the **OTP** code sent to your inbox.
 3. Provide your basic student profile details (Name, Phone, City, target course).
 4. Verify the billing summary and click **Confirm & Activate**.
