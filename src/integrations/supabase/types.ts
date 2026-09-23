@@ -141,7 +141,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      course_level: "CA Inter" | "CA Final" | "CMA Final" | "Other"
+      course_level: "CA Inter" | "CA Final" | "CMA Inter" | "CMA Final" | "Other"
       order_status: "pending" | "paid" | "failed" | "cancelled"
     }
     CompositeTypes: {
@@ -270,7 +270,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      course_level: ["CA Inter", "CA Final", "CMA Final", "Other"],
+      course_level: ["CA Inter", "CA Final", "CMA Inter", "CMA Final", "Other"],
       order_status: ["pending", "paid", "failed", "cancelled"],
     },
   },

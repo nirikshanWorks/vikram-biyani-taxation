@@ -18,10 +18,70 @@ import cma4 from "@/assets/cma4.jpeg";
 import offer1 from "@/assets/offer1.jpeg";
 import offer2 from "@/assets/offer2.jpeg";
 import offer3 from "@/assets/offer3.jpeg";
+import newCaInterHard from "@/assets/new cources/ca-inter-taxation-may-sep-2027-hardcopy.jpeg";
+import newCaInterPdf from "@/assets/new cources/ca-inter-taxation-may-sep-2027-pdf.jpeg";
+import newCmaInterHard from "@/assets/new cources/cma-inter-taxation-june-2027-hardcopy.jpeg";
+import newCmaInterPdf from "@/assets/new cources/cma-inter-taxation-june-2027-pdf.jpeg";
 
-const categories = ["All", "CA Final", "CA Inter", "CMA Final", "Combo", "Add On", "Hard Books", "PDF"];
+const categories = ["All", "CA Final", "CA Inter", "CMA Inter", "CMA Final", "Combo", "Add On", "Hard Books", "PDF"];
 
 export const courses = [
+  {
+    img: newCaInterHard,
+    tag: "CA Inter",
+    title: "CA Inter — Taxation Direct Tax + GST (Hard Books)",
+    batch: "May & Sep 2027",
+    hours: "220 hrs",
+    books: "Hard Books",
+    price: 9500,
+    mrp: 12500,
+    rating: 4.9,
+    live: true,
+    cat: "CA Inter",
+    media: "Hard Books",
+  },
+  {
+    img: newCaInterPdf,
+    tag: "CA Inter",
+    title: "CA Inter — Taxation Direct Tax + GST (PDF)",
+    batch: "May & Sep 2027",
+    hours: "220 hrs",
+    books: "PDF",
+    price: 8600,
+    mrp: 11500,
+    rating: 4.8,
+    live: true,
+    cat: "CA Inter",
+    media: "PDF",
+  },
+  {
+    img: newCmaInterHard,
+    tag: "CMA Inter",
+    title: "CMA Inter — Taxation Direct Tax + GST (Hard Books)",
+    batch: "June 2027",
+    hours: "220 hrs",
+    books: "Hard Books",
+    price: 9500,
+    mrp: 12500,
+    rating: 4.9,
+    live: true,
+    cat: "CMA Inter",
+    media: "Hard Books",
+  },
+  {
+    img: newCmaInterPdf,
+    tag: "CMA Inter",
+    title: "CMA Inter — Taxation Direct Tax + GST (PDF)",
+    batch: "June 2027",
+    hours: "220 hrs",
+    books: "PDF",
+    price: 8600,
+    mrp: 11500,
+    rating: 4.8,
+    live: true,
+    cat: "CMA Inter",
+    media: "PDF",
+  },
   {
     img: ca1,
     tag: "CA Final",

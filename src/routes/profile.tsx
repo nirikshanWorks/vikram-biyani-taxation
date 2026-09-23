@@ -453,6 +453,7 @@ function ProfilePage() {
                             >
                               <option value="CA Inter">CA Inter</option>
                               <option value="CA Final">CA Final</option>
+                              <option value="CMA Inter">CMA Inter</option>
                               <option value="CMA Final">CMA Final</option>
                               <option value="Other">Other</option>
                             </select>

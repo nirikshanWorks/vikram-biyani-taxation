@@ -14,6 +14,7 @@ const courseGroups = [
     subtitle: "Taxation (DT + GST)",
     color: "from-sky-500 to-blue-600",
     items: [
+      { label: "May & Sep 2027 · Hard / PDF", price: "₹8,600+" },
       { label: "Sep 2026 · Hard Books", price: "₹7,500" },
       { label: "Sep 2026 · PDF", price: "₹6,000" },
     ],
@@ -31,12 +32,13 @@ const courseGroups = [
   },
   {
     icon: Award,
-    title: "CMA Final",
-    subtitle: "DT & IDT — Dec 26 / 27",
+    title: "CMA (Inter & Final)",
+    subtitle: "DT & IDT Batches",
     color: "from-amber-500 to-orange-600",
     items: [
-      { label: "Direct Tax — Hard Books", price: "₹8,600+" },
-      { label: "Indirect Tax — Hard Books", price: "₹8,600+" },
+      { label: "CMA Inter — June 2027 (Hard/PDF)", price: "₹8,600+" },
+      { label: "CMA Final DT — Hard Books", price: "₹8,600+" },
+      { label: "CMA Final IDT — Hard Books", price: "₹8,600+" },
     ],
   },
 ];
@@ -199,7 +201,7 @@ export function Navbar() {
                     onClick={() => setCoursesOpen(false)}
                     className="col-span-3 mt-1 rounded-2xl bg-gradient-to-r from-brand to-brand-700 text-white px-4 py-3 flex items-center justify-between text-sm font-semibold hover:shadow-brand transition-shadow"
                   >
-                    <span>See all 13 batches with full details</span>
+                    <span>See all courses & batches with full details</span>
                     <span>→</span>
                   </a>
                 </div>
